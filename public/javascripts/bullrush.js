@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     //initialise key listeners
     window.addEventListener('keydown', keyListener, true)
+    window.addEventListener('click', clickListener, true)
 
     console.log('Starting game')
 
@@ -38,9 +39,13 @@ var keyListener = function (e) {
             break
         default:
     }
-
-    console.log(e.keyCode)
 }
+
+var clickListener = function (e) {
+    console.log(e)
+    game.update(Pos.getPosFromClick(e, game))
+}
+
 
 class Pos {
     constructor(x, y) {
@@ -62,6 +67,14 @@ class Pos {
 
     getDownPos() {
         return new Pos(this.x, this.y + 1)
+    }
+
+    static getPosFromClick(e, game) {
+        console.log(game.context.canvas.offsetLeft)
+        console.log(game.context.canvas.offsetTop)
+        let x = parseInt((e.x - game.context.canvas.offsetLeft) / game.tileSize)
+        let y = parseInt((e.y - game.context.canvas.offsetLeft) / game.tileSize)
+        return new Pos(x, y)
     }
 }
 
@@ -101,7 +114,6 @@ class Boulder extends Actor {
 }
 
 class Game {
-
 
     constructor() {
         //initialise canvas
@@ -176,10 +188,11 @@ class Game {
         //check valid move
         //TODO most advanced sheep moves first
         let targetTile = this.board[dest.x][dest.y]
-
         //deny moves off screen or into obstruction
         if (dest.x < 0 || dest.x >= BOARD_WIDTH || dest.y < 0 || dest.y >= BOARD_HEIGHT
             || targetTile instanceof Boulder || targetTile instanceof Sheep) return
+        //deny moves more than one tile away
+        if (Math.abs(actor.pos.x - dest.x) + Math.abs(actor.pos.y - dest.y) > 1) return
 
         //update board
         this.board[actor.pos.x][actor.pos.y] = null
@@ -243,5 +256,6 @@ class Game {
         }
         return array;
     }
+
 }
 
