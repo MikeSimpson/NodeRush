@@ -1,9 +1,10 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: greenyellow;
+  background-color: dimgray;
 }
 
-a {
-  color: #00B7FF;
+.container {
+  margin: auto;
+  padding: 10px;
 }
