@@ -1,7 +1,7 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
-let BACKGROUND_A = "#adff2f";
-let BACKGROUND_B = "#9be52a";
+let BACKGROUND_A = '#adff2f';
+let BACKGROUND_B = '#9be52a';
 let game
 
 $(document).ready(function () {
@@ -10,7 +10,7 @@ $(document).ready(function () {
     //initialise key listeners
     window.addEventListener('keydown', keyListener, true)
 
-    console.log("Starting game")
+    console.log('Starting game')
 
 })
 
@@ -23,23 +23,18 @@ var keyListener = function (e) {
     switch (e.keyCode) {
         case 37: //Left
             game.update(game.player.pos.getLeftPos())
-            game.updateAI()
             break
         case 38: //Up
             game.update(game.player.pos.getUpPos())
-            game.updateAI()
             break
         case 39: //Right
             game.update(game.player.pos.getRightPos())
-            game.updateAI()
             break
         case 40: //Down
             game.update(game.player.pos.getDownPos())
-            game.updateAI()
             break
         case 32: //Space
             game.update(game.player.pos)
-            game.updateAI()
             break
         default:
     }
@@ -73,35 +68,35 @@ class Pos {
 class Actor {
     constructor(pos) {
         this.pos = pos
-        this.color = "#ff00ff"
+        this.color = '#ff00ff'
     }
 }
 
 class Player extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = "#00BFFF"
+        this.color = '#00BFFF'
     }
 }
 
 class Sheep extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = "#ffebd2"
+        this.color = '#ffebd2'
     }
 }
 
 class Wolf extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = "#ff0000"
+        this.color = '#ff0000'
     }
 }
 
 class Boulder extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = "#696969"
+        this.color = '#696969'
     }
 }
 
@@ -173,6 +168,7 @@ class Game {
 
     update(dest) {
         this.moveActor(this.player, dest)
+        game.updateAI()
         this.draw()
     }
 
@@ -200,7 +196,9 @@ class Game {
             var start = graph.grid[sheep.pos.x][sheep.pos.y]
             var end = graph.grid[BOARD_WIDTH - 1][0]
             var nextStep = astar.search(graph, start, end).shift();
-            this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
+            if (typeof nextStep !== 'undefined') {
+                this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
+            }
         })
         this.wolves.forEach(wolf => {
 
@@ -236,7 +234,7 @@ class Game {
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
             for (let y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.board instanceof Actor) {
+                if (this.board[x][y] instanceof Actor) {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
