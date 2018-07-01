@@ -55,7 +55,6 @@ class Game {
         div.appendChild(canvas)
         this.context = canvas.getContext('2d')
 
-
         this.initialiseGame()
     }
 
@@ -84,15 +83,23 @@ class Game {
     spawnActors() {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
-        this.player = new Player(new Pos(startX, 0))
-        this.board[startX][0] = this.player
+        let playerY = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+        this.player = new Player(new Pos(startX, playerY))
+        this.board[startX][playerY] = this.player
 
         //spawn sheep
         this.sheeps = new Set()
-        for (var y = 1; y <= this.sheepCount; y++) {
-            let sheep = new Sheep(new Pos(startX, y))
-            this.board[startX][y] = sheep
-            this.sheeps.add(sheep)
+        var sheepsCreated = 0
+        while (true) {
+            //attempt to add a sheep
+            let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+            if (!(this.board[startX][y] instanceof Actor)) {
+                let sheep = new Sheep(new Pos(startX, y))
+                this.board[startX][y] = sheep
+                this.sheeps.add(sheep)
+                sheepsCreated++
+                if (sheepsCreated === this.sheepCount) break
+            }
         }
 
         //spawn wolves
@@ -189,30 +196,38 @@ class Game {
             return
         }
 
-        //check for win condition
-        let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
-        if (actor instanceof Player && dest.x === targetX) {
-            this.resetRound()
-        }
+        //deny moves more than one tile away
+        if (!Pos.adjacent(actor.pos, dest)) return
 
-        //check for player hitting
-        if (ctrl) {
-            if (this.board[dest.x][dest.y] instanceof Actor) {
-                this.board[dest.x][dest.y].rooted = true
+        let target
+
+        if (actor instanceof Player) {
+            //check for win condition
+            console.log(dest.x)
+            let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
+            if (dest.x === targetX) {
+                this.resetRound()
             }
-            return
-        }
 
-        //check valid move
-        //TODO most advanced sheep moves first
-        let targetTile = this.board[dest.x][dest.y]
+            target = this.board[dest.x][dest.y]
+            //check for player trying to push
+            if (target instanceof Actor && target.rooted) {
+                console.log(Pos.getPushPos(actor.pos, dest))
+                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
+            }
+
+            //check for player hitting, we assume they want to hit a wolf if they walk into it
+            if (ctrl || target instanceof Wolf && !target.rooted) {
+                if (target instanceof Actor) {
+                    this.board[dest.x][dest.y].rooted = true
+                }
+                return
+            }
+        }
 
         //deny moves off screen or into obstruction
         if (dest.x < 0 || dest.x >= BOARD_WIDTH || dest.y < 0 || dest.y >= BOARD_HEIGHT
-            || targetTile instanceof Actor) return
-
-        //deny moves more than one tile away
-        if (!Pos.adjacent(actor.pos, dest)) return
+            || this.board[dest.x][dest.y] instanceof Actor) return
 
         //update board
         this.board[actor.pos.x][actor.pos.y] = null
@@ -370,6 +385,21 @@ class Pos {
 
     static adjacent(pos1, pos2) {
         return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y) === 1
+    }
+
+    static getPushPos(pos1, pos2) {
+        if (pos1.getRightPos().x === pos2.x) {
+            return pos2.getRightPos()
+        }
+        if (pos1.getUpPos().y === pos2.y) {
+            return pos2.getUpPos()
+        }
+        if (pos1.getLeftPos().x === pos2.x) {
+            return pos2.getLeftPos()
+        }
+        if (pos1.getDownPos().y === pos2.y) {
+            return pos2.getDownPos()
+        }
     }
 }
 

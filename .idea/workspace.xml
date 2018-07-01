@@ -52,8 +52,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="29" lean-forward="true" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+            <state relative-caret-position="228">
+              <caret line="203" column="38" lean-forward="true" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="38" />
               <folding>
                 <element signature="e#143#293#0" />
                 <element signature="e#327#1134#0" />
@@ -65,10 +65,6 @@
                 <element signature="e#876#988#0" />
                 <element signature="e#997#1088#0" />
                 <element signature="e#1026#1693#0" />
-                <element signature="n#!!block;n#spawnSheepAndWolves#0;n#Game#0" />
-                <element signature="e#2511#2643#0" />
-                <element signature="e#2534#3042#0" />
-                <element signature="e#2888#3032#0" />
                 <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
                 <element signature="e#3207#3424#0" />
                 <element signature="e#3260#3414#0" />
@@ -84,9 +80,7 @@
                 <element signature="e#3375#3415#0" />
                 <element signature="n#!!block;n#update#0;n#Game#0" />
                 <element signature="e#4883#4907#0" />
-                <element signature="e#5550#5574#0" />
                 <element signature="e#5590#5622#0" />
-                <element signature="e#5536#5554#0" />
                 <element signature="n#!!block;n#updateAI#0;n#Game#0" />
                 <element signature="n#!!block;n#sheepAI#0;n#Game#0" />
                 <element signature="e#6667#6727#0" />
@@ -108,7 +102,6 @@
                 <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
                 <element signature="e#7784#7941#0" />
                 <element signature="e#7879#7931#0" />
-                <element signature="n#Pos#0" />
                 <element signature="n#!!block;n#constructor#0;n#Pos#0" />
                 <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
@@ -116,6 +109,7 @@
                 <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
                 <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
+                <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
                 <element signature="n#Actor#0" />
                 <element signature="n#!!block;n#constructor#0;n#Actor#0" />
                 <element signature="n#!!block;n#getColor#0;n#Actor#0" />
@@ -336,12 +330,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530250104401</updated>
-      <workItem from="1530250107109" duration="31215000" />
+      <workItem from="1530250107109" duration="32817000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31215000" />
+    <option name="totallyTimeSpent" value="32817000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -455,8 +449,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="29" lean-forward="true" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        <state relative-caret-position="228">
+          <caret line="203" column="38" lean-forward="true" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="38" />
           <folding>
             <element signature="e#143#293#0" />
             <element signature="e#327#1134#0" />
@@ -468,10 +462,6 @@
             <element signature="e#876#988#0" />
             <element signature="e#997#1088#0" />
             <element signature="e#1026#1693#0" />
-            <element signature="n#!!block;n#spawnSheepAndWolves#0;n#Game#0" />
-            <element signature="e#2511#2643#0" />
-            <element signature="e#2534#3042#0" />
-            <element signature="e#2888#3032#0" />
             <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
             <element signature="e#3207#3424#0" />
             <element signature="e#3260#3414#0" />
@@ -487,9 +477,7 @@
             <element signature="e#3375#3415#0" />
             <element signature="n#!!block;n#update#0;n#Game#0" />
             <element signature="e#4883#4907#0" />
-            <element signature="e#5550#5574#0" />
             <element signature="e#5590#5622#0" />
-            <element signature="e#5536#5554#0" />
             <element signature="n#!!block;n#updateAI#0;n#Game#0" />
             <element signature="n#!!block;n#sheepAI#0;n#Game#0" />
             <element signature="e#6667#6727#0" />
@@ -511,7 +499,6 @@
             <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
             <element signature="e#7784#7941#0" />
             <element signature="e#7879#7931#0" />
-            <element signature="n#Pos#0" />
             <element signature="n#!!block;n#constructor#0;n#Pos#0" />
             <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
@@ -519,6 +506,7 @@
             <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
             <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
+            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
             <element signature="n#Actor#0" />
             <element signature="n#!!block;n#constructor#0;n#Actor#0" />
             <element signature="n#!!block;n#getColor#0;n#Actor#0" />
