@@ -1,8 +1,6 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
 let LEVEL_LAPS = 5
-let BACKGROUND_A = '#adff2f';
-let BACKGROUND_B = '#9be52a';
 let game
 
 $(document).ready(function () {
@@ -67,6 +65,9 @@ class Game {
 
         this.score = 0
         $("h2").text("Score: " + this.score)
+        this.backgroundA = this.getRandomColor()
+        this.backgroundB = this.getRandomColor()
+        // this.updateBackgroundColours()
 
         //initialise board
         this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
@@ -138,6 +139,7 @@ class Game {
         $("h2").text("Score: " + this.score)
         //every ten laps, reset but up the tempo
         if (this.score % LEVEL_LAPS === 0) {
+            this.updateBackgroundColours()
             this.wolfCount = parseInt(this.score / LEVEL_LAPS + 1)
             this.sheepCount = BOARD_HEIGHT - 1
             //reset board
@@ -173,9 +175,9 @@ class Game {
                 if (this.board[x][y] instanceof Actor) {
                     this.context.fillStyle = this.board[x][y].getColor()
                 } else if ((x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0)) {
-                    this.context.fillStyle = BACKGROUND_A
+                    this.context.fillStyle = this.backgroundA
                 } else {
-                    this.context.fillStyle = BACKGROUND_B
+                    this.context.fillStyle = this.backgroundB
                 }
                 this.context.fillRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
             }
@@ -185,6 +187,9 @@ class Game {
     update(dest, ctrl) {
         this.moveActor(this.player, dest, ctrl)
         game.updateAI()
+        if (this.score / LEVEL_LAPS > 10) { //disco mode
+            this.updateBackgroundColours()
+        }
         this.draw()
     }
 
@@ -203,14 +208,13 @@ class Game {
 
         if (actor instanceof Player) {
             //check for win condition
-            console.log(dest.x)
             let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
             if (dest.x === targetX) {
                 this.resetRound()
             }
 
             target = this.board[dest.x][dest.y]
-            
+
             //check for player hitting, we assume they want to hit a wolf if they walk into it
             if (ctrl || target instanceof Wolf && !target.rooted) {
                 if (target instanceof Actor) {
@@ -221,7 +225,6 @@ class Game {
 
             //check for player trying to push
             if (target instanceof Sheep) {
-                console.log(Pos.getPushPos(actor.pos, dest))
                 this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
         }
@@ -329,6 +332,48 @@ class Game {
             }
         }
         return array;
+    }
+
+    updateBackgroundColours() {
+        let level = parseInt(this.score / LEVEL_LAPS + 1)
+        switch (level) {
+            case 1:
+                this.backgroundA = '#adff2f'
+                this.backgroundB = '#9be52a'
+                break
+            case 2:
+                this.backgroundA = '#e5e57d'
+                this.backgroundB = '#ffff8b'
+                break
+            case 3:
+                this.backgroundA = '#d7ffff'
+                this.backgroundB = '#c1e5e5'
+                break
+            case 4:
+                this.backgroundA = '#7e5426'
+                this.backgroundB = '#8c673e'
+                break
+            case 5:
+                this.backgroundA = '#00cccc'
+                this.backgroundB = '#00b7b7'
+                break
+            case 6:
+                this.backgroundA = '#dddddd'
+                this.backgroundB = '#bbbbbb'
+                break
+            default:
+                this.backgroundA = this.getRandomColor()
+                this.backgroundB = this.getRandomColor()
+        }
+    }
+
+    getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(this.random.nextFloat() * 16)];
+        }
+        return color;
     }
 
     static createBoard(width, height) {
