@@ -1,5 +1,6 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
+let LEVEL_LAPS = 5
 let BACKGROUND_A = '#adff2f';
 let BACKGROUND_B = '#9be52a';
 let game
@@ -54,15 +55,17 @@ class Game {
         div.appendChild(canvas)
         this.context = canvas.getContext('2d')
 
-        //configure seed
-        let seed = parseInt(Math.random() * 2147483647)
-        this.random = new Random(seed)
 
         this.initialiseGame()
     }
 
     initialiseGame() {
+        //configure seed
+        let seed = parseInt(Math.random() * 2147483647)
+        this.random = new Random(seed)
+
         this.directionIsRight = true
+
         this.score = 0
         $("h2").text("Score: " + this.score)
 
@@ -123,6 +126,18 @@ class Game {
     }
 
     resetRound() {
+        //update score
+        this.score++
+        $("h2").text("Score: " + this.score)
+        //every ten laps, reset but up the tempo
+        if (this.score % LEVEL_LAPS === 0) {
+            this.wolfCount = parseInt(this.score / LEVEL_LAPS + 1)
+            this.sheepCount = BOARD_HEIGHT - 1
+            //reset board
+            this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
+            this.spawnBoulders()
+        }
+
         //reverse direction
         this.directionIsRight = !this.directionIsRight
 
@@ -178,8 +193,6 @@ class Game {
         let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
         if (actor instanceof Player && dest.x === targetX) {
             this.resetRound()
-            this.score++
-            $("h2").text("Score: " + this.score)
         }
 
         //check for player hitting
@@ -250,7 +263,9 @@ class Game {
             }
         })
 
+        var break_outer = false
         this.wolves.forEach(wolf => {
+            if (break_outer) return
             if (wolf.rooted) return
             let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
@@ -267,6 +282,8 @@ class Game {
                     }
                     if (this.board[nextStep.x][nextStep.y] instanceof Player) {
                         if (confirm("You lose noob")) this.initialiseGame()
+                        //Awkward loop breaking so that the next game doesn't have ghost wolves...
+                        break_outer = true
                         return
                     }
                 }
