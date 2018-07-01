@@ -10,9 +10,6 @@ $(document).ready(function () {
     //initialise key listeners
     window.addEventListener('keydown', keyListener, true)
     window.addEventListener('click', clickListener, true)
-
-    console.log('Starting game')
-
 })
 
 var keyListener = function (e) {
@@ -42,7 +39,6 @@ var keyListener = function (e) {
 }
 
 var clickListener = function (e) {
-    console.log(e)
     game.update(Pos.getPosFromClick(e, game))
 }
 
@@ -70,8 +66,6 @@ class Pos {
     }
 
     static getPosFromClick(e, game) {
-        console.log(game.context.canvas.offsetLeft)
-        console.log(game.context.canvas.offsetTop)
         let x = parseInt((e.x - game.context.canvas.offsetLeft) / game.tileSize)
         let y = parseInt((e.y - game.context.canvas.offsetLeft) / game.tileSize)
         return new Pos(x, y)
@@ -82,6 +76,7 @@ class Actor {
     constructor(pos) {
         this.pos = pos
         this.color = '#ff00ff'
+        this.rooted = false
     }
 }
 
@@ -110,6 +105,7 @@ class Boulder extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#696969'
+        this.rooted = true
     }
 }
 
@@ -130,7 +126,7 @@ class Game {
         let seed = parseInt(Math.random() * 2147483647);
         this.random = new Random(seed);
 
-        this.board = this.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
+        this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
         this.spawnBoulders()
 
         //initialise actors
@@ -138,13 +134,13 @@ class Game {
         this.wolves = new Set()
         this.player = new Player(new Pos(0, 0))
         this.board[0][0] = this.player
-
+        //spawn sheep
         for (var y = 1; y < BOARD_HEIGHT; y++) {
             let sheep = new Sheep(new Pos(0, y))
             this.board[0][y] = sheep
             this.sheeps.add(sheep)
         }
-
+        //spawn alpha wolf
         while (true) {
             let x = parseInt(BOARD_WIDTH / 2 + this.random.nextFloat() * BOARD_WIDTH / 2)
             let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
@@ -185,12 +181,17 @@ class Game {
     }
 
     moveActor(actor, dest) {
+        if (dest === null) {
+            //remove actor
+            this.board[actor.pos.x][actor.pos.y] = null
+            return
+        }
         //check valid move
         //TODO most advanced sheep moves first
         let targetTile = this.board[dest.x][dest.y]
         //deny moves off screen or into obstruction
         if (dest.x < 0 || dest.x >= BOARD_WIDTH || dest.y < 0 || dest.y >= BOARD_HEIGHT
-            || targetTile instanceof Boulder || targetTile instanceof Sheep) return
+            || targetTile instanceof Actor) return
         //deny moves more than one tile away
         if (Math.abs(actor.pos.x - dest.x) + Math.abs(actor.pos.y - dest.y) > 1) return
 
@@ -205,36 +206,52 @@ class Game {
     updateAI() {
         var graph = new Graph(this.getWeightArray());
 
+        let sheepGoals = []
+        let wolfGoals = []
+        wolfGoals.push(this.player.pos)
+        for (var y = 0; y < BOARD_HEIGHT; y++) {
+            sheepGoals.push(new Pos(BOARD_WIDTH - 1, y))
+        }
         this.sheeps.forEach(sheep => {
-            var start = graph.grid[sheep.pos.x][sheep.pos.y]
-            var end = graph.grid[BOARD_WIDTH - 1][0]
-            var nextStep = astar.search(graph, start, end).shift();
+            if (sheep.pos.x === BOARD_WIDTH - 1) {
+                this.moveActor(sheep, null)
+                this.sheeps.delete(sheep) //seems dangerous to do this here ¯\_(ツ)_/¯
+                return
+            }
+            if (sheep.rooted) return
+            let start = graph.grid[sheep.pos.x][sheep.pos.y]
+            let endPos = Game.nearestGoal(sheep.pos, sheepGoals)
+            let end = graph.grid[endPos.x][endPos.y]
+            let nextStep = astar.search(graph, start, end).shift();
             if (typeof nextStep !== 'undefined') {
                 this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             }
+            wolfGoals.push(sheep.pos)
         })
+
         this.wolves.forEach(wolf => {
+            let start = graph.grid[wolf.pos.x][wolf.pos.y]
+            let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
+            let end = graph.grid[endPos.x][endPos.y]
+            let nextStep = astar.search(graph, start, end).shift();
+            if (typeof nextStep !== 'undefined') {
+                if (Math.abs(wolf.pos.x - nextStep.x) + Math.abs(wolf.pos.y - nextStep.y) === 1) {
+                    //attack the target
+                    if (this.board[nextStep.x][nextStep.y] instanceof Sheep) {
+                        this.board[nextStep.x][nextStep.y].rooted = true
+                        this.board[nextStep.x][nextStep.y].color = '#bfab92'
+                    }
 
-        })
-    }
-
-    createBoard(width, height) {
-        let board = []
-        for (var i = 0; i < width; i++) {
-            board.push([0])
-            for (var j = 0; j < height; j++) {
-                board[i][j] = null;
+                }
+                this.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
             }
-        }
-        return board;
+        })
     }
 
     spawnBoulders() {
-        console.log(this.random.nextFloat())
         //loop every non edge tile and chuck a maybe boulder in it
         for (var x = 1; x < BOARD_WIDTH - 1; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
-                console.log(this.random.nextFloat())
                 if (this.random.nextFloat() < 0.2) {
                     this.board[x][y] = new Boulder(new Pos([x][y]))
                 }
@@ -247,7 +264,7 @@ class Game {
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
             for (let y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.board[x][y] instanceof Actor) {
+                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted) {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
@@ -255,6 +272,30 @@ class Game {
             }
         }
         return array;
+    }
+
+    static createBoard(width, height) {
+        let board = []
+        for (var i = 0; i < width; i++) {
+            board.push([])
+            for (var j = 0; j < height; j++) {
+                board[i][j] = null;
+            }
+        }
+        return board;
+    }
+
+    static nearestGoal(start, goals) {
+        var minHatten = 1993 //my birthyear
+        var goal
+        for (var i = 0; i < goals.length; i++) {
+            let distance = astar.heuristics.manhattan(start, goals[i]) //warning, we are using Pos instead of GridNode but I guess it still works #javascript
+            if (distance <= minHatten) {
+                minHatten = distance
+                goal = goals[i]
+            }
+        }
+        return goal
     }
 
 }

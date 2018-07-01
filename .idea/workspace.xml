@@ -52,10 +52,9 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="194" column="48" selection-start-line="194" selection-start-column="48" selection-end-line="194" selection-end-column="48" />
+            <state relative-caret-position="402">
+              <caret line="240" column="69" selection-start-line="240" selection-start-column="69" selection-end-line="240" selection-end-column="69" />
               <folding>
-                <element signature="e#143#293#0" />
                 <element signature="e#327#1134#0" />
                 <element signature="e#415#449#0" />
                 <element signature="e#455#1104#0" />
@@ -64,16 +63,12 @@
                 <element signature="e#730#819#0" />
                 <element signature="e#828#915#0" />
                 <element signature="e#924#999#0" />
-                <element signature="e#1026#1693#0" />
-                <element signature="n#Pos#0" />
                 <element signature="n#!!block;n#constructor#0;n#Pos#0" />
                 <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-                <element signature="n#Actor#0" />
-                <element signature="n#!!block;n#constructor#0;n#Actor#0" />
                 <element signature="n#Player#0" />
                 <element signature="n#!!block;n#constructor#0;n#Player#0" />
                 <element signature="n#Sheep#0" />
@@ -82,8 +77,7 @@
                 <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
                 <element signature="n#Boulder#0" />
                 <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-                <element signature="n#!!block;n#constructor#0;n#Game#0" />
-                <element signature="e#2818#2950#0" />
+                <element signature="e#3202#3334#0" />
                 <element signature="e#2956#2980#0" />
                 <element signature="e#3186#3218#0" />
                 <element signature="n#!!block;n#function#0;n#Game#0" />
@@ -94,23 +88,22 @@
                 <element signature="e#3405#3445#0" />
                 <element signature="e#3375#3415#0" />
                 <element signature="n#!!block;n#update#0;n#Game#0" />
+                <element signature="e#4883#4907#0" />
                 <element signature="e#3221#3239#0" />
-                <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-                <element signature="e#5137#5466#0" />
+                <element signature="e#5656#5680#0" />
+                <element signature="e#5847#5906#0" />
                 <element signature="e#5370#5456#0" />
-                <element signature="e#5033#5057#0" />
-                <element signature="n#!!block;n#fill2DimensionsArray#0;n#Game#0" />
-                <element signature="e#3434#3564#0" />
-                <element signature="e#3508#3554#0" />
                 <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
                 <element signature="e#4041#4065#0" />
                 <element signature="e#4093#4125#0" />
                 <element signature="e#4427#4467#0" />
-                <element signature="n#!!block;n#getWallGrid#0;n#Game#0" />
-                <element signature="e#6795#6958#0" />
-                <element signature="e#6875#6952#0" />
-                <element signature="e#7010#7050#0" />
                 <element signature="e#7058#7098#0" />
+                <element signature="n#!!block;n#createBoard#0;n#Game#0" />
+                <element signature="e#7987#8122#0" />
+                <element signature="e#8061#8112#0" />
+                <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
+                <element signature="e#7784#7941#0" />
+                <element signature="e#7879#7931#0" />
               </folding>
             </state>
           </provider>
@@ -128,10 +121,8 @@
       <file leaf-file-name="astar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/javascripts/astar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-378">
-              <folding>
-                <element signature="e#1064#5936#0" />
-              </folding>
+            <state relative-caret-position="248">
+              <caret line="127" column="16" selection-start-line="127" selection-start-column="12" selection-end-line="127" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -179,7 +170,15 @@
       <find>mazegen</find>
       <find>;</find>
       <find>getLeftPos</find>
+      <find>manha</find>
+      <find>&quot;</find>
+      <find>pos</find>
+      <find>x</find>
+      <find>manh</find>
     </findStrings>
+    <replaceStrings>
+      <replace>'</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -306,12 +305,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530250104401</updated>
-      <workItem from="1530250107109" duration="19502000" />
+      <workItem from="1530250107109" duration="22675000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19502000" />
+    <option name="totallyTimeSpent" value="22675000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -347,7 +346,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -418,19 +417,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/astar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378">
-          <folding>
-            <element signature="e#1064#5936#0" />
-          </folding>
+        <state relative-caret-position="248">
+          <caret line="127" column="16" selection-start-line="127" selection-start-column="12" selection-end-line="127" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="194" column="48" selection-start-line="194" selection-start-column="48" selection-end-line="194" selection-end-column="48" />
+        <state relative-caret-position="402">
+          <caret line="240" column="69" selection-start-line="240" selection-start-column="69" selection-end-line="240" selection-end-column="69" />
           <folding>
-            <element signature="e#143#293#0" />
             <element signature="e#327#1134#0" />
             <element signature="e#415#449#0" />
             <element signature="e#455#1104#0" />
@@ -439,16 +435,12 @@
             <element signature="e#730#819#0" />
             <element signature="e#828#915#0" />
             <element signature="e#924#999#0" />
-            <element signature="e#1026#1693#0" />
-            <element signature="n#Pos#0" />
             <element signature="n#!!block;n#constructor#0;n#Pos#0" />
             <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#Actor#0" />
-            <element signature="n#!!block;n#constructor#0;n#Actor#0" />
             <element signature="n#Player#0" />
             <element signature="n#!!block;n#constructor#0;n#Player#0" />
             <element signature="n#Sheep#0" />
@@ -457,8 +449,7 @@
             <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
             <element signature="n#Boulder#0" />
             <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
-            <element signature="e#2818#2950#0" />
+            <element signature="e#3202#3334#0" />
             <element signature="e#2956#2980#0" />
             <element signature="e#3186#3218#0" />
             <element signature="n#!!block;n#function#0;n#Game#0" />
@@ -469,23 +460,22 @@
             <element signature="e#3405#3445#0" />
             <element signature="e#3375#3415#0" />
             <element signature="n#!!block;n#update#0;n#Game#0" />
+            <element signature="e#4883#4907#0" />
             <element signature="e#3221#3239#0" />
-            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-            <element signature="e#5137#5466#0" />
+            <element signature="e#5656#5680#0" />
+            <element signature="e#5847#5906#0" />
             <element signature="e#5370#5456#0" />
-            <element signature="e#5033#5057#0" />
-            <element signature="n#!!block;n#fill2DimensionsArray#0;n#Game#0" />
-            <element signature="e#3434#3564#0" />
-            <element signature="e#3508#3554#0" />
             <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
             <element signature="e#4041#4065#0" />
             <element signature="e#4093#4125#0" />
             <element signature="e#4427#4467#0" />
-            <element signature="n#!!block;n#getWallGrid#0;n#Game#0" />
-            <element signature="e#6795#6958#0" />
-            <element signature="e#6875#6952#0" />
-            <element signature="e#7010#7050#0" />
             <element signature="e#7058#7098#0" />
+            <element signature="n#!!block;n#createBoard#0;n#Game#0" />
+            <element signature="e#7987#8122#0" />
+            <element signature="e#8061#8112#0" />
+            <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
+            <element signature="e#7784#7941#0" />
+            <element signature="e#7879#7931#0" />
           </folding>
         </state>
       </provider>
