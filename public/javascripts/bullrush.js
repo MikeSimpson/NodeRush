@@ -13,25 +13,25 @@ $(document).ready(function () {
 
 let keyListener = function (e) {
     //prevent browser scrolling
-    if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+    if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ' ', 'Control'].indexOf(e.key) > -1) {
         e.preventDefault()
     }
 
-    switch (e.keyCode) {
-        case 37: //Left
-            game.update(game.player.pos.getLeftPos())
+    switch (e.key) {
+        case 'ArrowLeft':
+            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey)
             break
-        case 38: //Up
-            game.update(game.player.pos.getUpPos())
+        case 'ArrowUp':
+            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey)
             break
-        case 39: //Right
-            game.update(game.player.pos.getRightPos())
+        case 'ArrowRight':
+            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey)
             break
-        case 40: //Down
-            game.update(game.player.pos.getDownPos())
+        case 'ArrowDown':
+            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey)
             break
-        case 32: //Space
-            game.update(game.player.pos)
+        case ' ':
+            game.update(game.player.pos, e.ctrlKey || e.altKey)
             break
         default:
     }
@@ -147,7 +147,7 @@ class Game {
         for (var x = 0; x < BOARD_WIDTH; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
                 if (this.board[x][y] instanceof Actor) {
-                    this.context.fillStyle = this.board[x][y].color
+                    this.context.fillStyle = this.board[x][y].getColor()
                 } else if ((x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0)) {
                     this.context.fillStyle = BACKGROUND_A
                 } else {
@@ -158,30 +158,42 @@ class Game {
         }
     }
 
-    update(dest) {
-        this.moveActor(this.player, dest)
+    update(dest, ctrl) {
+        this.moveActor(this.player, dest, ctrl)
         game.updateAI()
         this.draw()
     }
 
-    moveActor(actor, dest) {
+    moveActor(actor, dest, ctrl) {
         //remove actor if dest null
         if (dest === null) {
             //remove actor
             this.board[actor.pos.x][actor.pos.y] = null
             return
         }
+
         //check for win condition
         let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
         if (actor instanceof Player && dest.x === targetX) {
             this.resetRound()
         }
+
+        //check for player hitting
+        if (ctrl) {
+            if (this.board[dest.x][dest.y] instanceof Actor) {
+                this.board[dest.x][dest.y].rooted = true
+            }
+            return
+        }
+
         //check valid move
         //TODO most advanced sheep moves first
         let targetTile = this.board[dest.x][dest.y]
+
         //deny moves off screen or into obstruction
         if (dest.x < 0 || dest.x >= BOARD_WIDTH || dest.y < 0 || dest.y >= BOARD_HEIGHT
             || targetTile instanceof Actor) return
+
         //deny moves more than one tile away
         if (Math.abs(actor.pos.x - dest.x) + Math.abs(actor.pos.y - dest.y) > 1) return
 
@@ -204,12 +216,15 @@ class Game {
             sheepGoals.push(new Pos(targetX, y))
         }
         this.sheeps.forEach(sheep => {
+            if (!sheep.eaten) {
+                wolfGoals.push(sheep.pos)
+            }
+            if (sheep.rooted) return
             if (sheep.pos.x === targetX) {
                 this.moveActor(sheep, null)
                 this.sheeps.delete(sheep) //seems dangerous to do this here ¯\_(ツ)_/¯
                 return
             }
-            if (sheep.rooted) return
             let start = graph.grid[sheep.pos.x][sheep.pos.y]
             let endPos = Game.nearestGoal(sheep.pos, sheepGoals)
             let end = graph.grid[endPos.x][endPos.y]
@@ -217,10 +232,10 @@ class Game {
             if (typeof nextStep !== 'undefined') {
                 this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             }
-            wolfGoals.push(sheep.pos)
         })
 
         this.wolves.forEach(wolf => {
+            if (wolf.rooted) return
             let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
             let end = graph.grid[endPos.x][endPos.y]
@@ -230,7 +245,7 @@ class Game {
                     //attack the target
                     if (this.board[nextStep.x][nextStep.y] instanceof Sheep) {
                         this.board[nextStep.x][nextStep.y].rooted = true
-                        this.board[nextStep.x][nextStep.y].color = '#bfab92'
+                        this.board[nextStep.x][nextStep.y].eaten = true
                         this.sheepCount--
                         this.wolfCount++
                     }
@@ -287,7 +302,7 @@ class Pos {
     }
 
     getLeftPos() {
-        return new Pos(Math.max(0, this.x - 1), this.y)
+        return new Pos(this.x - 1, this.y)
     }
 
     getRightPos() {
@@ -315,6 +330,10 @@ class Actor {
         this.color = '#ff00ff'
         this.rooted = false
     }
+
+    getColor() {
+        return this.color
+    }
 }
 
 class Player extends Actor {
@@ -328,6 +347,17 @@ class Sheep extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#ffebd2'
+        this.eaten = false
+    }
+
+    getColor() {
+        if (this.eaten) {
+            return '#ff8b72'
+        }
+        if (this.rooted) {
+            return '#bfab92'
+        }
+        return this.color
     }
 }
 
@@ -335,6 +365,13 @@ class Wolf extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#ff0000'
+    }
+
+    getColor() {
+        if (this.rooted) {
+            return '#990000'
+        }
+        return this.color
     }
 }
 
