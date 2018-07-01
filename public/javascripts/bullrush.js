@@ -65,9 +65,7 @@ class Game {
 
         this.score = 0
         $("h2").text("Score: " + this.score)
-        this.backgroundA = this.getRandomColor()
-        this.backgroundB = this.getRandomColor()
-        // this.updateBackgroundColours()
+        this.updateBackgroundColours()
 
         //initialise board
         this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
