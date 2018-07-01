@@ -210,18 +210,19 @@ class Game {
             }
 
             target = this.board[dest.x][dest.y]
-            //check for player trying to push
-            if (target instanceof Actor && target.rooted) {
-                console.log(Pos.getPushPos(actor.pos, dest))
-                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
-            }
-
+            
             //check for player hitting, we assume they want to hit a wolf if they walk into it
             if (ctrl || target instanceof Wolf && !target.rooted) {
                 if (target instanceof Actor) {
                     this.board[dest.x][dest.y].rooted = true
                 }
                 return
+            }
+
+            //check for player trying to push
+            if (target instanceof Sheep) {
+                console.log(Pos.getPushPos(actor.pos, dest))
+                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
         }
 
