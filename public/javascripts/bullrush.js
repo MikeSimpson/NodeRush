@@ -63,6 +63,8 @@ class Game {
 
     initialiseGame() {
         this.directionIsRight = true
+        this.score = 0
+        $("h2").text("Score: " + this.score)
 
         //initialise board
         this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
@@ -176,6 +178,8 @@ class Game {
         let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
         if (actor instanceof Player && dest.x === targetX) {
             this.resetRound()
+            this.score++
+            $("h2").text("Score: " + this.score)
         }
 
         //check for player hitting
@@ -195,7 +199,7 @@ class Game {
             || targetTile instanceof Actor) return
 
         //deny moves more than one tile away
-        if (Math.abs(actor.pos.x - dest.x) + Math.abs(actor.pos.y - dest.y) > 1) return
+        if (!Pos.adjacent(actor.pos, dest)) return
 
         //update board
         this.board[actor.pos.x][actor.pos.y] = null
@@ -206,19 +210,19 @@ class Game {
     }
 
     updateAI() {
-        var graph = new Graph(this.getWeightArray());
+        this.sheepAI()
+        this.wolfAI()
+    }
+
+    sheepAI() {
+        let graph = new Graph(this.getWeightArray(true));
 
         let sheepGoals = []
-        let wolfGoals = []
-        wolfGoals.push(this.player.pos)
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
         for (var y = 0; y < BOARD_HEIGHT; y++) {
             sheepGoals.push(new Pos(targetX, y))
         }
         this.sheeps.forEach(sheep => {
-            if (!sheep.eaten) {
-                wolfGoals.push(sheep.pos)
-            }
             if (sheep.rooted) return
             if (sheep.pos.x === targetX) {
                 this.moveActor(sheep, null)
@@ -231,6 +235,18 @@ class Game {
             let nextStep = astar.search(graph, start, end).shift();
             if (typeof nextStep !== 'undefined') {
                 this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
+            }
+        })
+    }
+
+    wolfAI() {
+        let graph = new Graph(this.getWeightArray());
+
+        let wolfGoals = []
+        wolfGoals.push(this.player.pos)
+        this.sheeps.forEach(sheep => {
+            if (!sheep.eaten) {
+                wolfGoals.push(sheep.pos)
             }
         })
 
@@ -249,13 +265,17 @@ class Game {
                         this.sheepCount--
                         this.wolfCount++
                     }
+                    if (this.board[nextStep.x][nextStep.y] instanceof Player) {
+                        if (confirm("You lose noob")) this.initialiseGame()
+                        return
+                    }
                 }
                 this.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
             }
         })
     }
 
-    getWeightArray() {
+    getWeightArray(sheep = false) {
         let array = [];
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
@@ -264,6 +284,14 @@ class Game {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
+                }
+                if (sheep) {
+                    this.wolves.forEach(wolf => {
+                        if (wolf.rooted) return
+                        if (Pos.adjacent(wolf.pos, new Pos(x, y))) {
+                            array[x][y] = 0
+                        }
+                    })
                 }
             }
         }
@@ -321,6 +349,10 @@ class Pos {
         let x = parseInt((e.x - game.context.canvas.offsetLeft) / game.tileSize)
         let y = parseInt((e.y - game.context.canvas.offsetLeft) / game.tileSize)
         return new Pos(x, y)
+    }
+
+    static adjacent(pos1, pos2) {
+        return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y) === 1
     }
 }
 
