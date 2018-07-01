@@ -76,6 +76,9 @@ class Game {
         this.wolfCount = 1
         this.spawnActors();
 
+        //clear debug flags
+        this.teleport = false
+
         this.draw()
     }
 
@@ -85,11 +88,11 @@ class Game {
         let playerY = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
         this.player = new Player(new Pos(startX, playerY))
         this.board[startX][playerY] = this.player
-
         //spawn sheep
         this.sheeps = new Set()
         var sheepsCreated = 0
-        while (true) {
+
+        while (this.sheepCount > 0) {
             //attempt to add a sheep
             let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[startX][y] instanceof Actor)) {
@@ -200,7 +203,7 @@ class Game {
         }
 
         //deny moves more than one tile away
-        if (!Pos.adjacent(actor.pos, dest)) return
+        if (!Pos.adjacent(actor.pos, dest) && !this.teleport) return
 
         let target
 
@@ -504,5 +507,19 @@ class Boulder extends Actor {
         this.color = '#696969'
         this.rooted = true
     }
+}
+
+//debug codes
+function enableTeleport() {
+    game.teleport = true
+}
+
+function eatAllTheSheep() {
+    game.sheeps.forEach(sheep => {
+        sheep.eaten = true;
+        sheep.rooted = true;
+        game.sheepCount--
+        game.wolfCount++
+    })
 }
 
