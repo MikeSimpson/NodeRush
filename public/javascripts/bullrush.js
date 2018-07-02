@@ -85,7 +85,7 @@ class Game {
         this.directionIsRight = true
 
         this.score = 0
-        $("h2").text("Score: " + this.score)
+        $("h1").text("Score: " + this.score)
         this.updateBackgroundColours()
 
         //initialise board
@@ -158,7 +158,7 @@ class Game {
     resetRound() {
         //update score
         this.score++
-        $("h2").text("Score: " + this.score)
+        $("h1").text("Score: " + this.score)
         //every ten laps, reset but up the tempo
         if (this.score % LEVEL_LAPS === 0) {
             this.updateBackgroundColours()
