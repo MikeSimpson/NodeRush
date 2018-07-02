@@ -7,7 +7,7 @@ $(document).ready(function () {
     game = new Game()
 
     window.addEventListener('keydown', keyListener, true)
-    window.addEventListener('click', clickListener, true)
+    // window.addEventListener('click', clickListener, true)
 })
 
 let keyListener = function (e) {
@@ -31,6 +31,27 @@ let keyListener = function (e) {
             break
         case ' ':
             game.update(game.player.pos, e.ctrlKey || e.altKey)
+            break
+        default:
+    }
+}
+
+function dpadInput(key) {
+    switch (key) {
+        case 'PadLeft':
+            game.update(game.player.pos.getLeftPos(), false)
+            break
+        case 'PadUp':
+            game.update(game.player.pos.getUpPos(), false)
+            break
+        case 'PadRight':
+            game.update(game.player.pos.getRightPos(), false)
+            break
+        case 'PadDown':
+            game.update(game.player.pos.getDownPos(), false)
+            break
+        case 'PadWait':
+            game.update(game.player.pos, false)
             break
         default:
     }

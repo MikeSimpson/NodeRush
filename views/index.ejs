@@ -7,15 +7,33 @@
    <body>
       <div class="container" id="canvas_container"></div>
       <h2>Score: 0</h2>
+      <table>
+          <tr>
+            <td><div/></td>
+            <td><div class="dpad" onClick="dpadInput('PadUp')"></div></td>
+            <td><div/></td>
+            </tr>
+          <tr>
+          <td><div class="dpad" onClick="dpadInput('PadLeft')"></div></td>
+            <td><div class="dpad" onClick="dpadInput('PadWait')"></div></td>
+            <td><div class="dpad" onClick="dpadInput('PadRight')"></div></td>
+            </tr>
+          <tr>
+            <td><div/></td>
+            <td><div class="dpad" onClick="dpadInput('PadDown')"></div></td>
+            <td><div/></td>
+            </tr>
+      </table>
+
       <h3>High Scores</h3>
       <div>
          <table>
             <% for(var i=0; i<scores.length; i++) { %>
             <tr>
-               <td>
+               <td class="score_col">
                   <%= scores[i].name %>
                </td>
-               <td>
+               <td class="score_col">
                   <%= scores[i].score %>
                </td>
             </tr>

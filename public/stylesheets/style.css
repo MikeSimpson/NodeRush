@@ -28,7 +28,7 @@ h3 {
   font-size: xx-large;
 }
 
-td {
+.score_col {
   padding-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -42,4 +42,12 @@ table {
   color: white;
   text-align: center;
   font-size: x-large;
+}
+
+.dpad {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  background: skyblue;
+  border-radius: 20px;
 }

@@ -13,7 +13,7 @@ mongoose.connect(
     function(err) {
         if (err) return console.log(err);
         else {
-            console.log('Connection Succesful');
+            console.log('Connection Successful');
         }
         //connect to server
         app.listen(port, function() {
