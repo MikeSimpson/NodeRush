@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'NodeRush' });
 });
 
-var highscore = require('../public/model/highscore.js');
+var highscore = require('../models/highscore.js');
 
 var port = process.env.PORT || 5000;
 
