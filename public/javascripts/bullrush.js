@@ -209,7 +209,7 @@ class Game {
     update(dest, ctrl) {
         this.moveActor(this.player, dest, ctrl)
         game.updateAI()
-        if (this.score / LEVEL_LAPS > 10) { //disco mode
+        if (this.score / LEVEL_LAPS > 5) { //disco mode
             this.updateBackgroundColours()
         }
         this.draw()
