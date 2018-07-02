@@ -7,6 +7,23 @@
   <body>
     <div class="container" id="canvas_container"></div>
     <h2>Score: 0</h2>
+    <div>
+        <table class="highscore-table">
+            <tr>
+                <th colspan="2">Highscores</th>
+            </tr>
+            <% for(var i=0; i<scores.game_scores.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= scores.highscore[i].name %>
+                    </td>
+                    <td class="scorecol">
+                        <%= scores.game_scores[i].score %> s
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="../javascripts/bullrush.js"></script>
     <script type="text/javascript" src="../javascripts/astar.js"></script>

@@ -523,3 +523,26 @@ function eatAllTheSheep() {
     })
 }
 
+function addHighscore() {
+    var person = prompt(
+        'Congratulations, You finished ' +
+        levelName +
+        ' difficulty in ' +
+        gameRunTime +
+        ' seconds. Please enter your name:'
+    );
+
+    if (person != null) {
+        //post to highscore
+        $.post(
+            '/highscore',
+            {
+                name: person,
+                score: game.score
+            },
+            function(msg) {
+                alert(msg);
+            }
+        );
+    }
+}
