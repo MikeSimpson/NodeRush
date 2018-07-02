@@ -18,15 +18,19 @@ let keyListener = function (e) {
 
     switch (e.key) {
         case 'ArrowLeft':
+        case 'a':
             game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey)
             break
         case 'ArrowUp':
+        case 'w':
             game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey)
             break
         case 'ArrowRight':
+        case 'd':
             game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey)
             break
         case 'ArrowDown':
+        case 's':
             game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey)
             break
         case ' ':
