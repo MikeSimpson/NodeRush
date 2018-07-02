@@ -540,5 +540,5 @@ function addHighscore() {
             }
         );
     }
-    this.initialiseGame()
+    game.initialiseGame()
 }
