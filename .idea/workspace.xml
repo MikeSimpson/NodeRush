@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/public/javascripts/bullrush.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/bullrush.js" afterDir="false" />
-    </list>
+    <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +203,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="1057" />
@@ -302,12 +300,12 @@
       <updated>1530250104401</updated>
       <workItem from="1530250107109" duration="43770000" />
       <workItem from="1530502041236" duration="1846000" />
-      <workItem from="1530505584520" duration="2263000" />
+      <workItem from="1530505584520" duration="2313000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47879000" />
+    <option name="totallyTimeSpent" value="47929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />

@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
     Promise.all([
         highscore
             .find({})
-            .sort({ score: -1 })
+            .sort({ score: 1 })
             .limit(10)
             .exec()
     ]).then(result => {
