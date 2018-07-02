@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
-var highscore = require('./model/highscore.js');
+var highscore = require('./highscore.js');
 
 var port = process.env.PORT || 5000;
 
