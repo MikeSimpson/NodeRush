@@ -33,7 +33,7 @@ mongoose.connect(
 
 var highScoresToPopulate = {};
 
-app.get('/highscore', function(req, res) {
+router.get('/highscore', function(req, res) {
     Promise.all([
         highscore
             .find({})
@@ -47,7 +47,7 @@ app.get('/highscore', function(req, res) {
 });
 
 //post handler
-app.post('/highscore', function(req, res) {
+router.post('/highscore', function(req, res) {
     var post = new highscore();
     post.name = req.body.name;
     post.score = req.body.score;
