@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
         highscore
             .find({})
             .sort({ score: -1 })
-            .limit(10)
+            .limit(20)
             .exec()
     ]).then(result => {
         res.render('index', { title: "Bull Rush", scores: result[0] });
