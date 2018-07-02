@@ -7,6 +7,4 @@ var scoreSchema = new mongoose.Schema({
     {collection: 'high_scores'}
 );
 
-module.exports = {
-    score: mongoose.model('game_scores', scoreSchema)
-}
+module.exports = mongoose.model('game_scores', scoreSchema);
