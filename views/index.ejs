@@ -2,43 +2,83 @@
 <html>
    <head>
       <title>Bull Rush</title>
+      <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
       <link rel='stylesheet' href='/stylesheets/style.css' />
    </head>
    <body>
-      <div class="container" id="canvas_container"></div>
-      <h2>Score: 0</h2>
+      <div class="container-fluid" id="canvas_container"></div>
+      <div class="row">
+         <div class="col-sm-6">
+            <h1>Score: 0</h2>
+         </div>
+         <div class="col-sm-6">
+            <button onClick="addHighscore()">End Game</button>
+         </div>
+      </div>
       <table>
-          <tr>
-            <td><div/></td>
-            <td><div class="dpad" onClick="dpadInput('PadUp')"></div></td>
-            <td><div/></td>
-            </tr>
-          <tr>
-          <td><div class="dpad" onClick="dpadInput('PadLeft')"></div></td>
-            <td><div class="dpad" onClick="dpadInput('PadWait')"></div></td>
-            <td><div class="dpad" onClick="dpadInput('PadRight')"></div></td>
-            </tr>
-          <tr>
-            <td><div/></td>
-            <td><div class="dpad" onClick="dpadInput('PadDown')"></div></td>
-            <td><div/></td>
-            </tr>
+         <tr>
+            <td>
+               <div/>
+            </td>
+            <td>
+               <div class="dpad" onClick="dpadInput('PadUp')"></div>
+            </td>
+            <td>
+               <div/>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <div class="dpad" onClick="dpadInput('PadLeft')"></div>
+            </td>
+            <td>
+               <div class="dpad" onClick="dpadInput('PadWait')"></div>
+            </td>
+            <td>
+               <div class="dpad" onClick="dpadInput('PadRight')"></div>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <div/>
+            </td>
+            <td>
+               <div class="dpad" onClick="dpadInput('PadDown')"></div>
+            </td>
+            <td>
+               <div/>
+            </td>
+         </tr>
       </table>
-
-      <h3>High Scores</h3>
-      <div>
-         <table>
-            <% for(var i=0; i<scores.length; i++) { %>
-            <tr>
-               <td class="score_col">
-                  <%= scores[i].name %>
-               </td>
-               <td class="score_col">
-                  <%= scores[i].score %>
-               </td>
-            </tr>
-            <% } %>
-         </table>
+      <div class="row">
+         <div class="col-sm-6">
+            <h1>Instructions</h3>
+            <div class="instructions">
+               <p>You’re the blue square</p>
+               <p>White squares are your friends</p>
+               <p>Red Squares are not your friends</p>
+               <p>Arrow keys to move</p>
+               <p>Space to wait</p>
+               <p>Hold ctrl or alt to stun a creature in a given direction.</p>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <h1>High Scores</h3>
+            <div>
+               <table>
+                  <% for(var i=0; i<scores.length; i++) { %>
+                  <tr>
+                     <td class="score_col">
+                        <%= scores[i].name %>
+                     </td>
+                     <td class="score_col">
+                        <%= scores[i].score %>
+                     </td>
+                  </tr>
+                  <% } %>
+               </table>
+            </div>
+         </div>
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script type="text/javascript" src="../javascripts/bullrush.js"></script>

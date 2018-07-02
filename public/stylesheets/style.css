@@ -1,41 +1,45 @@
 body {
   padding-top: 20px;
-  padding-left: 200px;
-  padding-right: 200px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: dimgray;
 }
 
-.container {
-  margin: auto;
-  padding: 10px;
+.container-fluid {
+  padding-top: 20px;
+  max-width: 90%;
 }
 
 table {
   margin: auto;
-  padding: 10px;
 }
 
-h2 {
+hr {
   color: white;
-  text-align: center;
-  font-size: xx-large;
 }
 
-h3 {
+h1 {
   color: white;
   text-align: center;
   font-size: xx-large;
 }
 
 .score_col {
-  padding-top: 10px;
+  padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-table {
-  padding-top: 0px;
+button {
+  margin: 10px;
+  padding: 10px;
+  background: dimgray;
+  border: 3px solid white;
+  border-radius: 20px;
+}
+
+p {
+  text-align: center;
+  padding-top: 20px;
 }
 
 * {
@@ -44,10 +48,12 @@ table {
   font-size: x-large;
 }
 
-.dpad {
-  width: 60px;
-  height: 60px;
-  margin: 10px;
-  background: skyblue;
-  border-radius: 20px;
+@media only screen and (max-width: 1200px) {
+  .dpad {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    background: #00BFFF;
+    border-radius: 20px;
+  }
 }

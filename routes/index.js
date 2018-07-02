@@ -44,7 +44,7 @@ router.post('/highscore', function(req, res) {
 
     post.save(function(err) {
         if (err) res.send(err);
-        res.send('Thanks ' + req.body.name + ', your score has been submitted');
+        // res.send('Thanks ' + req.body.name + ', your score has been submitted');
     });
 });
 
