@@ -23,6 +23,12 @@ h1 {
   font-size: xx-large;
 }
 
+h2 {
+  color: white;
+  text-align: center;
+  font-size: xx-large;
+}
+
 .score_col {
   padding-top: 20px;
   padding-left: 20px;
