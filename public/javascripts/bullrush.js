@@ -83,7 +83,12 @@ class Game {
 
     initialiseGame() {
         //configure seed
-        let seed = parseInt(Math.random() * 2147483647)
+        var seed = document.getElementById('seed').value
+        if (seed === "" || seed === this.lastSeed) {
+            seed = parseInt(Math.random() * 2147483647);
+            document.getElementById('seed').value = seed;
+        }
+        this.lastSeed = seed;
         this.random = new Random(seed)
 
         this.directionIsRight = true
@@ -273,13 +278,14 @@ class Game {
     }
 
     sheepAI() {
-        let graph = new Graph(this.getWeightArray(true));
 
         let sheepGoals = []
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
         for (var y = 0; y < BOARD_HEIGHT; y++) {
             sheepGoals.push(new Pos(targetX, y))
         }
+
+        let graph = new Graph(this.getWeightArray(true))
         this.sheeps.forEach(sheep => {
             if (sheep.rooted) return
             if (sheep.pos.x === targetX) {
@@ -293,12 +299,27 @@ class Game {
             let nextStep = astar.search(graph, start, end).shift();
             if (typeof nextStep !== 'undefined') {
                 this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
+            } else {
+                //if theres no clear path just mill about
+                switch (parseInt(this.random.nextFloat() * 4)) {
+                    case 0:
+                        this.moveActor(sheep, sheep.pos.getRightPos())
+                        break
+                    case 1:
+                        this.moveActor(sheep, sheep.pos.getLeftPos())
+                        break
+                    case 2:
+                        this.moveActor(sheep, sheep.pos.getUpPos())
+                        break
+                    case 3:
+                        this.moveActor(sheep, sheep.pos.getDownPos())
+                        break
+                }
             }
         })
     }
 
     wolfAI() {
-        let graph = new Graph(this.getWeightArray());
 
         let wolfGoals = []
         wolfGoals.push(this.player.pos)
@@ -308,12 +329,17 @@ class Game {
             }
         })
 
+        let weights = this.getWeightArray()
         var break_outer = false
         this.wolves.forEach(wolf => {
             if (break_outer) return
             if (wolf.rooted) return
-            let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
+            if (this.board[endPos.x][endPos.y] instanceof Actor && this.board[endPos.x][endPos.y].rooted) {
+                weights[endPos.x][endPos.y] = 1
+            }
+            let graph = new Graph(weights)
+            let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let end = graph.grid[endPos.x][endPos.y]
             let nextStep = astar.search(graph, start, end).shift();
             if (typeof nextStep !== 'undefined') {
@@ -333,6 +359,22 @@ class Game {
                     }
                 }
                 this.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
+            } else {
+                //if theres no clear path just mill about
+                switch (parseInt(this.random.nextFloat() * 4)) {
+                    case 0:
+                        this.moveActor(wolf, wolf.pos.getRightPos())
+                        break
+                    case 1:
+                        this.moveActor(wolf, wolf.pos.getLeftPos())
+                        break
+                    case 2:
+                        this.moveActor(wolf, wolf.pos.getUpPos())
+                        break
+                    case 3:
+                        this.moveActor(wolf, wolf.pos.getDownPos())
+                        break
+                }
             }
         })
     }

@@ -43,6 +43,20 @@ button {
   border-radius: 20px;
 }
 
+input {
+  : white;
+  margin: 10px;
+  padding: 10px;
+  background: dimgray;
+  border: 3px solid white;
+  border-radius: 20px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: darkgrey;
+  opacity: 1; /* Firefox */
+}
+
 p {
   text-align: center;
   padding-top: 20px;
