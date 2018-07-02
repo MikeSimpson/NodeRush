@@ -600,7 +600,8 @@ function addHighscore() {
             '/highscore',
             {
                 name: person,
-                score: game.score
+                score: game.score,
+                seed: game.seed
             }
         );
     }
