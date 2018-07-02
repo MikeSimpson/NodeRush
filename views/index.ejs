@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <div class="container" id="canvas_container"></div>
-    <h2>Score: 0</h2>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../javascripts/bullrush.js"></script>
-    <script type="text/javascript" src="../javascripts/astar.js"></script>
-    <script type="text/javascript" src="../javascripts/prng.js"></script>
-  </body>
+   <head>
+      <title>Bull Rush</title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+   </head>
+   <body>
+      <div class="container" id="canvas_container"></div>
+      <h2>Score: 0</h2>
+      <h3>High Scores</h3>
+      <div>
+         <table>
+            <% for(var i=0; i<scores.length; i++) { %>
+            <tr>
+               <td>
+                  <%= scores[i].name %>
+               </td>
+               <td>
+                  <%= scores[i].score %>
+               </td>
+            </tr>
+            <% } %>
+         </table>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script type="text/javascript" src="../javascripts/bullrush.js"></script>
+      <script type="text/javascript" src="../javascripts/astar.js"></script>
+      <script type="text/javascript" src="../javascripts/prng.js"></script>
+   </body>
 </html>

@@ -301,7 +301,7 @@ class Game {
                         this.wolfCount++
                     }
                     if (this.board[nextStep.x][nextStep.y] instanceof Player) {
-                        if (confirm("You lose noob")) this.initialiseGame()
+                        addHighscore()
                         //Awkward loop breaking so that the next game doesn't have ghost wolves...
                         break_outer = true
                         return
@@ -525,15 +525,10 @@ function eatAllTheSheep() {
 
 function addHighscore() {
     var person = prompt(
-        'Congratulations, You finished ' +
-        levelName +
-        ' difficulty in ' +
-        gameRunTime +
-        ' seconds. Please enter your name:'
+        'Congratulations, you lose! Enter your name to save your score:'
     );
 
     if (person != null) {
-        //post to highscore
         $.post(
             '/highscore',
             {
@@ -545,4 +540,5 @@ function addHighscore() {
             }
         );
     }
+    this.initialiseGame()
 }

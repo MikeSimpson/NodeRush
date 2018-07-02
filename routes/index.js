@@ -1,14 +1,7 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'NodeRush' });
-});
-
-var highscore = require('../models/highscore.js');
-
-var port = process.env.PORT || 5000;
+let port = process.env.PORT || 5000;
 
 //mongo setup
 const mongoose = require('mongoose');
@@ -29,18 +22,17 @@ mongoose.connect(
     }
 );
 
-var highScoresToPopulate = {};
+let highscore = require('../models/highscore.js');
 
 router.get('/', function(req, res) {
     Promise.all([
         highscore
             .find({})
-            .sort({ score: 1 })
+            .sort({ score: -1 })
             .limit(10)
             .exec()
-    ]).then(results => {
-        highScoresToPopulate.game_scores = results[0];
-        res.render('./index.ejs', { scores: highScoresToPopulate });
+    ]).then(result => {
+        res.render('index', { title: "Bull Rush", scores: result[0] });
     });
 });
 
