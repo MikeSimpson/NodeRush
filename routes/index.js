@@ -6,9 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'NodeRush' });
 });
 
-module.exports = router;
-
-var highscore = require('../public/model/highscore.js');
+var highscore = require('../model/highscore.js');
 
 var port = process.env.PORT || 5000;
 
@@ -33,7 +31,7 @@ mongoose.connect(
 
 var highScoresToPopulate = {};
 
-router.get('/highscore', function(req, res) {
+router.get('/', function(req, res) {
     Promise.all([
         highscore
             .find({})
@@ -57,3 +55,5 @@ router.post('/highscore', function(req, res) {
         res.send('Thanks ' + req.body.name + ', your score has been submitted');
     });
 });
+
+module.exports = router;
