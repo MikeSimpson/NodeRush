@@ -750,7 +750,7 @@ function endGame() {
     if (this.score > 0) {
         addHighscore()
     }
-    this.initialiseGame()
+    game.initialiseGame()
 }
 
 function addHighscore() {
