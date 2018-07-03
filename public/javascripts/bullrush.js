@@ -139,7 +139,7 @@ class Game {
         //spawn wolves
         this.wolves = new Set()
         var wolvesCreated = 0
-        while (true) {
+        while (this.wolfCount > 0) {
             //attempt to add a wolf
             let x = parseInt(this.random.nextFloat() * BOARD_WIDTH / 2)
             //force wolf to second half of board
