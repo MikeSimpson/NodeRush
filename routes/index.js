@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
 router.post('/highscore', function(req, res) {
     var post = new highscore();
     post.name = req.body.name;
-    post.laps = req.body.laps;
+    post.score = req.body.score;
 
     post.save(function(err) {
         if (err) res.send(err);
