@@ -289,12 +289,15 @@ class Game {
             if(this.player.powerUp instanceof LethalBlows && target instanceof Actor){
                 this.moveActor(target, null);
                 if (target instanceof Sheep && !target.eaten){
+                    this.sheeps.delete(target)
                     this.sheepCount--
                 }
                 if (target instanceof Sheep && target.eaten){
+                    this.sheeps.delete(target)
                     this.wolfCount--
                 }
                 if (target instanceof Wolf){
+                    this.wolves.delete(target)
                     this.wolfCount--
                 }
                 return
@@ -700,6 +703,8 @@ class PowerUp {
                 return new SuperSpeed()
             case 3:
                 return new LethalBlows()
+            default:
+                return new SuperPush()
         }
     }
 }
