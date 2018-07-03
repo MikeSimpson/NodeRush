@@ -752,7 +752,7 @@ function eatAllTheSheep() {
 }
 
 function endGame() {
-    if (this.score > 0) {
+    if (game.score > 0) {
         addHighscore()
     }
     game.initialiseGame()
