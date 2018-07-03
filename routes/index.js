@@ -41,7 +41,6 @@ router.post('/highscore', function(req, res) {
     var post = new highscore();
     post.name = req.body.name;
     post.laps = req.body.laps;
-    post.seed = req.body.seed;
 
     post.save(function(err) {
         if (err) res.send(err);
