@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="" />
+    <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/models/highscore.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/highscore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/bullrush.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/bullrush.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +35,8 @@
       <file leaf-file-name="highscore.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/highscore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+            <state relative-caret-position="60">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -55,8 +58,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="718" column="18" selection-start-line="718" selection-start-column="6" selection-end-line="718" selection-end-column="18" />
+            <state relative-caret-position="356">
+              <caret line="754" column="25" lean-forward="true" selection-start-line="754" selection-start-column="25" selection-end-line="754" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -100,7 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getLeftPos</find>
       <find>manha</find>
       <find>&quot;</find>
       <find>pos</find>
@@ -130,6 +132,7 @@
       <find>&quot;Score: &quot;</find>
       <find>powerup</find>
       <find>WolfDisguise</find>
+      <find>endga</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -150,9 +153,9 @@
         <option value="$PROJECT_DIR$/public/javascripts/DPad.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/models/highscore.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
+        <option value="$PROJECT_DIR$/models/highscore.js" />
         <option value="$PROJECT_DIR$/public/javascripts/bullrush.js" />
       </list>
     </option>
@@ -273,12 +276,12 @@
       <workItem from="1530502041236" duration="1846000" />
       <workItem from="1530505584520" duration="2313000" />
       <workItem from="1530509906748" duration="11933000" />
-      <workItem from="1530596178673" duration="8013000" />
+      <workItem from="1530596178673" duration="8180000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67875000" />
+    <option name="totallyTimeSpent" value="68042000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -604,13 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/highscore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/users.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -628,10 +624,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/highscore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="718" column="18" selection-start-line="718" selection-start-column="6" selection-end-line="718" selection-end-column="18" />
+        <state relative-caret-position="356">
+          <caret line="754" column="25" lean-forward="true" selection-start-line="754" selection-start-column="25" selection-end-line="754" selection-end-column="25" />
         </state>
       </provider>
     </entry>
