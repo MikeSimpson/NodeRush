@@ -15,26 +15,26 @@ let keyListener = function (e) {
     if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ' ', 'Control'].indexOf(e.key) > -1) {
         e.preventDefault()
     }
-
+    console.log(e.shiftKey)
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
-            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey)
+            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey)
             break
         case 'ArrowUp':
         case 'w':
-            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey)
+            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey)
             break
         case 'ArrowRight':
         case 'd':
-            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey)
+            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey)
             break
         case 'ArrowDown':
         case 's':
-            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey)
+            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey)
             break
         case ' ':
-            game.update(game.player.pos, e.ctrlKey || e.altKey)
+            game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey)
             break
         default:
     }
@@ -86,15 +86,17 @@ class Game {
         var seed = document.getElementById('seed').value
         if (seed === "" || seed === this.lastSeed) {
             seed = parseInt(Math.random() * 2147483647);
-            document.getElementById('seed').value = seed;
+            // document.getElementById('seed').value = seed;
         }
         this.lastSeed = seed;
         this.random = new Random(seed)
 
         this.directionIsRight = true
 
+        this.laps = 0
         this.score = 0
-        $("h1").text("Score: " + this.score)
+        document.getElementById('score').innerText = "Score: " + this.score
+        document.getElementById('lap').innerText = "Lap: " + (this.laps + 1)
         this.updateBackgroundColours()
 
         //initialise board
@@ -143,12 +145,27 @@ class Game {
             //force wolf to second half of board
             if (this.directionIsRight) x += parseInt(BOARD_WIDTH / 2)
             let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
-            if (!(this.board[x][y] instanceof Boulder)) {
+            if (!(this.board[x][y] instanceof Actor)) {
                 let wolf = new Wolf(new Pos(x, y))
                 this.board[x][y] = wolf
                 this.wolves.add(wolf)
                 wolvesCreated++
                 if (wolvesCreated === this.wolfCount) break
+            }
+        }
+
+        //spawn coin
+        this.coins = new Set()
+        while (true) {
+            //attempt to add a coin
+            let x = parseInt(this.random.nextFloat() * BOARD_WIDTH)
+            //force wolf to second half of board
+            let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+            if (!(this.board[x][y] instanceof Actor)) {
+                let coin = new Coin(new Pos(x, y))
+                this.board[x][y] = coin
+                this.coins.add(coin)
+                break
             }
         }
     }
@@ -158,20 +175,22 @@ class Game {
         for (var x = 1; x < BOARD_WIDTH - 1; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
                 if (this.random.nextFloat() < 0.2) {
-                    this.board[x][y] = new Boulder(new Pos([x][y]))
+                    this.board[x][y] = new Boulder(new Pos(x, y))
                 }
             }
         }
     }
 
     resetRound() {
-        //update score
+        //update laps
+        this.laps++
         this.score++
-        $("h1").text("Score: " + this.score)
-        //every ten laps, reset but up the tempo
-        if (this.score % LEVEL_LAPS === 0) {
+        document.getElementById('score').innerText = "Score: " + this.score
+        document.getElementById('lap').innerText = "Lap: " + (this.laps + 1)
+        //every x laps, reset but up the tempo
+        if (this.laps % LEVEL_LAPS === 0) {
             this.updateBackgroundColours()
-            this.wolfCount = parseInt(this.score / LEVEL_LAPS + 1)
+            this.wolfCount = parseInt(this.laps / LEVEL_LAPS + 1)
             this.sheepCount = BOARD_HEIGHT - 1
             //reset board
             this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
@@ -189,8 +208,12 @@ class Game {
         this.wolves.forEach(wolf => {
             this.moveActor(wolf, null)
         })
+        this.coins.forEach(coin => {
+            this.moveActor(coin, null)
+        })
         this.sheeps = new Set()
         this.wolves = new Set()
+        this.coins = new Set()
         this.spawnActors();
 
         this.draw()
@@ -199,7 +222,6 @@ class Game {
     draw() {
         // this.context.scale(this.tileSize, this.tileSize)
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height)
-        //draw player
         //draw all tiles
         for (var x = 0; x < BOARD_WIDTH; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
@@ -217,11 +239,19 @@ class Game {
 
     update(dest, ctrl) {
         this.moveActor(this.player, dest, ctrl)
-        game.updateAI()
-        if (this.score / LEVEL_LAPS > 5) { //disco mode
+        if (!(this.player.powerUp != null && this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 2 === 1)) {
+            game.updateAI()
+        }
+        if (this.laps / LEVEL_LAPS >= 5) { //disco mode
             this.updateBackgroundColours()
         }
         this.draw()
+        if (this.player.powerUp !== null) {
+            this.player.powerUp.timer--
+            if (this.player.powerUp.timer < 0) {
+                this.player.powerUp = null
+            }
+        }
     }
 
     moveActor(actor, dest, ctrl) {
@@ -246,16 +276,51 @@ class Game {
 
             target = this.board[dest.x][dest.y]
 
-            //check for player hitting, we assume they want to hit a wolf if they walk into it
-            if (ctrl || target instanceof Wolf && !target.rooted) {
-                if (target instanceof Actor) {
-                    this.board[dest.x][dest.y].rooted = true
+            //check for coin
+            if (target instanceof Coin) {
+                this.coins.delete(target)
+                this.moveActor(target, null)
+                this.score++
+                document.getElementById('score').innerText = "Score: " + this.score
+                document.getElementById('lap').innerText = "Lap: " + (this.laps + 1)
+            }
+
+            //check for murder
+            if(this.player.powerUp instanceof LethalBlows && target instanceof Actor){
+                this.moveActor(target, null);
+                if (target instanceof Sheep && !target.eaten){
+                    this.sheepCount--
+                }
+                if (target instanceof Sheep && target.eaten){
+                    this.wolfCount--
+                }
+                if (target instanceof Wolf){
+                    this.wolfCount--
                 }
                 return
             }
 
+            //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
+            if (target instanceof Wolf && !target.rooted) {
+                this.board[dest.x][dest.y].rooted = true
+                return
+            }
+
+            //check for player hitting sheep
+            if (ctrl && target instanceof Sheep && !target.eaten) {
+                this.board[dest.x][dest.y].rooted = true
+                this.board[dest.x][dest.y].eaten = true
+                this.sheepCount--
+                this.wolfCount++
+
+                //add power up
+                this.player.powerUp = PowerUp.getRandom()
+                return
+            }
+
             //check for player trying to push
-            if (target instanceof Sheep) {
+            if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
+                console.log(target, Pos.getPushPos(actor.pos, dest))
                 this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
         }
@@ -320,9 +385,10 @@ class Game {
     }
 
     wolfAI() {
-
         let wolfGoals = []
-        wolfGoals.push(this.player.pos)
+        if (!(this.player.powerUp instanceof WolfDisguise)) {
+            wolfGoals.push(this.player.pos)
+        }
         this.sheeps.forEach(sheep => {
             if (!sheep.eaten) {
                 wolfGoals.push(sheep.pos)
@@ -335,6 +401,24 @@ class Game {
             if (break_outer) return
             if (wolf.rooted) return
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
+            if (endPos == null) {
+                //if theres no clear path just mill about
+                switch (parseInt(this.random.nextFloat() * 4)) {
+                    case 0:
+                        this.moveActor(wolf, wolf.pos.getRightPos())
+                        break
+                    case 1:
+                        this.moveActor(wolf, wolf.pos.getLeftPos())
+                        break
+                    case 2:
+                        this.moveActor(wolf, wolf.pos.getUpPos())
+                        break
+                    case 3:
+                        this.moveActor(wolf, wolf.pos.getDownPos())
+                        break
+                }
+                return
+            }
             if (this.board[endPos.x][endPos.y] instanceof Actor && this.board[endPos.x][endPos.y].rooted) {
                 weights[endPos.x][endPos.y] = 1
             }
@@ -352,7 +436,10 @@ class Game {
                         this.wolfCount++
                     }
                     if (this.board[nextStep.x][nextStep.y] instanceof Player) {
-                        addHighscore()
+                        if (this.score > 0) {
+                            addHighscore()
+                        }
+                        this.initialiseGame()
                         //Awkward loop breaking so that the next game doesn't have ghost wolves...
                         break_outer = true
                         return
@@ -403,7 +490,7 @@ class Game {
     }
 
     updateBackgroundColours() {
-        let level = parseInt(this.score / LEVEL_LAPS + 1)
+        let level = parseInt(this.laps / LEVEL_LAPS + 1)
         switch (level) {
             case 1:
                 this.backgroundA = '#adff2f'
@@ -520,7 +607,7 @@ class Pos {
 class Actor {
     constructor(pos) {
         this.pos = pos
-        this.color = '#ff00ff'
+        this.color = '#000000'
         this.rooted = false
     }
 
@@ -533,6 +620,15 @@ class Player extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#00BFFF'
+        this.powerUp = null
+    }
+
+    getColor() {
+        if (this.powerUp == null || this.powerUp.timer === 2 || this.powerUp.timer === 4) {
+            return this.color
+        } else if (this.powerUp instanceof PowerUp) {
+            return this.powerUp.getColor()
+        }
     }
 }
 
@@ -576,6 +672,66 @@ class Boulder extends Actor {
     }
 }
 
+class Coin extends Actor {
+    constructor(pos) {
+        super(pos)
+        this.color = '#ffcc00'
+        this.rooted = true
+    }
+}
+
+class PowerUp {
+    constructor() {
+        this.color = '#000000'
+        this.timer = 10
+    }
+
+    getColor() {
+        return this.color
+    }
+
+    static getRandom() {
+        switch (parseInt(game.random.nextFloat() * 4)) {
+            case 0:
+                return new SuperPush()
+            case 1:
+                return new WolfDisguise()
+            case 2:
+                return new SuperSpeed()
+            case 3:
+                return new LethalBlows()
+        }
+    }
+}
+
+class SuperPush extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#996655'
+    }
+}
+
+class WolfDisguise extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#ff0099'
+    }
+}
+
+class SuperSpeed extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#ffff88'
+    }
+}
+
+class LethalBlows extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#000000'
+    }
+}
+
 //debug codes
 function enableTeleport() {
     game.teleport = true
@@ -588,6 +744,13 @@ function eatAllTheSheep() {
         game.sheepCount--
         game.wolfCount++
     })
+}
+
+function endGame() {
+    if (this.score > 0) {
+        addHighscore()
+    }
+    this.initialiseGame()
 }
 
 function addHighscore() {
@@ -605,5 +768,4 @@ function addHighscore() {
             }
         );
     }
-    game.initialiseGame()
 }

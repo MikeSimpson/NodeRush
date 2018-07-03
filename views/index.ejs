@@ -6,18 +6,20 @@
       <link rel='stylesheet' href='/stylesheets/style.css' />
    </head>
    <body>
-      <h2>Bull Rush</h2>
       <div class="container-fluid" id="canvas_container"></div>
       <div class="row">
-         <div class="col-sm-4">
-            <h1>Score: 0</h2>
+         <div class="col-sm-3">
+            <button onClick="endGame()" id="end_game">New Game</button>
          </div>
-         <div class="col-sm-4">
-            <button onClick="addHighscore()">End Game</button>
-         </div>
-         <div class="col-sm-4">
+         <div class="col-sm-3">
 			<input id="seed" type="number" value="" placeholder="Random Seed">
 		 </div>
+         <div class="col-sm-3">
+            <h1 id="score">Score: 0</h2>
+         </div>
+         <div class="col-sm-3">
+            <h1 id="lap">Lap: 1</h2>
+         </div>
       </div>
       <table>
          <tr>
@@ -63,6 +65,7 @@
                <p>Red Squares are not your friends</p>
                <p>Arrow keys/WASD to move, Space to wait</p>
                <p>Hold ctrl or alt to stun a creature in a given direction<br> or if it's a red square just walk into it and hope for the best.</p>
+               <p>You can get a ten turn power-up if you stun a white square,<br> can you find out what each colour does?</p>
                <p><a href="https://itsmaze.herokuapp.com">Also check out Max's Maze Game</a></p>
             </div>
          </div>

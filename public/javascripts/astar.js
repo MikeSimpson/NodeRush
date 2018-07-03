@@ -83,14 +83,14 @@
                         continue;
                     }
 
-                    // The g score is the shortest distance from start to current node.
+                    // The g laps is the shortest distance from start to current node.
                     // We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
                     var gScore = currentNode.g + neighbor.getCost(currentNode);
                     var beenVisited = neighbor.visited;
 
                     if (!beenVisited || gScore < neighbor.g) {
 
-                        // Found an optimal (so far) path to this node.  Take score for node to see how good it is.
+                        // Found an optimal (so far) path to this node.  Take laps for node to see how good it is.
                         neighbor.visited = true;
                         neighbor.parent = currentNode;
                         neighbor.h = neighbor.h || heuristic(neighbor, end);
@@ -349,7 +349,7 @@
             }
         },
         bubbleUp: function(n) {
-            // Look up the target element and its score.
+            // Look up the target element and its laps.
             var length = this.content.length;
             var element = this.content[n];
             var elemScore = this.scoreFunction(element);
@@ -363,11 +363,11 @@
                 var child1Score;
                 // If the first child exists (is inside the array)...
                 if (child1N < length) {
-                    // Look it up and compute its score.
+                    // Look it up and compute its laps.
                     var child1 = this.content[child1N];
                     child1Score = this.scoreFunction(child1);
 
-                    // If the score is less than our element's, we need to swap.
+                    // If the laps is less than our element's, we need to swap.
                     if (child1Score < elemScore) {
                         swap = child1N;
                     }

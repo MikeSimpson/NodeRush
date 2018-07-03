@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/models/highscore.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/highscore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/astar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/astar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/bullrush.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/bullrush.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,8 +29,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="43" column="29" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+            <state relative-caret-position="465">
+              <caret line="31" column="23" lean-forward="true" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -36,8 +38,8 @@
       <file leaf-file-name="highscore.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/highscore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+            <state relative-caret-position="150">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -45,8 +47,8 @@
       <file leaf-file-name="index.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
+            <state relative-caret-position="165">
+              <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -59,114 +61,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="605" column="10" lean-forward="true" selection-start-line="605" selection-start-column="10" selection-end-line="605" selection-end-column="10" />
-              <folding>
-                <element signature="e#102#244#0" />
-                <element signature="e#278#1072#0" />
-                <element signature="e#409#443#0" />
-                <element signature="e#449#1070#0" />
-                <element signature="e#503#607#0" />
-                <element signature="e#640#742#0" />
-                <element signature="e#778#883#0" />
-                <element signature="e#918#1022#0" />
-                <element signature="e#1031#1122#0" />
-                <element signature="e#1108#1116#0" />
-                <element signature="e#1114#1735#0" />
-                <element signature="e#1202#1296#0" />
-                <element signature="e#1305#1395#0" />
-                <element signature="e#1404#1500#0" />
-                <element signature="e#1509#1603#0" />
-                <element signature="e#1612#1693#0" />
-                <element signature="e#1107#1156#0" />
-                <element signature="n#!!block;n#constructor#0;n#Game#0" />
-                <element signature="n#!!block;n#spawnActors#0;n#Game#0" />
-                <element signature="e#2671#3099#0" />
-                <element signature="e#2838#3089#0" />
-                <element signature="e#3207#3807#0" />
-                <element signature="e#3561#3797#0" />
-                <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
-                <element signature="e#3954#4171#0" />
-                <element signature="e#4007#4161#0" />
-                <element signature="e#4060#4147#0" />
-                <element signature="n#!!block;n#resetRound#0;n#Game#0" />
-                <element signature="e#4379#4675#0" />
-                <element signature="e#4863#4914#0" />
-                <element signature="e#4952#5002#0" />
-                <element signature="n#!!block;n#draw#0;n#Game#0" />
-                <element signature="e#5297#5310#0" />
-                <element signature="e#5382#5950#0" />
-                <element signature="e#5435#5940#0" />
-                <element signature="e#5492#5584#0" />
-                <element signature="e#5652#5733#0" />
-                <element signature="e#5739#5820#0" />
-                <element signature="n#!!block;n#update#0;n#Game#0" />
-                <element signature="e#6097#6164#0" />
-                <element signature="n#!!block;n#moveActor#0;n#Game#0" />
-                <element signature="e#6290#6403#0" />
-                <element signature="e#6577#7421#0" />
-                <element signature="e#6810#6859#0" />
-                <element signature="e#7071#7235#0" />
-                <element signature="e#7118#7198#0" />
-                <element signature="e#7324#7411#0" />
-                <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-                <element signature="e#8090#8150#0" />
-                <element signature="e#8268#8436#0" />
-                <element signature="e#9766#10017#0" />
-                <element signature="e#10096#10331#0" />
-                <element signature="e#10866#11145#0" />
-                <element signature="e#10916#11126#0" />
-                <element signature="e#11033#11104#0" />
-                <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
-                <element signature="e#11297#12250#0" />
-                <element signature="e#11971#12090#0" />
-                <element signature="e#12103#12222#0" />
-                <element signature="e#12235#12354#0" />
-                <element signature="e#12367#12486#0" />
-                <element signature="e#12499#12618#0" />
-                <element signature="e#12631#12750#0" />
-                <element signature="e#12763#12885#0" />
-                <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
-                <element signature="e#12384#12467#0" />
-                <element signature="n#!!block;n#createBoard#0;n#Game#0" />
-                <element signature="e#12600#12735#0" />
-                <element signature="e#12674#12725#0" />
-                <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
-                <element signature="e#12912#13205#0" />
-                <element signature="e#13111#13195#0" />
-                <element signature="n#Pos#0" />
-                <element signature="n#!!block;n#constructor#0;n#Pos#0" />
-                <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-                <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
-                <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
-                <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
-                <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-                <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-                <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-                <element signature="e#14037#14086#0" />
-                <element signature="e#14129#14175#0" />
-                <element signature="e#14220#14268#0" />
-                <element signature="e#14313#14361#0" />
-                <element signature="n#Actor#0" />
-                <element signature="n#!!block;n#constructor#0;n#Actor#0" />
-                <element signature="n#!!block;n#getColor#0;n#Actor#0" />
-                <element signature="n#Player#0" />
-                <element signature="n#!!block;n#constructor#0;n#Player#0" />
-                <element signature="n#Sheep#0" />
-                <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-                <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
-                <element signature="e#14836#14876#0" />
-                <element signature="e#14902#14942#0" />
-                <element signature="n#Wolf#0" />
-                <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
-                <element signature="n#!!block;n#getColor#0;n#Wolf#0" />
-                <element signature="e#15127#15167#0" />
-                <element signature="n#Boulder#0" />
-                <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-                <element signature="n#!!block;n#enableTeleport#0" />
-                <element signature="n#!!block;n#eatAllTheSheep#0" />
-                <element signature="e#15473#15588#0" />
-              </folding>
+            <state relative-caret-position="6">
+              <caret line="89" column="9" lean-forward="true" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -174,8 +70,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="541">
-              <caret line="77" column="17" lean-forward="true" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+            <state relative-caret-position="1155">
+              <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -193,7 +89,7 @@
       <file leaf-file-name="bootstrap.min.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bootstrap.min.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-736">
+            <state relative-caret-position="360">
               <caret line="5" column="23766" selection-start-line="5" selection-start-column="23756" selection-end-line="5" selection-end-column="23766" />
             </state>
           </provider>
@@ -210,7 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>noderush</find>
       <find>mazegen</find>
       <find>;</find>
       <find>getLeftPos</find>
@@ -232,6 +127,15 @@
       <find>disco</find>
       <find>h2</find>
       <find>info</find>
+      <find>laps</find>
+      <find>SuperPush</find>
+      <find>boulder</find>
+      <find>eaten</find>
+      <find>addHighscore</find>
+      <find>%</find>
+      <find>ctrl</find>
+      <find>score</find>
+      <find>&quot;Score: &quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -251,11 +155,11 @@
         <option value="$PROJECT_DIR$/public/model/highscore.js" />
         <option value="$PROJECT_DIR$/public/javascripts/DPad.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/models/highscore.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/public/javascripts/bullrush.js" />
+        <option value="$PROJECT_DIR$/views/index.ejs" />
       </list>
     </option>
   </component>
@@ -275,7 +179,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="1057" />
@@ -374,37 +278,38 @@
       <workItem from="1530250107109" duration="43770000" />
       <workItem from="1530502041236" duration="1846000" />
       <workItem from="1530505584520" duration="2313000" />
-      <workItem from="1530509906748" duration="11564000" />
+      <workItem from="1530509906748" duration="11933000" />
+      <workItem from="1530596178673" duration="6720000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59493000" />
+    <option name="totallyTimeSpent" value="66582000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16666667" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16809729" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32935324" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -415,10 +320,27 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/bootstrap-theme.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/bootstrap.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="5" column="23766" selection-start-line="5" selection-start-column="23756" selection-end-line="5" selection-end-column="23766" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="29" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -482,112 +404,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4620">
           <caret line="536" column="14" lean-forward="true" selection-start-line="536" selection-start-column="14" selection-end-line="536" selection-end-column="14" />
-          <folding>
-            <element signature="e#102#244#0" />
-            <element signature="e#278#1072#0" />
-            <element signature="e#409#443#0" />
-            <element signature="e#449#1070#0" />
-            <element signature="e#503#607#0" />
-            <element signature="e#640#742#0" />
-            <element signature="e#778#883#0" />
-            <element signature="e#918#1022#0" />
-            <element signature="e#1031#1122#0" />
-            <element signature="e#1108#1116#0" />
-            <element signature="e#1114#1735#0" />
-            <element signature="e#1202#1296#0" />
-            <element signature="e#1305#1395#0" />
-            <element signature="e#1404#1500#0" />
-            <element signature="e#1509#1603#0" />
-            <element signature="e#1612#1693#0" />
-            <element signature="e#1107#1156#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
-            <element signature="n#!!block;n#spawnActors#0;n#Game#0" />
-            <element signature="e#2671#3099#0" />
-            <element signature="e#2838#3089#0" />
-            <element signature="e#3207#3807#0" />
-            <element signature="e#3561#3797#0" />
-            <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
-            <element signature="e#3954#4171#0" />
-            <element signature="e#4007#4161#0" />
-            <element signature="e#4060#4147#0" />
-            <element signature="n#!!block;n#resetRound#0;n#Game#0" />
-            <element signature="e#4379#4675#0" />
-            <element signature="e#4863#4914#0" />
-            <element signature="e#4952#5002#0" />
-            <element signature="n#!!block;n#draw#0;n#Game#0" />
-            <element signature="e#5297#5310#0" />
-            <element signature="e#5382#5950#0" />
-            <element signature="e#5435#5940#0" />
-            <element signature="e#5492#5584#0" />
-            <element signature="e#5652#5733#0" />
-            <element signature="e#5739#5820#0" />
-            <element signature="n#!!block;n#update#0;n#Game#0" />
-            <element signature="e#6097#6164#0" />
-            <element signature="n#!!block;n#moveActor#0;n#Game#0" />
-            <element signature="e#6290#6403#0" />
-            <element signature="e#6577#7421#0" />
-            <element signature="e#6810#6859#0" />
-            <element signature="e#7071#7235#0" />
-            <element signature="e#7118#7198#0" />
-            <element signature="e#7324#7411#0" />
-            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-            <element signature="e#8090#8150#0" />
-            <element signature="e#8268#8436#0" />
-            <element signature="e#9766#10017#0" />
-            <element signature="e#10096#10331#0" />
-            <element signature="e#10866#11145#0" />
-            <element signature="e#10916#11126#0" />
-            <element signature="e#11033#11104#0" />
-            <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
-            <element signature="e#11297#12250#0" />
-            <element signature="e#11971#12090#0" />
-            <element signature="e#12103#12222#0" />
-            <element signature="e#12235#12354#0" />
-            <element signature="e#12367#12486#0" />
-            <element signature="e#12499#12618#0" />
-            <element signature="e#12631#12750#0" />
-            <element signature="e#12763#12885#0" />
-            <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
-            <element signature="e#12384#12467#0" />
-            <element signature="n#!!block;n#createBoard#0;n#Game#0" />
-            <element signature="e#12600#12735#0" />
-            <element signature="e#12674#12725#0" />
-            <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
-            <element signature="e#12912#13205#0" />
-            <element signature="e#13111#13195#0" />
-            <element signature="n#Pos#0" />
-            <element signature="n#!!block;n#constructor#0;n#Pos#0" />
-            <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-            <element signature="e#14037#14086#0" />
-            <element signature="e#14129#14175#0" />
-            <element signature="e#14220#14268#0" />
-            <element signature="e#14313#14361#0" />
-            <element signature="n#Actor#0" />
-            <element signature="n#!!block;n#constructor#0;n#Actor#0" />
-            <element signature="n#!!block;n#getColor#0;n#Actor#0" />
-            <element signature="n#Player#0" />
-            <element signature="n#!!block;n#constructor#0;n#Player#0" />
-            <element signature="n#Sheep#0" />
-            <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-            <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
-            <element signature="e#14836#14876#0" />
-            <element signature="e#14902#14942#0" />
-            <element signature="n#Wolf#0" />
-            <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
-            <element signature="n#!!block;n#getColor#0;n#Wolf#0" />
-            <element signature="e#15127#15167#0" />
-            <element signature="n#Boulder#0" />
-            <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-            <element signature="n#!!block;n#enableTeleport#0" />
-            <element signature="n#!!block;n#eatAllTheSheep#0" />
-            <element signature="e#15473#15588#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -626,112 +442,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#102#244#0" />
-            <element signature="e#278#1072#0" />
-            <element signature="e#409#443#0" />
-            <element signature="e#449#1070#0" />
-            <element signature="e#503#607#0" />
-            <element signature="e#640#742#0" />
-            <element signature="e#778#883#0" />
-            <element signature="e#918#1022#0" />
-            <element signature="e#1031#1122#0" />
-            <element signature="e#1108#1116#0" />
-            <element signature="e#1114#1735#0" />
-            <element signature="e#1202#1296#0" />
-            <element signature="e#1305#1395#0" />
-            <element signature="e#1404#1500#0" />
-            <element signature="e#1509#1603#0" />
-            <element signature="e#1612#1693#0" />
-            <element signature="e#1107#1156#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
-            <element signature="n#!!block;n#spawnActors#0;n#Game#0" />
-            <element signature="e#2671#3099#0" />
-            <element signature="e#2838#3089#0" />
-            <element signature="e#3207#3807#0" />
-            <element signature="e#3561#3797#0" />
-            <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
-            <element signature="e#3954#4171#0" />
-            <element signature="e#4007#4161#0" />
-            <element signature="e#4060#4147#0" />
-            <element signature="n#!!block;n#resetRound#0;n#Game#0" />
-            <element signature="e#4379#4675#0" />
-            <element signature="e#4863#4914#0" />
-            <element signature="e#4952#5002#0" />
-            <element signature="n#!!block;n#draw#0;n#Game#0" />
-            <element signature="e#5297#5310#0" />
-            <element signature="e#5382#5950#0" />
-            <element signature="e#5435#5940#0" />
-            <element signature="e#5492#5584#0" />
-            <element signature="e#5652#5733#0" />
-            <element signature="e#5739#5820#0" />
-            <element signature="n#!!block;n#update#0;n#Game#0" />
-            <element signature="e#6097#6164#0" />
-            <element signature="n#!!block;n#moveActor#0;n#Game#0" />
-            <element signature="e#6290#6403#0" />
-            <element signature="e#6577#7421#0" />
-            <element signature="e#6810#6859#0" />
-            <element signature="e#7071#7235#0" />
-            <element signature="e#7118#7198#0" />
-            <element signature="e#7324#7411#0" />
-            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-            <element signature="e#8090#8150#0" />
-            <element signature="e#8268#8436#0" />
-            <element signature="e#9766#10017#0" />
-            <element signature="e#10096#10331#0" />
-            <element signature="e#10866#11145#0" />
-            <element signature="e#10916#11126#0" />
-            <element signature="e#11033#11104#0" />
-            <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
-            <element signature="e#11297#12250#0" />
-            <element signature="e#11971#12090#0" />
-            <element signature="e#12103#12222#0" />
-            <element signature="e#12235#12354#0" />
-            <element signature="e#12367#12486#0" />
-            <element signature="e#12499#12618#0" />
-            <element signature="e#12631#12750#0" />
-            <element signature="e#12763#12885#0" />
-            <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
-            <element signature="e#12384#12467#0" />
-            <element signature="n#!!block;n#createBoard#0;n#Game#0" />
-            <element signature="e#12600#12735#0" />
-            <element signature="e#12674#12725#0" />
-            <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
-            <element signature="e#12912#13205#0" />
-            <element signature="e#13111#13195#0" />
-            <element signature="n#Pos#0" />
-            <element signature="n#!!block;n#constructor#0;n#Pos#0" />
-            <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-            <element signature="e#14037#14086#0" />
-            <element signature="e#14129#14175#0" />
-            <element signature="e#14220#14268#0" />
-            <element signature="e#14313#14361#0" />
-            <element signature="n#Actor#0" />
-            <element signature="n#!!block;n#constructor#0;n#Actor#0" />
-            <element signature="n#!!block;n#getColor#0;n#Actor#0" />
-            <element signature="n#Player#0" />
-            <element signature="n#!!block;n#constructor#0;n#Player#0" />
-            <element signature="n#Sheep#0" />
-            <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-            <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
-            <element signature="e#14836#14876#0" />
-            <element signature="e#14902#14942#0" />
-            <element signature="n#Wolf#0" />
-            <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
-            <element signature="n#!!block;n#getColor#0;n#Wolf#0" />
-            <element signature="e#15127#15167#0" />
-            <element signature="n#Boulder#0" />
-            <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-            <element signature="n#!!block;n#enableTeleport#0" />
-            <element signature="n#!!block;n#eatAllTheSheep#0" />
-            <element signature="e#15473#15588#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -795,112 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="57" lean-forward="true" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
-          <folding>
-            <element signature="e#102#244#0" />
-            <element signature="e#278#1072#0" />
-            <element signature="e#409#443#0" />
-            <element signature="e#449#1070#0" />
-            <element signature="e#503#607#0" />
-            <element signature="e#640#742#0" />
-            <element signature="e#778#883#0" />
-            <element signature="e#918#1022#0" />
-            <element signature="e#1031#1122#0" />
-            <element signature="e#1108#1116#0" />
-            <element signature="e#1114#1735#0" />
-            <element signature="e#1202#1296#0" />
-            <element signature="e#1305#1395#0" />
-            <element signature="e#1404#1500#0" />
-            <element signature="e#1509#1603#0" />
-            <element signature="e#1612#1693#0" />
-            <element signature="e#1107#1156#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
-            <element signature="n#!!block;n#spawnActors#0;n#Game#0" />
-            <element signature="e#2671#3099#0" />
-            <element signature="e#2838#3089#0" />
-            <element signature="e#3207#3807#0" />
-            <element signature="e#3561#3797#0" />
-            <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
-            <element signature="e#3954#4171#0" />
-            <element signature="e#4007#4161#0" />
-            <element signature="e#4060#4147#0" />
-            <element signature="n#!!block;n#resetRound#0;n#Game#0" />
-            <element signature="e#4379#4675#0" />
-            <element signature="e#4863#4914#0" />
-            <element signature="e#4952#5002#0" />
-            <element signature="n#!!block;n#draw#0;n#Game#0" />
-            <element signature="e#5297#5310#0" />
-            <element signature="e#5382#5950#0" />
-            <element signature="e#5435#5940#0" />
-            <element signature="e#5492#5584#0" />
-            <element signature="e#5652#5733#0" />
-            <element signature="e#5739#5820#0" />
-            <element signature="n#!!block;n#update#0;n#Game#0" />
-            <element signature="e#6097#6164#0" />
-            <element signature="n#!!block;n#moveActor#0;n#Game#0" />
-            <element signature="e#6290#6403#0" />
-            <element signature="e#6577#7421#0" />
-            <element signature="e#6810#6859#0" />
-            <element signature="e#7071#7235#0" />
-            <element signature="e#7118#7198#0" />
-            <element signature="e#7324#7411#0" />
-            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-            <element signature="e#8090#8150#0" />
-            <element signature="e#8268#8436#0" />
-            <element signature="e#9766#10017#0" />
-            <element signature="e#10096#10331#0" />
-            <element signature="e#10866#11145#0" />
-            <element signature="e#10916#11126#0" />
-            <element signature="e#11033#11104#0" />
-            <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
-            <element signature="e#11297#12250#0" />
-            <element signature="e#11971#12090#0" />
-            <element signature="e#12103#12222#0" />
-            <element signature="e#12235#12354#0" />
-            <element signature="e#12367#12486#0" />
-            <element signature="e#12499#12618#0" />
-            <element signature="e#12631#12750#0" />
-            <element signature="e#12763#12885#0" />
-            <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
-            <element signature="e#12384#12467#0" />
-            <element signature="n#!!block;n#createBoard#0;n#Game#0" />
-            <element signature="e#12600#12735#0" />
-            <element signature="e#12674#12725#0" />
-            <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
-            <element signature="e#12912#13205#0" />
-            <element signature="e#13111#13195#0" />
-            <element signature="n#Pos#0" />
-            <element signature="n#!!block;n#constructor#0;n#Pos#0" />
-            <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-            <element signature="e#14037#14086#0" />
-            <element signature="e#14129#14175#0" />
-            <element signature="e#14220#14268#0" />
-            <element signature="e#14313#14361#0" />
-            <element signature="n#Actor#0" />
-            <element signature="n#!!block;n#constructor#0;n#Actor#0" />
-            <element signature="n#!!block;n#getColor#0;n#Actor#0" />
-            <element signature="n#Player#0" />
-            <element signature="n#!!block;n#constructor#0;n#Player#0" />
-            <element signature="n#Sheep#0" />
-            <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-            <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
-            <element signature="e#14836#14876#0" />
-            <element signature="e#14902#14942#0" />
-            <element signature="n#Wolf#0" />
-            <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
-            <element signature="n#!!block;n#getColor#0;n#Wolf#0" />
-            <element signature="e#15127#15167#0" />
-            <element signature="n#Boulder#0" />
-            <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-            <element signature="n#!!block;n#enableTeleport#0" />
-            <element signature="n#!!block;n#eatAllTheSheep#0" />
-            <element signature="e#15473#15588#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -977,15 +581,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/users.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/DPad.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/DPad.js" />
+    <entry file="file://$PROJECT_DIR$/.env" />
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1001,149 +598,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bootstrap.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-736">
+        <state relative-caret-position="360">
           <caret line="5" column="23766" selection-start-line="5" selection-start-column="23756" selection-end-line="5" selection-end-column="23766" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="77" column="17" lean-forward="true" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+        <state relative-caret-position="1155">
+          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/highscore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        <state relative-caret-position="150">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/users.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="43" column="29" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+        <state relative-caret-position="465">
+          <caret line="31" column="23" lean-forward="true" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="605" column="10" lean-forward="true" selection-start-line="605" selection-start-column="10" selection-end-line="605" selection-end-column="10" />
-          <folding>
-            <element signature="e#102#244#0" />
-            <element signature="e#278#1072#0" />
-            <element signature="e#409#443#0" />
-            <element signature="e#449#1070#0" />
-            <element signature="e#503#607#0" />
-            <element signature="e#640#742#0" />
-            <element signature="e#778#883#0" />
-            <element signature="e#918#1022#0" />
-            <element signature="e#1031#1122#0" />
-            <element signature="e#1108#1116#0" />
-            <element signature="e#1114#1735#0" />
-            <element signature="e#1202#1296#0" />
-            <element signature="e#1305#1395#0" />
-            <element signature="e#1404#1500#0" />
-            <element signature="e#1509#1603#0" />
-            <element signature="e#1612#1693#0" />
-            <element signature="e#1107#1156#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
-            <element signature="n#!!block;n#spawnActors#0;n#Game#0" />
-            <element signature="e#2671#3099#0" />
-            <element signature="e#2838#3089#0" />
-            <element signature="e#3207#3807#0" />
-            <element signature="e#3561#3797#0" />
-            <element signature="n#!!block;n#spawnBoulders#0;n#Game#0" />
-            <element signature="e#3954#4171#0" />
-            <element signature="e#4007#4161#0" />
-            <element signature="e#4060#4147#0" />
-            <element signature="n#!!block;n#resetRound#0;n#Game#0" />
-            <element signature="e#4379#4675#0" />
-            <element signature="e#4863#4914#0" />
-            <element signature="e#4952#5002#0" />
-            <element signature="n#!!block;n#draw#0;n#Game#0" />
-            <element signature="e#5297#5310#0" />
-            <element signature="e#5382#5950#0" />
-            <element signature="e#5435#5940#0" />
-            <element signature="e#5492#5584#0" />
-            <element signature="e#5652#5733#0" />
-            <element signature="e#5739#5820#0" />
-            <element signature="n#!!block;n#update#0;n#Game#0" />
-            <element signature="e#6097#6164#0" />
-            <element signature="n#!!block;n#moveActor#0;n#Game#0" />
-            <element signature="e#6290#6403#0" />
-            <element signature="e#6577#7421#0" />
-            <element signature="e#6810#6859#0" />
-            <element signature="e#7071#7235#0" />
-            <element signature="e#7118#7198#0" />
-            <element signature="e#7324#7411#0" />
-            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
-            <element signature="e#8090#8150#0" />
-            <element signature="e#8268#8436#0" />
-            <element signature="e#9766#10017#0" />
-            <element signature="e#10096#10331#0" />
-            <element signature="e#10866#11145#0" />
-            <element signature="e#10916#11126#0" />
-            <element signature="e#11033#11104#0" />
-            <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
-            <element signature="e#11297#12250#0" />
-            <element signature="e#11971#12090#0" />
-            <element signature="e#12103#12222#0" />
-            <element signature="e#12235#12354#0" />
-            <element signature="e#12367#12486#0" />
-            <element signature="e#12499#12618#0" />
-            <element signature="e#12631#12750#0" />
-            <element signature="e#12763#12885#0" />
-            <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
-            <element signature="e#12384#12467#0" />
-            <element signature="n#!!block;n#createBoard#0;n#Game#0" />
-            <element signature="e#12600#12735#0" />
-            <element signature="e#12674#12725#0" />
-            <element signature="n#!!block;n#nearestGoal#0;n#Game#0" />
-            <element signature="e#12912#13205#0" />
-            <element signature="e#13111#13195#0" />
-            <element signature="n#Pos#0" />
-            <element signature="n#!!block;n#constructor#0;n#Pos#0" />
-            <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getRightPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-            <element signature="e#14037#14086#0" />
-            <element signature="e#14129#14175#0" />
-            <element signature="e#14220#14268#0" />
-            <element signature="e#14313#14361#0" />
-            <element signature="n#Actor#0" />
-            <element signature="n#!!block;n#constructor#0;n#Actor#0" />
-            <element signature="n#!!block;n#getColor#0;n#Actor#0" />
-            <element signature="n#Player#0" />
-            <element signature="n#!!block;n#constructor#0;n#Player#0" />
-            <element signature="n#Sheep#0" />
-            <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-            <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
-            <element signature="e#14836#14876#0" />
-            <element signature="e#14902#14942#0" />
-            <element signature="n#Wolf#0" />
-            <element signature="n#!!block;n#constructor#0;n#Wolf#0" />
-            <element signature="n#!!block;n#getColor#0;n#Wolf#0" />
-            <element signature="e#15127#15167#0" />
-            <element signature="n#Boulder#0" />
-            <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
-            <element signature="n#!!block;n#enableTeleport#0" />
-            <element signature="n#!!block;n#eatAllTheSheep#0" />
-            <element signature="e#15473#15588#0" />
-          </folding>
+        <state relative-caret-position="6">
+          <caret line="89" column="9" lean-forward="true" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
         </state>
       </provider>
     </entry>
