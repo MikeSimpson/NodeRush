@@ -110,6 +110,8 @@ class Game {
         //clear debug flags
         this.teleport = false
 
+        this.inputLock = false //used to lock input while delayed loops are running
+
         this.draw()
     }
 
@@ -238,6 +240,7 @@ class Game {
     }
 
     update(dest, ctrl) {
+        if (this.inputLock) return
         this.moveActor(this.player, dest, ctrl)
         if (!(this.player.powerUp != null && (this.player.powerUp instanceof SuperSpeed) && (this.player.powerUp.timer % 2 === 1))) {
             game.updateAI()
@@ -343,6 +346,7 @@ class Game {
 
     updateAI() {
         this.sheepAI()
+        //TODO the wolves don't wait their turn
         this.wolfAI()
     }
 
@@ -355,41 +359,53 @@ class Game {
 
         let graph = new Graph(this.getWeightArray(true))
         //sort sheeps most advanced at the end
-        this.sheeps.sort((a, b) => {
-            return Math.abs(a.x - targetX) <= Math.abs(b.x - targetX) ? 1 : 0
-        })
-        for (var i = this.sheeps.length - 1; i >= 0; i--) { //iterate in reverse so we can remove elements and not butcher the index
-            let sheep = this.sheeps[i]
-            if (sheep.rooted) continue
+        this.sheeps.sort((a, b) => Math.abs(a.pos.x - targetX) <= Math.abs(b.pos.x - targetX) ? 1 : -1)
+
+        this.delayLoop(this.sheeps.length, 20, function (i) { //This must iterate in reverse as we are removing array elements
+            let sheep = game.sheeps[i]
+            if (sheep.rooted) return
             if (sheep.pos.x === targetX) {
-                this.moveActor(sheep, null)
-                remove(this.sheeps, sheep)
-                continue
+                game.moveActor(sheep, null)
+                remove(game.sheeps, sheep)
+                return
             }
             let start = graph.grid[sheep.pos.x][sheep.pos.y]
             let endPos = Game.nearestGoal(sheep.pos, sheepGoals)
             let end = graph.grid[endPos.x][endPos.y]
             let nextStep = astar.search(graph, start, end).shift();
             if (typeof nextStep !== 'undefined') {
-                this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
+                game.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             } else {
                 //if there's no clear path just mill about
-                switch (parseInt(this.random.nextFloat() * 4)) {
+                switch (parseInt(game.random.nextFloat() * 4)) {
                     case 0:
-                        this.moveActor(sheep, sheep.pos.getRightPos())
+                        game.moveActor(sheep, sheep.pos.getRightPos())
                         break
                     case 1:
-                        this.moveActor(sheep, sheep.pos.getLeftPos())
+                        game.moveActor(sheep, sheep.pos.getLeftPos())
                         break
                     case 2:
-                        this.moveActor(sheep, sheep.pos.getUpPos())
+                        game.moveActor(sheep, sheep.pos.getUpPos())
                         break
                     case 3:
-                        this.moveActor(sheep, sheep.pos.getDownPos())
+                        game.moveActor(sheep, sheep.pos.getDownPos())
                         break
                 }
             }
+            game.draw()
+        })
+    }
+
+    delayLoop(i, timeout, func) {
+        game.inputLock = true
+        if (--i < 0) {
+            game.inputLock = false;
+            return
         }
+        setTimeout(function () {
+            func(i)
+            game.delayLoop(i, timeout, func)
+        }, timeout)
     }
 
     wolfAI() {
@@ -406,31 +422,33 @@ class Game {
         }
 
         let weights = this.getWeightArray()
-        var break_outer = false
-        for (var i = this.wolves.length - 1; i >= 0; i--) { //iterate in reverse so we can remove elements and not butcher the index
-            let wolf = this.wolves[i]
-            if (wolf.rooted) continue
+        var BREAK_OUTER = false
+        this.delayLoop(this.wolves.length, 20, function (i) {
+            if (BREAK_OUTER) return
+            let wolf = game.wolves[i]
+            if (wolf.rooted) return
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
             if (endPos == null) { //TODO improve this logic as this block is duplicated below
                 //if theres no clear path just mill about
-                switch (parseInt(this.random.nextFloat() * 4)) {
+                switch (parseInt(game.random.nextFloat() * 4)) {
                     case 0:
-                        this.moveActor(wolf, wolf.pos.getRightPos())
+                        game.moveActor(wolf, wolf.pos.getRightPos())
                         break
                     case 1:
-                        this.moveActor(wolf, wolf.pos.getLeftPos())
+                        game.moveActor(wolf, wolf.pos.getLeftPos())
                         break
                     case 2:
-                        this.moveActor(wolf, wolf.pos.getUpPos())
+                        game.moveActor(wolf, wolf.pos.getUpPos())
                         break
                     case 3:
-                        this.moveActor(wolf, wolf.pos.getDownPos())
+                        game.moveActor(wolf, wolf.pos.getDownPos())
                         break
                 }
-                continue
+                game.draw()
+                return
             }
             //make rooted sheep traversable
-            if (this.board[endPos.x][endPos.y] instanceof Actor && this.board[endPos.x][endPos.y].rooted) {
+            if (game.board[endPos.x][endPos.y] instanceof Actor && game.board[endPos.x][endPos.y].rooted) {
                 weights[endPos.x][endPos.y] = 1
             }
             let graph = new Graph(weights)
@@ -440,39 +458,41 @@ class Game {
             if (typeof nextStep !== 'undefined') {
                 if (Math.abs(wolf.pos.x - nextStep.x) + Math.abs(wolf.pos.y - nextStep.y) === 1) {
                     //attack the target
-                    if (this.board[nextStep.x][nextStep.y] instanceof Sheep) {
-                        this.board[nextStep.x][nextStep.y].rooted = true
-                        this.board[nextStep.x][nextStep.y].eaten = true
-                        this.sheepCount--
-                        this.wolfCount++
+                    if (game.board[nextStep.x][nextStep.y] instanceof Sheep) {
+                        game.board[nextStep.x][nextStep.y].rooted = true
+                        game.board[nextStep.x][nextStep.y].eaten = true
+                        game.sheepCount--
+                        game.wolfCount++
                     }
-                    if (this.board[nextStep.x][nextStep.y] instanceof Player) {
-                        if (this.score > 0) {
+                    if (game.board[nextStep.x][nextStep.y] instanceof Player) {
+                        if (game.score > 0) {
                             addHighscore()
                         }
-                        this.initialiseGame()
+                        game.initialiseGame()
+                        BREAK_OUTER = true
                         return
                     }
                 }
-                this.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
+                game.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
             } else {
                 //if theres no clear path just mill about
-                switch (parseInt(this.random.nextFloat() * 4)) {
+                switch (parseInt(game.random.nextFloat() * 4)) {
                     case 0:
-                        this.moveActor(wolf, wolf.pos.getRightPos())
+                        game.moveActor(wolf, wolf.pos.getRightPos())
                         break
                     case 1:
-                        this.moveActor(wolf, wolf.pos.getLeftPos())
+                        game.moveActor(wolf, wolf.pos.getLeftPos())
                         break
                     case 2:
-                        this.moveActor(wolf, wolf.pos.getUpPos())
+                        game.moveActor(wolf, wolf.pos.getUpPos())
                         break
                     case 3:
-                        this.moveActor(wolf, wolf.pos.getDownPos())
+                        game.moveActor(wolf, wolf.pos.getDownPos())
                         break
                 }
             }
-        }
+            game.draw()
+        })
     }
 
     getWeightArray(sheep = false) {
@@ -743,6 +763,21 @@ class LethalBlows extends PowerUp {
         super()
         this.color = '#000000'
         this.timer = 5
+    }
+}
+
+class CoinSuprise extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#00BFFF'
+        this.timer = 1
+    }
+}
+
+class ChainLightning extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#eeeeff'
     }
 }
 
