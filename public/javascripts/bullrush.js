@@ -15,7 +15,6 @@ let keyListener = function (e) {
     if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ' ', 'Control'].indexOf(e.key) > -1) {
         e.preventDefault()
     }
-    console.log(e.shiftKey)
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
@@ -104,9 +103,9 @@ class Game {
         this.spawnBoulders()
 
         //initialise actors
-        this.sheepCount = BOARD_HEIGHT - 1
+        this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz
         this.wolfCount = 1
-        this.spawnActors();
+        this.spawnActors()
 
         //clear debug flags
         this.teleport = false
@@ -121,7 +120,7 @@ class Game {
         this.player = new Player(new Pos(startX, playerY))
         this.board[startX][playerY] = this.player
         //spawn sheep
-        this.sheeps = new Set()
+        this.sheeps = []
         var sheepsCreated = 0
 
         while (this.sheepCount > 0) {
@@ -130,14 +129,14 @@ class Game {
             if (!(this.board[startX][y] instanceof Actor)) {
                 let sheep = new Sheep(new Pos(startX, y))
                 this.board[startX][y] = sheep
-                this.sheeps.add(sheep)
+                this.sheeps.push(sheep)
                 sheepsCreated++
                 if (sheepsCreated === this.sheepCount) break
             }
         }
 
         //spawn wolves
-        this.wolves = new Set()
+        this.wolves = []
         var wolvesCreated = 0
         while (this.wolfCount > 0) {
             //attempt to add a wolf
@@ -148,14 +147,14 @@ class Game {
             if (!(this.board[x][y] instanceof Actor)) {
                 let wolf = new Wolf(new Pos(x, y))
                 this.board[x][y] = wolf
-                this.wolves.add(wolf)
+                this.wolves.push(wolf)
                 wolvesCreated++
                 if (wolvesCreated === this.wolfCount) break
             }
         }
 
         //spawn coin
-        this.coins = new Set()
+        this.coins = []
         while (true) {
             //attempt to add a coin
             let x = parseInt(this.random.nextFloat() * BOARD_WIDTH)
@@ -164,18 +163,21 @@ class Game {
             if (!(this.board[x][y] instanceof Actor)) {
                 let coin = new Coin(new Pos(x, y))
                 this.board[x][y] = coin
-                this.coins.add(coin)
+                this.coins.push(coin)
                 break
             }
         }
     }
 
     spawnBoulders() {
+        this.boulders = []
         //loop every non edge tile and chuck a maybe boulder in it
         for (var x = 1; x < BOARD_WIDTH - 1; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
                 if (this.random.nextFloat() < 0.2) {
-                    this.board[x][y] = new Boulder(new Pos(x, y))
+                    let boulder = new Boulder(new Pos(x, y))
+                    this.board[x][y] = boulder
+                    this.boulders.push(boulder)
                 }
             }
         }
@@ -195,6 +197,7 @@ class Game {
             //reset board
             this.board = Game.createBoard(BOARD_WIDTH, BOARD_HEIGHT)
             this.spawnBoulders()
+            //TODO mutate boulders?
         }
 
         //reverse direction
@@ -202,18 +205,15 @@ class Game {
 
         //reset actors
         this.moveActor(this.player, null)
-        this.sheeps.forEach(sheep => {
-            this.moveActor(sheep, null)
-        })
-        this.wolves.forEach(wolf => {
-            this.moveActor(wolf, null)
-        })
-        this.coins.forEach(coin => {
-            this.moveActor(coin, null)
-        })
-        this.sheeps = new Set()
-        this.wolves = new Set()
-        this.coins = new Set()
+        for (var i = 0; i < this.sheeps.length; i++) {
+            this.moveActor(this.sheeps[i], null)
+        }
+        for (var i = 0; i < this.wolves.length; i++) {
+            this.moveActor(this.wolves[i], null)
+        }
+        for (var i = 0; i < this.coins.length; i++) {
+            this.moveActor(this.coins[i], null)
+        }
         this.spawnActors();
 
         this.draw()
@@ -239,13 +239,14 @@ class Game {
 
     update(dest, ctrl) {
         this.moveActor(this.player, dest, ctrl)
-        if (!(this.player.powerUp != null && this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 2 === 1)) {
+        if (!(this.player.powerUp != null && (this.player.powerUp instanceof SuperSpeed) && (this.player.powerUp.timer % 2 === 1))) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
             this.updateBackgroundColours()
         }
         this.draw()
+        //TODO make this logic more readable
         if (this.player.powerUp !== null) {
             this.player.powerUp.timer--
             if (this.player.powerUp.timer < 0) {
@@ -278,7 +279,7 @@ class Game {
 
             //check for coin
             if (target instanceof Coin) {
-                this.coins.delete(target)
+                remove(this.coins, target)
                 this.moveActor(target, null)
                 this.score++
                 document.getElementById('score').innerText = "Score: " + this.score
@@ -286,18 +287,18 @@ class Game {
             }
 
             //check for murder
-            if(this.player.powerUp instanceof LethalBlows && target instanceof Actor){
+            if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
                 this.moveActor(target, null);
-                if (target instanceof Sheep && !target.eaten){
-                    this.sheeps.delete(target)
+                if (target instanceof Sheep && !target.eaten) {
+                    remove(this.sheeps, target)
                     this.sheepCount--
                 }
-                if (target instanceof Sheep && target.eaten){
-                    this.sheeps.delete(target)
+                if (target instanceof Sheep && target.eaten) {
+                    remove(this.sheeps, target)
                     this.wolfCount--
                 }
-                if (target instanceof Wolf){
-                    this.wolves.delete(target)
+                if (target instanceof Wolf) {
+                    remove(this.wolves, target)
                     this.wolfCount--
                 }
                 return
@@ -315,7 +316,8 @@ class Game {
                 this.board[dest.x][dest.y].eaten = true
                 this.sheepCount--
                 this.wolfCount++
-
+                //TODO build array of eaten sheep and move that into wolves on reset
+                //TODO extract this into a function
                 //add power up
                 this.player.powerUp = PowerUp.getRandom()
                 return
@@ -323,7 +325,6 @@ class Game {
 
             //check for player trying to push
             if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
-                console.log(target, Pos.getPushPos(actor.pos, dest))
                 this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
         }
@@ -346,7 +347,6 @@ class Game {
     }
 
     sheepAI() {
-
         let sheepGoals = []
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
         for (var y = 0; y < BOARD_HEIGHT; y++) {
@@ -354,12 +354,17 @@ class Game {
         }
 
         let graph = new Graph(this.getWeightArray(true))
-        this.sheeps.forEach(sheep => {
-            if (sheep.rooted) return
+        //sort sheeps most advanced at the end
+        this.sheeps.sort((a, b) => {
+            return Math.abs(a.x - targetX) <= Math.abs(b.x - targetX) ? 1 : 0
+        })
+        for (var i = this.sheeps.length - 1; i >= 0; i--) { //iterate in reverse so we can remove elements and not butcher the index
+            let sheep = this.sheeps[i]
+            if (sheep.rooted) continue
             if (sheep.pos.x === targetX) {
                 this.moveActor(sheep, null)
-                this.sheeps.delete(sheep) //seems dangerous to do this here ¯\_(ツ)_/¯
-                return
+                remove(this.sheeps, sheep)
+                continue
             }
             let start = graph.grid[sheep.pos.x][sheep.pos.y]
             let endPos = Game.nearestGoal(sheep.pos, sheepGoals)
@@ -368,7 +373,7 @@ class Game {
             if (typeof nextStep !== 'undefined') {
                 this.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             } else {
-                //if theres no clear path just mill about
+                //if there's no clear path just mill about
                 switch (parseInt(this.random.nextFloat() * 4)) {
                     case 0:
                         this.moveActor(sheep, sheep.pos.getRightPos())
@@ -384,7 +389,7 @@ class Game {
                         break
                 }
             }
-        })
+        }
     }
 
     wolfAI() {
@@ -392,19 +397,21 @@ class Game {
         if (!(this.player.powerUp instanceof WolfDisguise)) {
             wolfGoals.push(this.player.pos)
         }
-        this.sheeps.forEach(sheep => {
+
+        for (var i = 0; i < game.sheeps.length; i++) {
+            let sheep = game.sheeps[i]
             if (!sheep.eaten) {
                 wolfGoals.push(sheep.pos)
             }
-        })
+        }
 
         let weights = this.getWeightArray()
         var break_outer = false
-        this.wolves.forEach(wolf => {
-            if (break_outer) return
-            if (wolf.rooted) return
+        for (var i = this.wolves.length - 1; i >= 0; i--) { //iterate in reverse so we can remove elements and not butcher the index
+            let wolf = this.wolves[i]
+            if (wolf.rooted) continue
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
-            if (endPos == null) {
+            if (endPos == null) { //TODO improve this logic as this block is duplicated below
                 //if theres no clear path just mill about
                 switch (parseInt(this.random.nextFloat() * 4)) {
                     case 0:
@@ -420,8 +427,9 @@ class Game {
                         this.moveActor(wolf, wolf.pos.getDownPos())
                         break
                 }
-                return
+                continue
             }
+            //make rooted sheep traversable
             if (this.board[endPos.x][endPos.y] instanceof Actor && this.board[endPos.x][endPos.y].rooted) {
                 weights[endPos.x][endPos.y] = 1
             }
@@ -443,8 +451,6 @@ class Game {
                             addHighscore()
                         }
                         this.initialiseGame()
-                        //Awkward loop breaking so that the next game doesn't have ghost wolves...
-                        break_outer = true
                         return
                     }
                 }
@@ -466,7 +472,7 @@ class Game {
                         break
                 }
             }
-        })
+        }
     }
 
     getWeightArray(sheep = false) {
@@ -480,12 +486,13 @@ class Game {
                     array[x][y] = 1
                 }
                 if (sheep) {
-                    this.wolves.forEach(wolf => {
-                        if (wolf.rooted) return
+                    for (var i = 0; i < game.wolves.length; i++) {
+                        let wolf = game.wolves[i]
+                        if (wolf.rooted) continue
                         if (Pos.adjacent(wolf.pos, new Pos(x, y))) {
                             array[x][y] = 0
                         }
-                    })
+                    }
                 }
             }
         }
@@ -727,6 +734,7 @@ class SuperSpeed extends PowerUp {
     constructor() {
         super()
         this.color = '#ffff88'
+        this.timer = 20
     }
 }
 
@@ -734,6 +742,7 @@ class LethalBlows extends PowerUp {
     constructor() {
         super()
         this.color = '#000000'
+        this.timer = 5
     }
 }
 
@@ -743,12 +752,13 @@ function enableTeleport() {
 }
 
 function eatAllTheSheep() {
-    game.sheeps.forEach(sheep => {
+    for (var i = 0; i < game.sheeps.length; i++) {
+        let sheep = game.sheeps[i]
         sheep.eaten = true;
         sheep.rooted = true;
         game.sheepCount--
         game.wolfCount++
-    })
+    }
 }
 
 function endGame() {
@@ -771,5 +781,13 @@ function addHighscore() {
                 score: game.score
             }
         );
+    }
+}
+
+function remove(array, element) {
+    const index = array.indexOf(element);
+
+    if (index !== -1) {
+        array.splice(index, 1);
     }
 }
