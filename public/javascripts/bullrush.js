@@ -1,6 +1,8 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
 let LEVEL_LAPS = 5
+let MOVE_DELAY = 20
+let ANIMATION_FRAMES = 10
 let game
 
 $(document).ready(function () {
@@ -336,18 +338,32 @@ class Game {
         if (dest.x < 0 || dest.x >= BOARD_WIDTH || dest.y < 0 || dest.y >= BOARD_HEIGHT
             || this.board[dest.x][dest.y] instanceof Actor) return
 
+        //perform the move
+
         //update board
         this.board[actor.pos.x][actor.pos.y] = null
         this.board[dest.x][dest.y] = actor
 
-        //update actor
+        //update actor by animate from pos to dest
+        // this.animate(actor, dest)
         actor.pos = dest
     }
 
+    animate(actor, dest) {
+        this.delayLoop(ANIMATION_FRAMES, MOVE_DELAY / ANIMATION_FRAMES, function (i) {
+            let stepX = (ANIMATION_FRAMES - i) * (actor.pos.x - dest.x)
+            let stepY = (ANIMATION_FRAMES - i) * (actor.pos.y - dest.y)
+            game.context.fillStyle = actor.getColor()
+            game.context.fillRect(actor.pos.x * game.tileSize + stepX, actor.pos.y * game.tileSize + stepY, game.tileSize, game.tileSize)
+        })
+    }
+
     updateAI() {
-        this.sheepAI()
-        //TODO the wolves don't wait their turn
-        this.wolfAI()
+        //use delay loop to run sheep function followed by wolf function
+        //TODO wolves still don't wait their turn as theres only 20 ms until the wolf ai function gets called, meh
+        this.delayLoop(2, MOVE_DELAY, function (i) {
+            i === 1 ? game.sheepAI() : game.wolfAI()
+        })
     }
 
     sheepAI() {
@@ -358,54 +374,39 @@ class Game {
         }
 
         let graph = new Graph(this.getWeightArray(true))
-        //sort sheeps most advanced at the end
-        this.sheeps.sort((a, b) => Math.abs(a.pos.x - targetX) <= Math.abs(b.pos.x - targetX) ? 1 : -1)
-
-        this.delayLoop(this.sheeps.length, 20, function (i) { //This must iterate in reverse as we are removing array elements
+        //build plan for each sheep
+        for (var i = 0; i < this.sheeps.length; i++) {
             let sheep = game.sheeps[i]
-            if (sheep.rooted) return
+            if (sheep.rooted) continue
             if (sheep.pos.x === targetX) {
                 game.moveActor(sheep, null)
                 remove(game.sheeps, sheep)
-                return
+                continue
             }
             let start = graph.grid[sheep.pos.x][sheep.pos.y]
             let endPos = Game.nearestGoal(sheep.pos, sheepGoals)
             let end = graph.grid[endPos.x][endPos.y]
-            let nextStep = astar.search(graph, start, end).shift();
+            sheep.plan = astar.search(graph, start, end);
+        }
+
+        //sort sheeps most advanced at the end
+        this.sheeps.sort(function (a, b) {
+            if (a.plan === null || typeof a.plan[0] === 'undefined') return -1
+            if (b.plan === null || typeof b.plan[0] === 'undefined') return 1
+            return a.plan.length <= b.plan.length ? 1 : -1
+        })
+        this.delayLoop(this.sheeps.length, MOVE_DELAY, function (i) { //This must iterate in reverse as we are removing array elements
+            let sheep = game.sheeps[i]
+            if (sheep.rooted) return
+
+            let nextStep = sheep.plan[0];
             if (typeof nextStep !== 'undefined') {
                 game.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             } else {
-                //if there's no clear path just mill about
-                switch (parseInt(game.random.nextFloat() * 4)) {
-                    case 0:
-                        game.moveActor(sheep, sheep.pos.getRightPos())
-                        break
-                    case 1:
-                        game.moveActor(sheep, sheep.pos.getLeftPos())
-                        break
-                    case 2:
-                        game.moveActor(sheep, sheep.pos.getUpPos())
-                        break
-                    case 3:
-                        game.moveActor(sheep, sheep.pos.getDownPos())
-                        break
-                }
+                game.millAbout(sheep)
             }
             game.draw()
         })
-    }
-
-    delayLoop(i, timeout, func) {
-        game.inputLock = true
-        if (--i < 0) {
-            game.inputLock = false;
-            return
-        }
-        setTimeout(function () {
-            func(i)
-            game.delayLoop(i, timeout, func)
-        }, timeout)
     }
 
     wolfAI() {
@@ -423,27 +424,13 @@ class Game {
 
         let weights = this.getWeightArray()
         var BREAK_OUTER = false
-        this.delayLoop(this.wolves.length, 20, function (i) {
+        this.delayLoop(this.wolves.length, MOVE_DELAY, function (i) {
             if (BREAK_OUTER) return
             let wolf = game.wolves[i]
             if (wolf.rooted) return
             let endPos = Game.nearestGoal(wolf.pos, wolfGoals)
-            if (endPos == null) { //TODO improve this logic as this block is duplicated below
-                //if theres no clear path just mill about
-                switch (parseInt(game.random.nextFloat() * 4)) {
-                    case 0:
-                        game.moveActor(wolf, wolf.pos.getRightPos())
-                        break
-                    case 1:
-                        game.moveActor(wolf, wolf.pos.getLeftPos())
-                        break
-                    case 2:
-                        game.moveActor(wolf, wolf.pos.getUpPos())
-                        break
-                    case 3:
-                        game.moveActor(wolf, wolf.pos.getDownPos())
-                        break
-                }
+            if (endPos == null) {
+                game.millAbout(wolf)
                 game.draw()
                 return
             }
@@ -454,7 +441,7 @@ class Game {
             let graph = new Graph(weights)
             let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let end = graph.grid[endPos.x][endPos.y]
-            let nextStep = astar.search(graph, start, end).shift();
+            let nextStep = astar.search(graph, start, end)[0];
             if (typeof nextStep !== 'undefined') {
                 if (Math.abs(wolf.pos.x - nextStep.x) + Math.abs(wolf.pos.y - nextStep.y) === 1) {
                     //attack the target
@@ -475,24 +462,39 @@ class Game {
                 }
                 game.moveActor(wolf, new Pos(nextStep.x, nextStep.y))
             } else {
-                //if theres no clear path just mill about
-                switch (parseInt(game.random.nextFloat() * 4)) {
-                    case 0:
-                        game.moveActor(wolf, wolf.pos.getRightPos())
-                        break
-                    case 1:
-                        game.moveActor(wolf, wolf.pos.getLeftPos())
-                        break
-                    case 2:
-                        game.moveActor(wolf, wolf.pos.getUpPos())
-                        break
-                    case 3:
-                        game.moveActor(wolf, wolf.pos.getDownPos())
-                        break
-                }
+                game.millAbout(wolf)
             }
             game.draw()
         })
+    }
+
+    delayLoop(i, timeout, func) {
+        this.inputLock = true
+        if (--i < 0) {
+            this.inputLock = false
+            return
+        }
+        setTimeout(function () {
+            func(i)
+            game.delayLoop(i, timeout, func)
+        }, timeout)
+    }
+
+    millAbout(actor) {
+        switch (parseInt(this.random.nextFloat() * 4)) {
+            case 0:
+                this.moveActor(actor, actor.pos.getRightPos())
+                break
+            case 1:
+                this.moveActor(actor, actor.pos.getLeftPos())
+                break
+            case 2:
+                this.moveActor(actor, actor.pos.getUpPos())
+                break
+            case 3:
+                this.moveActor(actor, actor.pos.getDownPos())
+                break
+        }
     }
 
     getWeightArray(sheep = false) {
@@ -639,6 +641,7 @@ class Actor {
         this.pos = pos
         this.color = '#000000'
         this.rooted = false
+        this.plan = null
     }
 
     getColor() {
@@ -762,7 +765,7 @@ class LethalBlows extends PowerUp {
     constructor() {
         super()
         this.color = '#000000'
-        this.timer = 5
+        this.timer = 6
     }
 }
 
