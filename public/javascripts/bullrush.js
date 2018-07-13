@@ -121,6 +121,7 @@ class Game {
         this.inputLock = false //used to lock input while delayed loops are running
 
         this.draw()
+        this.draw()
     }
 
     spawnActors() {
