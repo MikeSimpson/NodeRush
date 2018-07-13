@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/public/sprites/player.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sprites/sheep.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sprites/wolf.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/bullrush.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/bullrush.js" afterDir="false" />
     </list>
@@ -58,8 +61,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="355" selection-start-line="355" selection-end-line="355" />
+            <state relative-caret-position="382">
+              <caret line="234" column="24" lean-forward="true" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -103,7 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.color</find>
       <find>resetRound</find>
       <find>BACKGROUND_A</find>
       <find>bullrush</find>
@@ -133,6 +135,7 @@
       <find>remove</find>
       <find>return</find>
       <find>todo</find>
+      <find>draw</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -188,6 +191,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -215,6 +219,12 @@
               <item name="NodeRush" type="b2602c69:ProjectViewProjectNode" />
               <item name="NodeRush" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="sprites" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NodeRush" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NodeRush" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="stylesheets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -231,7 +241,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -240,14 +249,16 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/sprites" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/sprites" />
       <recent name="$PROJECT_DIR$/public/stylesheets" />
       <recent name="$PROJECT_DIR$/public/javascripts" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/public" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -280,30 +291,31 @@
       <workItem from="1530676452913" duration="167000" />
       <workItem from="1530690553970" duration="7391000" />
       <workItem from="1530736975271" duration="1963000" />
-      <workItem from="1530931287671" duration="1817000" />
+      <workItem from="1530931287671" duration="2103000" />
+      <workItem from="1531458167739" duration="1080000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80469000" />
+    <option name="totallyTimeSpent" value="81835000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1370" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1850" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17620482" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13053097" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -637,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="355" selection-start-line="355" selection-end-line="355" />
+        <state relative-caret-position="382">
+          <caret line="234" column="24" lean-forward="true" selection-start-line="234" selection-start-column="24" selection-end-line="234" selection-end-column="24" />
         </state>
       </provider>
     </entry>

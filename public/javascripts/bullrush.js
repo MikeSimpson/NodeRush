@@ -4,6 +4,12 @@ let LEVEL_LAPS = 5
 let MOVE_DELAY = 20
 let ANIMATION_FRAMES = 10
 let game
+var sheepImage = new Image()
+var wolfImage = new Image()
+var playerImage = new Image()
+sheepImage.src = '/sprites/sheep.png'
+wolfImage.src = '/sprites/wolf.png'
+playerImage.src = '/sprites/player.png'
 
 $(document).ready(function () {
     game = new Game()
@@ -237,6 +243,18 @@ class Game {
                     this.context.fillStyle = this.backgroundB
                 }
                 this.context.fillRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                if (this.board[x][y] instanceof Player) {
+                    this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                    continue
+                }
+                if (this.board[x][y] instanceof Wolf) {
+                    this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                    continue
+                }
+                if (this.board[x][y] instanceof Sheep) {
+                    this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                    continue
+                }
             }
         }
     }
