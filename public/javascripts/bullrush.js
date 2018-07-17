@@ -110,14 +110,14 @@ class Game {
 
     initialiseGame() {
         //configure seed
-        var seed = document.getElementById('seed').value
-        if (seed === "" || seed === this.lastSeed) {
-            seed = parseInt(Math.random() * 2147483647);
+        this.seed = document.getElementById('seed').value
+        if (this.seed === "" || this.seed === this.lastSeed) {
+            this.seed = parseInt(Math.random() * 2147483647);
             // document.getElementById('seed').value = seed;
         }
 
-        this.lastSeed = seed;
-        this.genRandom = new Random(seed)
+        this.lastSeed = this.seed;
+        this.genRandom = new Random(this.seed)
         this.gameRandom = new Random(this.genRandom.next())
 
         this.directionIsRight = true
@@ -854,7 +854,7 @@ function addHighscore() {
     var person = prompt(
         'Congratulations, you lose! Enter your name to save your score:'
     );
-    console.log(game.moves)
+    console.log(game.seed)
     if (person != null && person !== '') {
         $.post(
             '/highscore',
