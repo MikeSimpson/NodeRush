@@ -27,21 +27,42 @@ let keyListener = function (e) {
         case 'ArrowLeft':
         case 'a':
             game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey)
+            if(e.ctrlKey || e.altKey || e.shiftKey){
+                game.moves.push('A')
+            } else {
+                game.moves.push('a')
+            }
             break
         case 'ArrowUp':
         case 'w':
             game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey)
+            if(e.ctrlKey || e.altKey || e.shiftKey){
+                game.moves.push('W')
+            } else {
+                game.moves.push('w')
+            }
             break
         case 'ArrowRight':
         case 'd':
             game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey)
+            if(e.ctrlKey || e.altKey || e.shiftKey){
+                game.moves.push('D')
+            } else {
+                game.moves.push('d')
+            }
             break
         case 'ArrowDown':
         case 's':
             game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey)
+            if(e.ctrlKey || e.altKey || e.shiftKey){
+                game.moves.push('S')
+            } else {
+                game.moves.push('s')
+            }
             break
         case ' ':
             game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey)
+            game.moves.push('P')
             break
         default:
     }
@@ -84,7 +105,6 @@ class Game {
         canvas.height = this.tileSize * BOARD_HEIGHT
         div.appendChild(canvas)
         this.context = canvas.getContext('2d')
-
         this.initialiseGame()
     }
 
@@ -95,8 +115,10 @@ class Game {
             seed = parseInt(Math.random() * 2147483647);
             // document.getElementById('seed').value = seed;
         }
+
         this.lastSeed = seed;
-        this.random = new Random(seed)
+        this.genRandom = new Random(seed)
+        this.gameRandom = new Random(this.genRandom.next())
 
         this.directionIsRight = true
 
@@ -120,14 +142,15 @@ class Game {
 
         this.inputLock = false //used to lock input while delayed loops are running
 
-        this.draw()
+        this.moves = []
+
         this.draw()
     }
 
     spawnActors() {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
-        let playerY = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+        let playerY = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
         this.player = new Player(new Pos(startX, playerY))
         this.board[startX][playerY] = this.player
         //spawn sheep
@@ -136,7 +159,7 @@ class Game {
 
         while (this.sheepCount > 0) {
             //attempt to add a sheep
-            let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[startX][y] instanceof Actor)) {
                 let sheep = new Sheep(new Pos(startX, y))
                 this.board[startX][y] = sheep
@@ -151,10 +174,10 @@ class Game {
         var wolvesCreated = 0
         while (this.wolfCount > 0) {
             //attempt to add a wolf
-            let x = parseInt(this.random.nextFloat() * BOARD_WIDTH / 2)
+            let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH / 2)
             //force wolf to second half of board
             if (this.directionIsRight) x += parseInt(BOARD_WIDTH / 2)
-            let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[x][y] instanceof Actor)) {
                 let wolf = new Wolf(new Pos(x, y))
                 this.board[x][y] = wolf
@@ -168,9 +191,9 @@ class Game {
         this.coins = []
         while (true) {
             //attempt to add a coin
-            let x = parseInt(this.random.nextFloat() * BOARD_WIDTH)
+            let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
             //force wolf to second half of board
-            let y = parseInt(this.random.nextFloat() * BOARD_HEIGHT)
+            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[x][y] instanceof Actor)) {
                 let coin = new Coin(new Pos(x, y))
                 this.board[x][y] = coin
@@ -185,7 +208,7 @@ class Game {
         //loop every non edge tile and chuck a maybe boulder in it
         for (var x = 1; x < BOARD_WIDTH - 1; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.random.nextFloat() < 0.2) {
+                if (this.genRandom.nextFloat() < 0.2) {
                     let boulder = new Boulder(new Pos(x, y))
                     this.board[x][y] = boulder
                     this.boulders.push(boulder)
@@ -380,9 +403,11 @@ class Game {
     updateAI() {
         //use delay loop to run sheep function followed by wolf function
         //TODO wolves still don't wait their turn as theres only 20 ms until the wolf ai function gets called, meh
-        this.delayLoop(2, MOVE_DELAY, function (i) {
-            i === 1 ? game.sheepAI() : game.wolfAI()
-        })
+        game.sheepAI()
+        //after enough time has passed update wolves
+        setTimeout(function () {
+            game.wolfAI()
+        }, MOVE_DELAY * this.sheeps.length)
     }
 
     sheepAI() {
@@ -500,7 +525,7 @@ class Game {
     }
 
     millAbout(actor) {
-        switch (parseInt(this.random.nextFloat() * 4)) {
+        switch (parseInt(this.gameRandom.nextFloat() * 4)) {
             case 0:
                 this.moveActor(actor, actor.pos.getRightPos())
                 break
@@ -577,7 +602,7 @@ class Game {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(this.random.nextFloat() * 16)];
+            color += letters[Math.floor(this.gameRandom.nextFloat() * 16)];
         }
         return color;
     }
@@ -743,7 +768,7 @@ class PowerUp {
     }
 
     static getRandom() {
-        switch (parseInt(game.random.nextFloat() * 4)) {
+        switch (parseInt(game.gameRandom.nextFloat() * 4)) {
             case 0:
                 return new SuperPush()
             case 1:
@@ -829,13 +854,15 @@ function addHighscore() {
     var person = prompt(
         'Congratulations, you lose! Enter your name to save your score:'
     );
-
+    console.log(game.moves)
     if (person != null && person !== '') {
         $.post(
             '/highscore',
             {
                 name: person,
-                score: game.score
+                score: game.score,
+                seed: game.seed,
+                moves: game.moves
             }
         );
     }
