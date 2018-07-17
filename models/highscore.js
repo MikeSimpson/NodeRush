@@ -4,7 +4,7 @@ var scoreSchema = new mongoose.Schema({
         name: String,
         score: Number,
         seed: Number,
-        moves: [String]
+        moves: String
     },
     {collection: 'high_scores_donut'}
 );

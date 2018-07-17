@@ -28,41 +28,41 @@ let keyListener = function (e) {
         case 'a':
             game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey)
             if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves.push('A')
+                game.moves = game.moves + 'A'
             } else {
-                game.moves.push('a')
+                game.moves = game.moves + 'a'
             }
             break
         case 'ArrowUp':
         case 'w':
             game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey)
             if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves.push('W')
+                game.moves = game.moves + 'W'
             } else {
-                game.moves.push('w')
+                game.moves = game.moves + 'w'
             }
             break
         case 'ArrowRight':
         case 'd':
             game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey)
             if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves.push('D')
+                game.moves = game.moves + 'D'
             } else {
-                game.moves.push('d')
+                game.moves = game.moves + 'd'
             }
             break
         case 'ArrowDown':
         case 's':
             game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey)
             if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves.push('S')
+                game.moves = game.moves + 'S'
             } else {
-                game.moves.push('s')
+                game.moves = game.moves + 's'
             }
             break
         case ' ':
             game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey)
-            game.moves.push('P')
+            game.moves = game.moves + 'P'
             break
         default:
     }
@@ -142,7 +142,7 @@ class Game {
 
         this.inputLock = false //used to lock input while delayed loops are running
 
-        this.moves = []
+        this.moves = ''
 
         this.draw()
     }
