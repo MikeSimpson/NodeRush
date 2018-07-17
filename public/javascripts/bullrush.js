@@ -26,43 +26,22 @@ let keyListener = function (e) {
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
-            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey)
-            if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves = game.moves + 'A, '
-            } else {
-                game.moves = game.moves + 'a, '
-            }
+            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
             break
         case 'ArrowUp':
         case 'w':
-            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey)
-            if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves = game.moves + 'W, '
-            } else {
-                game.moves = game.moves + 'w, '
-            }
+            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
             break
         case 'ArrowRight':
         case 'd':
-            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey)
-            if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves = game.moves + 'D, '
-            } else {
-                game.moves = game.moves + 'd, '
-            }
+            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
             break
         case 'ArrowDown':
         case 's':
-            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey)
-            if(e.ctrlKey || e.altKey || e.shiftKey){
-                game.moves = game.moves + 'S, '
-            } else {
-                game.moves = game.moves + 's, '
-            }
+            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
             break
         case ' ':
-            game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey)
-            game.moves = game.moves + 'P, '
+            game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey, e.key)
             break
         default:
     }
@@ -142,7 +121,7 @@ class Game {
 
         this.inputLock = false //used to lock input while delayed loops are running
 
-        this.moves = ''
+        this.moves = 'Z'
 
         this.draw()
     }
@@ -283,8 +262,14 @@ class Game {
         }
     }
 
-    update(dest, ctrl) {
+    update(dest, ctrl, key) {
         if (this.inputLock) return
+        if (ctrl) {
+            game.moves = game.moves + key.toUpperCase() + ', '
+        } else {
+            game.moves = game.moves + key + ', '
+        }
+
         this.moveActor(this.player, dest, ctrl)
         if (!(this.player.powerUp != null && (this.player.powerUp instanceof SuperSpeed) && (this.player.powerUp.timer % 2 === 1))) {
             game.updateAI()
