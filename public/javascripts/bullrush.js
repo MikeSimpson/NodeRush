@@ -10,15 +10,19 @@ var playerImage = new Image()
 sheepImage.src = '/sprites/sheep.png'
 wolfImage.src = '/sprites/wolf.png'
 playerImage.src = '/sprites/player.png'
+var powerKey
 
 $(document).ready(function () {
     game = new Game()
+    game.initialiseGame()
 
-    window.addEventListener('keydown', keyListener, true)
+    window.addEventListener('keydown', keyDownListener, true)
+
+    window.addEventListener('keyup', keyUpListener, true)
     // window.addEventListener('click', clickListener, true)
 })
 
-let keyListener = function (e) {
+let keyDownListener = function (e) {
     //prevent browser scrolling
     if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ' ', 'Control'].indexOf(e.key) > -1) {
         e.preventDefault()
@@ -26,22 +30,44 @@ let keyListener = function (e) {
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
-            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
+            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
         case 'ArrowUp':
         case 'w':
-            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
+            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
         case 'ArrowRight':
         case 'd':
-            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
+            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
         case 'ArrowDown':
         case 's':
-            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey, e.key)
+            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
         case ' ':
-            game.update(game.player.pos, e.ctrlKey || e.altKey || e.shiftKey, e.key)
+            game.update(game.player.pos, false, e.key)
+            break
+        case 'Control':
+        case 'Alt':
+        case 'q':
+            powerKey = true
+            game.draw()
+            break
+        default:
+    }
+}
+
+let keyUpListener = function (e) {
+    //prevent browser scrolling
+    if (['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', ' ', 'Control'].indexOf(e.key) > -1) {
+        e.preventDefault()
+    }
+    switch (e.key) {
+        case 'Control':
+        case 'Alt':
+        case 'q':
+            powerKey = false
+            game.draw()
             break
         default:
     }
@@ -84,13 +110,12 @@ class Game {
         canvas.height = this.tileSize * BOARD_HEIGHT
         div.appendChild(canvas)
         this.context = canvas.getContext('2d')
-        this.initialiseGame()
     }
 
-    initialiseGame() {
+    initialiseGame(seed) {
         //configure seed
-        this.seed = document.getElementById('seed').value
-        if (this.seed === "" || this.seed === this.lastSeed) {
+        this.seed = seed || document.getElementById('seed').value
+        if (this.seed === "" || (this.seed === this.lastSeed && seed === null)) {
             this.seed = parseInt(Math.random() * 2147483647);
             // document.getElementById('seed').value = seed;
         }
@@ -121,7 +146,7 @@ class Game {
 
         this.inputLock = false //used to lock input while delayed loops are running
 
-        this.moves = 'Z'
+        this.moves = []
 
         this.draw()
     }
@@ -138,7 +163,7 @@ class Game {
 
         while (this.sheepCount > 0) {
             //attempt to add a sheep
-            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
+            let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[startX][y] instanceof Actor)) {
                 let sheep = new Sheep(new Pos(startX, y))
                 this.board[startX][y] = sheep
@@ -153,10 +178,10 @@ class Game {
         var wolvesCreated = 0
         while (this.wolfCount > 0) {
             //attempt to add a wolf
-            let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH / 2)
+            let x = parseInt(this.gameRandom.nextFloat() * BOARD_WIDTH / 2)
             //force wolf to second half of board
             if (this.directionIsRight) x += parseInt(BOARD_WIDTH / 2)
-            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
+            let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[x][y] instanceof Actor)) {
                 let wolf = new Wolf(new Pos(x, y))
                 this.board[x][y] = wolf
@@ -265,9 +290,9 @@ class Game {
     update(dest, ctrl, key) {
         if (this.inputLock) return
         if (ctrl) {
-            game.moves = game.moves + key.toUpperCase() + ', '
+            game.moves.push(key.toUpperCase())
         } else {
-            game.moves = game.moves + key + ', '
+            game.moves.push(key)
         }
 
         this.moveActor(this.player, dest, ctrl)
@@ -351,7 +376,7 @@ class Game {
                 //TODO build array of eaten sheep and move that into wolves on reset
                 //TODO extract this into a function
                 //add power up
-                this.player.powerUp = PowerUp.getRandom()
+                this.player.powerUp = target.powerUp
                 return
             }
 
@@ -699,6 +724,7 @@ class Sheep extends Actor {
         super(pos)
         this.color = '#ffebd2'
         this.eaten = false
+        this.powerUp = PowerUp.getRandom()
     }
 
     getColor() {
@@ -707,6 +733,9 @@ class Sheep extends Actor {
         }
         if (this.rooted) {
             return '#bfab92'
+        }
+        if (powerKey && Pos.adjacent(game.player.pos, this.pos)) {
+            return this.powerUp.getColor()
         }
         return this.color
     }
@@ -748,23 +777,39 @@ class PowerUp {
         this.timer = 10
     }
 
+    static get WEIGHT() {
+        return 10
+    }
+
     getColor() {
         return this.color
     }
 
     static getRandom() {
-        switch (parseInt(game.gameRandom.nextFloat() * 4)) {
-            case 0:
-                return new SuperPush()
-            case 1:
-                return new WolfDisguise()
-            case 2:
-                return new SuperSpeed()
-            case 3:
-                return new LethalBlows()
-            default:
-                return new SuperPush()
-        }
+        let totalWeight = SuperPush.WEIGHT
+            + WolfDisguise.WEIGHT
+            + LethalBlows.WEIGHT
+            + SuperSpeed.WEIGHT
+            + CoinSurprise.WEIGHT
+            + ChainLightning.WEIGHT
+        var pill = 0
+        let rand = game.gameRandom.nextFloat() * totalWeight
+        // console.log(totalWeight)
+        // console.log(pill)
+        // console.log(rand)
+        if (rand < (SuperPush.WEIGHT + pill)) return new SuperPush()
+        pill += SuperPush.WEIGHT
+        if (rand < (WolfDisguise.WEIGHT + pill)) return new WolfDisguise()
+        pill += WolfDisguise.WEIGHT
+        if (rand < (LethalBlows.WEIGHT + pill)) return new LethalBlows()
+        pill += LethalBlows.WEIGHT
+        if (rand < (SuperSpeed.WEIGHT + pill)) return new SuperSpeed()
+        pill += SuperSpeed.WEIGHT
+        if (rand < (CoinSurprise.WEIGHT + pill)) return new CoinSurprise()
+        pill += CoinSurprise.WEIGHT
+        if (rand < (ChainLightning.WEIGHT + pill)) return new ChainLightning()
+        pill += ChainLightning.WEIGHT
+        return new ChainLightning()
     }
 }
 
@@ -796,13 +841,21 @@ class LethalBlows extends PowerUp {
         this.color = '#000000'
         this.timer = 6
     }
+
+    static get WEIGHT() {
+        return 5
+    }
 }
 
-class CoinSuprise extends PowerUp {
+class CoinSurprise extends PowerUp {
     constructor() {
         super()
         this.color = '#00BFFF'
         this.timer = 1
+    }
+
+    static get WEIGHT() {
+        return 0
     }
 }
 
@@ -810,6 +863,10 @@ class ChainLightning extends PowerUp {
     constructor() {
         super()
         this.color = '#eeeeff'
+    }
+
+    static get WEIGHT() {
+        return 0
     }
 }
 
@@ -859,4 +916,69 @@ function remove(array, element) {
     if (index !== -1) {
         array.splice(index, 1);
     }
+}
+
+function replay(seed, moves) {
+    MOVE_DELAY = 0
+    game.initialiseGame(seed)
+    replayLoop(moveArray.length, 500, function (i) {
+        console.log(moves[i])
+        let ctrl = moves[i].toUpperCase() === moves[i]
+        switch (moves[i].toUpperCase()) {
+            case 'ARROWLEFT':
+            case 'A':
+                game.update(game.player.pos.getLeftPos(), ctrl, moves[i])
+                break
+            case 'ARROWUP':
+            case 'W':
+                game.update(game.player.pos.getUpPos(), ctrl, moves[i])
+                break
+            case 'ARROWRIGHT':
+            case 'D':
+                game.update(game.player.pos.getRightPos(), ctrl, moves[i])
+                break
+            case 'ARROWDOWN':
+            case 'S':
+                game.update(game.player.pos.getDownPos(), ctrl, moves[i])
+                break
+            case ' ':
+                game.update(game.player.pos, ctrl, moves[i])
+                break
+            default:
+        }
+    })
+    MOVE_DELAY = 20
+}
+
+function replayLoop(i, timeout, func) {
+    if (--i < 0) {
+        return
+    }
+    setTimeout(function () {
+        func(i)
+        replayLoop(i, timeout, func)
+    }, timeout)
+}
+
+function testPowerSpread() {
+    var ass = 0
+    var push = 0
+    var speed = 0
+    var hide = 0
+    for (var i = 0; i < 10000; i++) {
+        let powerUp = PowerUp.getRandom()
+        if (powerUp instanceof LethalBlows) {
+            ass++
+        } else if (powerUp instanceof SuperPush) {
+            push++
+        } else if (powerUp instanceof SuperSpeed) {
+            speed++
+        } else if (powerUp instanceof WolfDisguise) {
+            hide++
+        }
+    }
+    console.log(ass)
+    console.log(push)
+    console.log(speed)
+    console.log(hide)
 }
