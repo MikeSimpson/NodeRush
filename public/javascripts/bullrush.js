@@ -1,7 +1,7 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
 let LEVEL_LAPS = 5
-let MOVE_DELAY = 20
+let MOVE_DELAY = 10
 let ANIMATION_FRAMES = 10
 let game
 var sheepImage = new Image()
@@ -139,6 +139,7 @@ class Game {
         //initialise actors
         this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz
         this.wolfCount = 1
+        this.player = new Player(new Pos(-1,-1)) //pos will be overidden
         this.spawnActors()
 
         //clear debug flags
@@ -155,7 +156,7 @@ class Game {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
         let playerY = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
-        this.player = new Player(new Pos(startX, playerY))
+        this.player.pos = new Pos(startX, playerY)
         this.board[startX][playerY] = this.player
         //spawn sheep
         this.sheeps = []
@@ -340,7 +341,6 @@ class Game {
                 this.moveActor(target, null)
                 this.score++
                 document.getElementById('score').innerText = "Score: " + this.score
-                document.getElementById('lap').innerText = "Lap: " + (this.laps + 1)
             }
 
             //check for murder
@@ -377,6 +377,16 @@ class Game {
                 //TODO extract this into a function
                 //add power up
                 this.player.powerUp = target.powerUp
+                return
+            }
+
+            //check for MoneyBags dropping dosh
+            if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 2 && target == null) {
+                let coin = new Coin(new Pos(dest.x, dest.y))
+                this.board[dest.x][dest.y] = coin
+                this.coins.push(coin)
+                this.score -= 2
+                document.getElementById('score').innerText = "Score: " + this.score
                 return
             }
 
@@ -792,6 +802,8 @@ class PowerUp {
             + SuperSpeed.WEIGHT
             + CoinSurprise.WEIGHT
             + ChainLightning.WEIGHT
+            + MoneyBags.WEIGHT
+            + Rescue.WEIGHT
         var pill = 0
         let rand = game.gameRandom.nextFloat() * totalWeight
         // console.log(totalWeight)
@@ -809,7 +821,11 @@ class PowerUp {
         pill += CoinSurprise.WEIGHT
         if (rand < (ChainLightning.WEIGHT + pill)) return new ChainLightning()
         pill += ChainLightning.WEIGHT
-        return new ChainLightning()
+        if (rand < (MoneyBags.WEIGHT + pill)) return new MoneyBags()
+        pill += MoneyBags.WEIGHT
+        if (rand < (Rescue.WEIGHT + pill)) return new Rescue()
+        pill += Rescue.WEIGHT
+        return new SuperPush()
     }
 }
 
@@ -817,6 +833,7 @@ class SuperPush extends PowerUp {
     constructor() {
         super()
         this.color = '#996655'
+        this.timer = 20
     }
 }
 
@@ -824,6 +841,7 @@ class WolfDisguise extends PowerUp {
     constructor() {
         super()
         this.color = '#ff0099'
+        this.timer = 20
     }
 }
 
@@ -847,7 +865,7 @@ class LethalBlows extends PowerUp {
     }
 }
 
-class CoinSurprise extends PowerUp {
+class CoinSurprise extends PowerUp { //spawns coins and gives 2x multiplier
     constructor() {
         super()
         this.color = '#00BFFF'
@@ -867,6 +885,30 @@ class ChainLightning extends PowerUp {
 
     static get WEIGHT() {
         return 0
+    }
+}
+
+class Rescue extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#eeeeff'
+        this.timer = 999
+    }
+
+    static get WEIGHT() {
+        return 50
+    }
+}
+
+class MoneyBags extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#ffff00'
+        this.timer = 999
+    }
+
+    static get WEIGHT() {
+        return 5
     }
 }
 
@@ -947,7 +989,7 @@ function replay(seed, moves) {
             default:
         }
     })
-    MOVE_DELAY = 20
+    MOVE_DELAY = 10
 }
 
 function replayLoop(i, timeout, func) {
