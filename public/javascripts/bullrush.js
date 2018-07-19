@@ -206,6 +206,8 @@ class Game {
                 break
             }
         }
+
+        this.decoys = []
     }
 
     spawnBoulders() {
@@ -272,6 +274,7 @@ class Game {
                     this.context.fillStyle = this.backgroundB
                 }
                 this.context.fillRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                //draw sprites
                 if (this.board[x][y] instanceof Player) {
                     this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
                     continue
@@ -280,7 +283,7 @@ class Game {
                     this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
                     continue
                 }
-                if (this.board[x][y] instanceof Sheep) {
+                if (this.board[x][y] instanceof Sheep || this.board[x][y] instanceof Decoy) {
                     this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
                     continue
                 }
@@ -390,6 +393,14 @@ class Game {
                 return
             }
 
+            //check for WolfeDisguise dropping decoys
+            if (ctrl && this.player.powerUp instanceof WolfDisguise && this.player.powerUp.decoyCount > 0 && target == null) {
+                let decoy = new Decoy(new Pos(dest.x, dest.y))
+                this.board[dest.x][dest.y] = decoy
+                this.decoys.push(decoy)
+                return
+            }
+
             //check for player trying to push
             if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
                 this.moveActor(target, Pos.getPushPos(actor.pos, dest))
@@ -486,6 +497,13 @@ class Game {
             }
         }
 
+        for (var i = 0; i < game.decoys.length; i++) {
+            let decoy = game.decoys[i]
+            if (!decoy.eaten) {
+                wolfGoals.push(decoy.pos)
+            }
+        }
+
         let weights = this.getWeightArray()
         var BREAK_OUTER = false
         this.delayLoop(this.wolves.length, MOVE_DELAY, function (i) {
@@ -498,7 +516,7 @@ class Game {
                 game.draw()
                 return
             }
-            //make rooted sheep traversable
+            //make rooted sheep untraversable
             if (game.board[endPos.x][endPos.y] instanceof Actor && game.board[endPos.x][endPos.y].rooted) {
                 weights[endPos.x][endPos.y] = 1
             }
@@ -514,6 +532,10 @@ class Game {
                         game.board[nextStep.x][nextStep.y].eaten = true
                         game.sheepCount--
                         game.wolfCount++
+                    }
+                    if (game.board[nextStep.x][nextStep.y] instanceof Decoy) {
+                        game.board[nextStep.x][nextStep.y].rooted = true
+                        game.board[nextStep.x][nextStep.y].eaten = true
                     }
                     if (game.board[nextStep.x][nextStep.y] instanceof Player) {
                         if (game.score > 0) {
@@ -751,6 +773,21 @@ class Sheep extends Actor {
     }
 }
 
+class Decoy extends Actor {
+    constructor(pos) {
+        super(pos)
+        this.color = '#ffebd2'
+        this.eaten = false
+    }
+    getColor() {
+        if (this.eaten) {
+            return '#ff8b72'
+        }
+        return this.color
+    }
+
+}
+
 class Wolf extends Actor {
     constructor(pos) {
         super(pos)
@@ -842,6 +879,7 @@ class WolfDisguise extends PowerUp {
         super()
         this.color = '#ff0099'
         this.timer = 20
+        this.decoyCount = 1
     }
 }
 
@@ -896,7 +934,7 @@ class Rescue extends PowerUp {
     }
 
     static get WEIGHT() {
-        return 50
+        return 0
     }
 }
 
@@ -904,7 +942,7 @@ class MoneyBags extends PowerUp {
     constructor() {
         super()
         this.color = '#ffff00'
-        this.timer = 999
+        this.timer = 40
     }
 
     static get WEIGHT() {
