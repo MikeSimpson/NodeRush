@@ -44,10 +44,10 @@ router.post('/highscore', function(req, res) {
     post.seed = req.body.seed;
     post.moves = req.body.moves;
 
-    post.save(function(err) {
-        if (err) res.send(err);
-        // res.send('Thanks ' + req.body.name + ', your laps has been submitted');
-    });
+    // post.save(function(err) {
+    //     if (err) res.send(err);
+    //     // res.send('Thanks ' + req.body.name + ', your laps has been submitted');
+    // });
 });
 
 module.exports = router;

@@ -21,27 +21,30 @@
             <h1 id="lap">Lap: 1</h2>
          </div>
       </div>
-      <table>
+      <table class="dpad">
          <tr>
             <td>
                <div/>
             </td>
             <td>
-               <div class="dpad" onClick="dpadInput('PadUp')"></div>
+               <div class="dpadKey" onClick="dpadInput('PadUp')"></div>
             </td>
             <td>
-               <div/>
+               <div class="dpadSpacer"></div>
+            </td>
+            <td>
+               <div class="dpadAttack" onClick="dpadInput('PadAttack')"></div>
             </td>
          </tr>
          <tr>
             <td>
-               <div class="dpad" onClick="dpadInput('PadLeft')"></div>
+               <div class="dpadKey" onClick="dpadInput('PadLeft')"></div>
             </td>
             <td>
-               <div class="dpad" onClick="dpadInput('PadWait')"></div>
+               <div/>
             </td>
             <td>
-               <div class="dpad" onClick="dpadInput('PadRight')"></div>
+               <div class="dpadKey" onClick="dpadInput('PadRight')"></div>
             </td>
          </tr>
          <tr>
@@ -49,10 +52,13 @@
                <div/>
             </td>
             <td>
-               <div class="dpad" onClick="dpadInput('PadDown')"></div>
+               <div class="dpadKey" onClick="dpadInput('PadDown')"></div>
             </td>
             <td>
-               <div/>
+               <div class="dpadSpacer"></div>
+            </td>
+            <td>
+               <div class="dpadWait" onClick="dpadInput('PadWait')"></div>
             </td>
          </tr>
       </table>

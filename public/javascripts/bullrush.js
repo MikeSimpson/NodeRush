@@ -44,12 +44,11 @@ let keyDownListener = function (e) {
         case 's':
             game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
-        case ' ':
+        case 'e':
+        case 'Shift':
             game.update(game.player.pos, false, e.key)
             break
-        case 'Control':
-        case 'Alt':
-        case 'q':
+        case ' ':
             powerKey = true
             game.draw()
             break
@@ -63,9 +62,7 @@ let keyUpListener = function (e) {
         e.preventDefault()
     }
     switch (e.key) {
-        case 'Control':
-        case 'Alt':
-        case 'q':
+        case ' ':
             powerKey = false
             game.draw()
             break
@@ -76,19 +73,28 @@ let keyUpListener = function (e) {
 function dpadInput(key) {
     switch (key) {
         case 'PadLeft':
-            game.update(game.player.pos.getLeftPos(), false)
+            game.update(game.player.pos.getLeftPos(), powerKey, key)
+            powerKey = false
             break
         case 'PadUp':
-            game.update(game.player.pos.getUpPos(), false)
+            game.update(game.player.pos.getUpPos(), powerKey, key)
+            powerKey = false
             break
         case 'PadRight':
-            game.update(game.player.pos.getRightPos(), false)
+            game.update(game.player.pos.getRightPos(), powerKey, key)
+            powerKey = false
             break
         case 'PadDown':
-            game.update(game.player.pos.getDownPos(), false)
+            game.update(game.player.pos.getDownPos(), powerKey, key)
+            powerKey = false
             break
         case 'PadWait':
-            game.update(game.player.pos, false)
+            game.update(game.player.pos, powerKey, key)
+            powerKey = false
+            break
+        case 'PadAttack':
+            powerKey = true
+            game.draw()
             break
         default:
     }
@@ -139,7 +145,7 @@ class Game {
         //initialise actors
         this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz
         this.wolfCount = 1
-        this.player = new Player(new Pos(-1,-1)) //pos will be overidden
+        this.player = new Player(new Pos(-1, -1)) //pos will be overidden
         this.spawnActors()
 
         //clear debug flags
@@ -255,6 +261,9 @@ class Game {
         for (var i = 0; i < this.coins.length; i++) {
             this.moveActor(this.coins[i], null)
         }
+        for (var i = 0; i < this.decoys.length; i++) {
+            this.moveActor(this.decoys[i], null)
+        }
         this.spawnActors();
 
         this.draw()
@@ -275,18 +284,18 @@ class Game {
                 }
                 this.context.fillRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
                 //draw sprites
-                if (this.board[x][y] instanceof Player) {
-                    this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                    continue
-                }
-                if (this.board[x][y] instanceof Wolf) {
-                    this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                    continue
-                }
-                if (this.board[x][y] instanceof Sheep || this.board[x][y] instanceof Decoy) {
-                    this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                    continue
-                }
+                // if (this.board[x][y] instanceof Player) {
+                //     this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                //     continue
+                // }
+                // if (this.board[x][y] instanceof Wolf) {
+                //     this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                //     continue
+                // }
+                // if (this.board[x][y] instanceof Sheep || this.board[x][y] instanceof Decoy) {
+                //     this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                //     continue
+                // }
             }
         }
     }
@@ -776,9 +785,10 @@ class Sheep extends Actor {
 class Decoy extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = '#ffebd2'
+        this.color = '#77BFFF'
         this.eaten = false
     }
+
     getColor() {
         if (this.eaten) {
             return '#ff8b72'
@@ -973,9 +983,11 @@ function endGame() {
 }
 
 function addHighscore() {
-    var person = prompt(
-        'Congratulations, you lose! Enter your name to save your score:'
-    );
+    // var person = prompt(
+    //     'Congratulations, you lose! Enter your name to save your score:'
+    // )
+    alert('The leader board is locked.\nYou\'ll either get a doughnut or you won\'t!');
+    return
     console.log(game.seed)
     if (person != null && person !== '') {
         $.post(

@@ -1,83 +1,119 @@
 body {
-  padding-top: 20px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: dimgray;
+    padding-top: 20px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: dimgray;
 }
 
 .container-fluid {
-  padding-top: 20px;
-  max-width: 90%;
+    padding-top: 20px;
+    max-width: 90%;
 }
 
 table {
-  margin: auto;
+    margin: auto;
 }
 
 hr {
-  color: white;
+    color: white;
 }
 
 h1 {
-  color: white;
-  text-align: center;
-  font-size: xx-large;
+    color: white;
+    text-align: center;
+    font-size: xx-large;
 }
 
 h2 {
-  color: white;
-  text-align: center;
-  font-size: xx-large;
+    color: white;
+    text-align: center;
+    font-size: xx-large;
 }
 
 .score_col {
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 button {
-  margin: 10px;
-  padding: 10px;
-  background: dimgray;
-  border: 3px solid white;
-  border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    background: dimgray;
+    border: 3px solid white;
+    border-radius: 20px;
 }
 
-input {
-  : white;
-  margin: 10px;
-  padding: 10px;
-  background: dimgray;
-  border: 3px solid white;
-  border-radius: 20px;
+input {: white;
+    margin: 10px;
+    padding: 10px;
+    background: dimgray;
+    border: 3px solid white;
+    border-radius: 20px;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: darkgrey;
-  opacity: 1; /* Firefox */
+    color: darkgrey;
+    opacity: 1; /* Firefox */
 }
 
 p {
-  text-align: center;
-  padding-top: 20px;
+    text-align: center;
+    padding-top: 20px;
 }
 
 a {
-  color: skyblue;
+    color: skyblue;
 }
 
 * {
-  color: white;
-  text-align: center;
-  font-size: x-large;
+    color: white;
+    text-align: center;
+    font-size: x-large;
+}
+
+.disable-doubletap-to-zoom {
+    touch-action: none;
 }
 
 @media only screen and (max-width: 1200px) {
-  .dpad {
-    width: 60px;
-    height: 60px;
-    margin: 10px;
-    background: #00BFFF;
-    border-radius: 20px;
-  }
+    .dpad {
+        margin: auto;
+        margin-top: 600px;
+        margin-bottom: 100px;
+    }
+
+    .dpadKey {
+        width: 140px;
+        height: 140px;
+        margin: 10px;
+        background: #00BFFF;
+    }
+
+    .dpadAttack {
+        width: 140px;
+        height: 140px;
+        margin: 10px;
+        background: #FF0000;
+    }
+
+    .dpadWait {
+        width: 140px;
+        height: 140px;
+        margin: 10px;
+        background: #FFFFFF;
+    }
+
+    .dpadSpacer {
+        width: 300px;
+        height: 140px;
+        margin: 10px;
+    }
+
+    input {: white;
+        margin: 10px;
+        padding: 0px;
+        background: dimgray;
+        border: 3px solid white;
+        border-radius: 20px;
+    }
 }
