@@ -45,10 +45,11 @@ let keyDownListener = function (e) {
             game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
             break
         case 'e':
-        case 'Shift':
+        case ' ':
             game.update(game.player.pos, false, e.key)
             break
-        case ' ':
+        case 'q':
+        case 'Shift':
             powerKey = true
             game.draw()
             break
@@ -62,7 +63,8 @@ let keyUpListener = function (e) {
         e.preventDefault()
     }
     switch (e.key) {
-        case ' ':
+        case 'q':
+        case 'Shift':
             powerKey = false
             game.draw()
             break
