@@ -983,11 +983,9 @@ function endGame() {
 }
 
 function addHighscore() {
-    // var person = prompt(
-    //     'Congratulations, you lose! Enter your name to save your score:'
-    // )
-    alert('The leader board is locked.\nYou\'ll either get a doughnut or you won\'t!');
-    return
+    var person = prompt(
+        'Congratulations, you lose! Enter your name to save your score:'
+    )
     console.log(game.seed)
     if (person != null && person !== '') {
         $.post(
