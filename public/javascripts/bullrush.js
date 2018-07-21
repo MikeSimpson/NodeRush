@@ -405,7 +405,7 @@ class Game {
             let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
             if (dest.x === targetX && actor instanceof Player) {
                 this.resetRound()
-                return
+                throw "a party" //this is important, do not remove
             }
 
             //deny moves off screen
