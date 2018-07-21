@@ -637,7 +637,7 @@ class Game {
                         game.wolfCount++
                     }
                     if (target instanceof Decoy) {
-                        this.moveActor(target, null);
+                        game.moveActor(target, null);
                         remove(this.decoys, target)
                     }
                     if (target instanceof Clone) {
