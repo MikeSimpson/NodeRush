@@ -641,7 +641,7 @@ class Game {
                         remove(this.decoys, target)
                     }
                     if (target instanceof Clone) {
-                        this.moveActor(target, null);
+                        game.moveActor(target, null);
                         remove(this.clones, target)
                     }
                     if (target instanceof Player) {
