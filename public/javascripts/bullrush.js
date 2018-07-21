@@ -401,17 +401,19 @@ class Game {
 
         //deny moves off screen for clones
         if ((dest.x < 0 || dest.x >= BOARD_WIDTH) && actor instanceof Clone) return
-        let target = this.board[dest.x][dest.y]
 
         if (actor instanceof Player || actor instanceof Clone) {
+
+            //check for win condition
+            let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
+            if (dest.x === targetX && actor instanceof Player) {
+                this.resetRound()
+            }
+
+            let target = this.board[dest.x][dest.y]
+
             //player only actions
             if (actor instanceof Player) {
-                //check for win condition
-                let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
-                if (dest.x === targetX) {
-                    this.resetRound()
-                }
-
                 //check for murder
                 if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
                     this.moveActor(target, null);
