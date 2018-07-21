@@ -408,7 +408,7 @@ class Game {
             }
 
             //deny moves off screen
-            if ((dest.x < 0 || dest.x >= BOARD_WIDTH) && actor instanceof Clone) return
+            if ((dest.x < 0 || dest.x >= BOARD_WIDTH)) return
 
             let target = this.board[dest.x][dest.y]
 
