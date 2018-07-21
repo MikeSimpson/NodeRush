@@ -156,7 +156,7 @@ class Game {
         this.spawnBoulders()
 
         //initialise actors
-        this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz
+        this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz TODO this variable shouldn't really be needed
         this.wolfCount = 1
         this.player = new Player(new Pos(-1, -1)) //pos will be overidden
         this.spawnActors()
@@ -594,6 +594,11 @@ class Game {
             if (!sheep.eaten) {
                 wolfGoals.push(sheep.pos)
             }
+        }
+
+        for (var i = 0; i < game.clones.length; i++) {
+            let sheep = game.clones[i]
+            wolfGoals.push(sheep.pos)
         }
 
         if (game.decoys.length > 0) {
