@@ -86,7 +86,7 @@ let keyUpListener = function (e) {
 function dpadInput(key) {
     switch (key) {
         case 'PadLeft':
-            game.update(game.player.pos.getLeftPos(), powerKey, key)
+            game.update(DIR.LEFT, powerKey, key)
             powerKey = false
             break
         case 'PadUp':
@@ -234,6 +234,7 @@ class Game {
 
     spawnBoulders() {
         this.boulders = []
+        this.crates = []
         //loop every non edge tile and chuck a maybe boulder in it
         for (var x = 1; x < BOARD_WIDTH - 1; x++) {
             for (var y = 0; y < BOARD_HEIGHT; y++) {
@@ -455,15 +456,16 @@ class Game {
                     return
                 }
 
-                //check for MoneyBags dropping boulders
+                //check for MoneyBags dropping crates
                 if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
-                    let boulder = new Boulder(new Pos(dest.x, dest.y))
-                    this.board[dest.x][dest.y] = boulder
-                    this.boulders.push(boulder)
+                    let crate = new Crate(new Pos(dest.x, dest.y))
+                    this.board[dest.x][dest.y] = crate
+                    this.crates.push(crate)
                     this.score--
                     document.getElementById('score').innerText = "Score: " + this.score
                     return
                 }
+
 
                 //check for deploying a clone
                 if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
@@ -481,14 +483,6 @@ class Game {
                     this.player.powerUp.decoyCount--
                     return
                 }
-
-                //check for deploying a clone
-                if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
-                    let clone = new Clone(new Pos(dest.x, dest.y))
-                    this.board[dest.x][dest.y] = clone
-                    this.clones.push(clone)
-                    return
-                }
             }
             //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
             if (target instanceof Wolf && !target.rooted) {
@@ -497,7 +491,7 @@ class Game {
             }
 
             //check for player trying to push
-            if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
+            if (target instanceof Sheep || target instanceof Crate || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
                 this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
 
@@ -937,6 +931,13 @@ class Coin extends Actor {
         super(pos)
         this.color = '#ffcc00'
         this.rooted = true
+    }
+}
+
+class Crate extends Actor {
+    constructor(pos) {
+        super(pos)
+        this.color = '#bb9955'
     }
 }
 
