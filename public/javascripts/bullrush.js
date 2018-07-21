@@ -485,6 +485,11 @@ class Game {
                     return
                 }
             }
+            //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
+            if (target instanceof Wolf && !target.rooted) {
+                this.board[dest.x][dest.y].rooted = true
+                return
+            }
 
             //check for player trying to push
             if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
@@ -497,12 +502,6 @@ class Game {
                 this.moveActor(target, null)
                 this.score++
                 document.getElementById('score').innerText = "Score: " + this.score
-            }
-
-            //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
-            if (target instanceof Wolf && !target.rooted) {
-                this.board[dest.x][dest.y].rooted = true
-                return
             }
         }
 
