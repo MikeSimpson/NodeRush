@@ -345,7 +345,11 @@ class Game {
             game.moves.push(key)
         }
 
-        this.moveActor(this.player, playerDest, ctrl)
+        try {
+            this.moveActor(this.player, playerDest, ctrl)
+        } catch { //catch my clever joke
+            return
+        }
 
         //update clones
         for (var i = 0; i < this.clones.length; i++) {
@@ -371,7 +375,7 @@ class Game {
         }
 
         //update ai
-        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 2 === 1)) {
+        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 3 === 1)) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
@@ -650,6 +654,11 @@ class Game {
                         remove(game.clones, target)
                     }
                     if (target instanceof Player) {
+                        if(game.player.powerUp instanceof Undead && game.score > 0){
+                            game.score--
+                            document.getElementById('score').innerText = "Score: " + game.score
+                            return
+                        }
                         if (game.score > 0) {
                             addHighscore()
                         }
@@ -963,6 +972,7 @@ class PowerUp {
             + MoneyBags.WEIGHT
             + Rescue.WEIGHT
             + Cloned.WEIGHT
+            + Undead.WEIGHT
         var pill = 0
         let rand = game.gameRandom.nextFloat() * totalWeight
         // console.log(totalWeight)
@@ -986,6 +996,8 @@ class PowerUp {
         pill += Rescue.WEIGHT
         if (rand < (Cloned.WEIGHT + pill)) return new Cloned()
         pill += Cloned.WEIGHT
+        if (rand < (Undead.WEIGHT + pill)) return new Undead()
+        pill += Undead.WEIGHT
         return new SuperPush()
     }
 }
@@ -1076,6 +1088,18 @@ class Cloned extends PowerUp {
         super()
         this.color = '#88eeaa'
         this.timer = 10
+    }
+
+    static get WEIGHT() {
+        return 10
+    }
+}
+
+class Undead extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#888800'
+        this.timer = 999
     }
 
     static get WEIGHT() {

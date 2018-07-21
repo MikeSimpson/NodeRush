@@ -57,8 +57,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="603" column="35" lean-forward="true" selection-start-line="603" selection-start-column="35" selection-end-line="603" selection-end-column="35" />
+            <state relative-caret-position="313">
+              <caret line="654" column="21" lean-forward="true" selection-start-line="654" selection-start-column="21" selection-end-line="654" selection-end-column="21" />
               <folding>
                 <element signature="e#346#392#0" />
                 <element signature="e#362#596#0" />
@@ -137,6 +137,7 @@
                 <element signature="n#!!block;n#animate#0;n#Game#0" />
                 <element signature="e#15311#15658#0" />
                 <element signature="e#15692#15756#0" />
+                <element signature="e#15979#16016#0" />
                 <element signature="e#16215#16275#0" />
                 <element signature="e#16423#16918#0" />
                 <element signature="e#16544#16671#0" />
@@ -146,16 +147,15 @@
                 <element signature="e#18202#18360#0" />
                 <element signature="e#18281#18346#0" />
                 <element signature="e#19568#19763#0" />
-                <element signature="e#19993#20251#0" />
                 <element signature="e#20039#20109#0" />
                 <element signature="e#20539#20604#0" />
                 <element signature="e#20636#20712#0" />
                 <element signature="n#!!block;n#millAbout#0;n#Game#0" />
                 <element signature="e#20761#21238#0" />
-                <element signature="e#20826#20918#0" />
-                <element signature="e#20931#21022#0" />
-                <element signature="e#21035#21124#0" />
-                <element signature="e#21137#21228#0" />
+                <element signature="e#24013#24105#0" />
+                <element signature="e#24118#24209#0" />
+                <element signature="e#24222#24311#0" />
+                <element signature="e#24324#24415#0" />
                 <element signature="n#!!block;n#getWeightArray#0;n#Game#0" />
                 <element signature="e#21352#22031#0" />
                 <element signature="e#21432#22021#0" />
@@ -166,13 +166,13 @@
                 <element signature="e#21896#21967#0" />
                 <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
                 <element signature="e#22158#23111#0" />
-                <element signature="e#22187#22306#0" />
-                <element signature="e#22319#22438#0" />
-                <element signature="e#22451#22570#0" />
-                <element signature="e#22583#22702#0" />
-                <element signature="e#22715#22834#0" />
-                <element signature="e#22847#22966#0" />
-                <element signature="e#22979#23101#0" />
+                <element signature="e#25374#25493#0" />
+                <element signature="e#25506#25625#0" />
+                <element signature="e#25638#25757#0" />
+                <element signature="e#25770#25889#0" />
+                <element signature="e#25902#26021#0" />
+                <element signature="e#26034#26153#0" />
+                <element signature="e#26166#26288#0" />
                 <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
                 <element signature="e#23245#23332#0" />
                 <element signature="n#!!block;n#createBoard#0;n#Game#0" />
@@ -218,11 +218,9 @@
                 <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
                 <element signature="n#Coin#0" />
                 <element signature="n#!!block;n#constructor#0;n#Coin#0" />
-                <element signature="n#PowerUp#0" />
                 <element signature="n#!!block;n#constructor#0;n#PowerUp#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#PowerUp#0" />
                 <element signature="n#!!block;n#getColor#0;n#PowerUp#0" />
-                <element signature="n#!!block;n#getRandom#0;n#PowerUp#0" />
                 <element signature="e#27650#27677#0" />
                 <element signature="n#SuperPush#0" />
                 <element signature="n#!!block;n#constructor#0;n#SuperPush#0" />
@@ -230,9 +228,7 @@
                 <element signature="n#!!block;n#constructor#0;n#WolfDisguise#0" />
                 <element signature="n#SuperSpeed#0" />
                 <element signature="n#!!block;n#constructor#0;n#SuperSpeed#0" />
-                <element signature="n#LethalBlows#0" />
                 <element signature="n#!!block;n#constructor#0;n#LethalBlows#0" />
-                <element signature="n#!!block;n#WEIGHT#0;n#LethalBlows#0" />
                 <element signature="n#CoinSurprise#0" />
                 <element signature="n#!!block;n#constructor#0;n#CoinSurprise#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#CoinSurprise#0" />
@@ -242,9 +238,7 @@
                 <element signature="n#Rescue#0" />
                 <element signature="n#!!block;n#constructor#0;n#Rescue#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
-                <element signature="n#MoneyBags#0" />
                 <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
-                <element signature="n#!!block;n#WEIGHT#0;n#MoneyBags#0" />
                 <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
                 <element signature="n#!!block;n#addHighscore#0" />
                 <element signature="e#30604#30824#0" />
@@ -332,7 +326,6 @@
       <find>todo</find>
       <find>draw</find>
       <find>high_scores</find>
-      <find>score</find>
       <find>highscore</find>
       <find>.random</find>
       <find>seed</find>
@@ -351,6 +344,7 @@
       <find>instanceOf Player</find>
       <find>conso</find>
       <find>wolfAI</find>
+      <find>score</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -517,12 +511,12 @@
       <workItem from="1531864756056" duration="5220000" />
       <workItem from="1531956191011" duration="11287000" />
       <workItem from="1532053924653" duration="1024000" />
-      <workItem from="1532059337145" duration="9622000" />
+      <workItem from="1532059337145" duration="10651000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117534000" />
+    <option name="totallyTimeSpent" value="118563000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1370" height="877" extended-state="6" />
@@ -874,8 +868,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="603" column="35" lean-forward="true" selection-start-line="603" selection-start-column="35" selection-end-line="603" selection-end-column="35" />
+        <state relative-caret-position="313">
+          <caret line="654" column="21" lean-forward="true" selection-start-line="654" selection-start-column="21" selection-end-line="654" selection-end-column="21" />
           <folding>
             <element signature="e#346#392#0" />
             <element signature="e#362#596#0" />
@@ -954,6 +948,7 @@
             <element signature="n#!!block;n#animate#0;n#Game#0" />
             <element signature="e#15311#15658#0" />
             <element signature="e#15692#15756#0" />
+            <element signature="e#15979#16016#0" />
             <element signature="e#16215#16275#0" />
             <element signature="e#16423#16918#0" />
             <element signature="e#16544#16671#0" />
@@ -963,16 +958,15 @@
             <element signature="e#18202#18360#0" />
             <element signature="e#18281#18346#0" />
             <element signature="e#19568#19763#0" />
-            <element signature="e#19993#20251#0" />
             <element signature="e#20039#20109#0" />
             <element signature="e#20539#20604#0" />
             <element signature="e#20636#20712#0" />
             <element signature="n#!!block;n#millAbout#0;n#Game#0" />
             <element signature="e#20761#21238#0" />
-            <element signature="e#20826#20918#0" />
-            <element signature="e#20931#21022#0" />
-            <element signature="e#21035#21124#0" />
-            <element signature="e#21137#21228#0" />
+            <element signature="e#24013#24105#0" />
+            <element signature="e#24118#24209#0" />
+            <element signature="e#24222#24311#0" />
+            <element signature="e#24324#24415#0" />
             <element signature="n#!!block;n#getWeightArray#0;n#Game#0" />
             <element signature="e#21352#22031#0" />
             <element signature="e#21432#22021#0" />
@@ -983,13 +977,13 @@
             <element signature="e#21896#21967#0" />
             <element signature="n#!!block;n#updateBackgroundColours#0;n#Game#0" />
             <element signature="e#22158#23111#0" />
-            <element signature="e#22187#22306#0" />
-            <element signature="e#22319#22438#0" />
-            <element signature="e#22451#22570#0" />
-            <element signature="e#22583#22702#0" />
-            <element signature="e#22715#22834#0" />
-            <element signature="e#22847#22966#0" />
-            <element signature="e#22979#23101#0" />
+            <element signature="e#25374#25493#0" />
+            <element signature="e#25506#25625#0" />
+            <element signature="e#25638#25757#0" />
+            <element signature="e#25770#25889#0" />
+            <element signature="e#25902#26021#0" />
+            <element signature="e#26034#26153#0" />
+            <element signature="e#26166#26288#0" />
             <element signature="n#!!block;n#getRandomColor#0;n#Game#0" />
             <element signature="e#23245#23332#0" />
             <element signature="n#!!block;n#createBoard#0;n#Game#0" />
@@ -1035,11 +1029,9 @@
             <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
             <element signature="n#Coin#0" />
             <element signature="n#!!block;n#constructor#0;n#Coin#0" />
-            <element signature="n#PowerUp#0" />
             <element signature="n#!!block;n#constructor#0;n#PowerUp#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#PowerUp#0" />
             <element signature="n#!!block;n#getColor#0;n#PowerUp#0" />
-            <element signature="n#!!block;n#getRandom#0;n#PowerUp#0" />
             <element signature="e#27650#27677#0" />
             <element signature="n#SuperPush#0" />
             <element signature="n#!!block;n#constructor#0;n#SuperPush#0" />
@@ -1047,9 +1039,7 @@
             <element signature="n#!!block;n#constructor#0;n#WolfDisguise#0" />
             <element signature="n#SuperSpeed#0" />
             <element signature="n#!!block;n#constructor#0;n#SuperSpeed#0" />
-            <element signature="n#LethalBlows#0" />
             <element signature="n#!!block;n#constructor#0;n#LethalBlows#0" />
-            <element signature="n#!!block;n#WEIGHT#0;n#LethalBlows#0" />
             <element signature="n#CoinSurprise#0" />
             <element signature="n#!!block;n#constructor#0;n#CoinSurprise#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#CoinSurprise#0" />
@@ -1059,9 +1049,7 @@
             <element signature="n#Rescue#0" />
             <element signature="n#!!block;n#constructor#0;n#Rescue#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
-            <element signature="n#MoneyBags#0" />
             <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
-            <element signature="n#!!block;n#WEIGHT#0;n#MoneyBags#0" />
             <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
             <element signature="n#!!block;n#addHighscore#0" />
             <element signature="e#30604#30824#0" />
