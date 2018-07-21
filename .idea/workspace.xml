@@ -57,8 +57,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="640" column="39" selection-start-line="640" selection-start-column="39" selection-end-line="640" selection-end-column="39" />
+            <state relative-caret-position="285">
+              <caret line="409" column="35" lean-forward="true" selection-start-line="409" selection-start-column="35" selection-end-line="409" selection-end-column="35" />
               <folding>
                 <element signature="e#346#392#0" />
                 <element signature="e#362#596#0" />
@@ -122,7 +122,6 @@
                 <element signature="e#12026#12045#0" />
                 <element signature="e#10911#11068#0" />
                 <element signature="e#11000#11058#0" />
-                <element signature="n#!!block;n#moveActor#0;n#Game#0" />
                 <element signature="e#11174#11287#0" />
                 <element signature="e#13265#13322#0" />
                 <element signature="e#12199#12766#0" />
@@ -232,7 +231,6 @@
                 <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
                 <element signature="n#Coin#0" />
                 <element signature="n#!!block;n#constructor#0;n#Coin#0" />
-                <element signature="n#Player#1" />
                 <element signature="n#PowerUp#0" />
                 <element signature="n#!!block;n#constructor#0;n#PowerUp#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#PowerUp#0" />
@@ -532,12 +530,12 @@
       <workItem from="1531864756056" duration="5220000" />
       <workItem from="1531956191011" duration="11287000" />
       <workItem from="1532053924653" duration="1024000" />
-      <workItem from="1532059337145" duration="6347000" />
+      <workItem from="1532059337145" duration="6752000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114259000" />
+    <option name="totallyTimeSpent" value="114664000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1370" height="877" extended-state="6" />
@@ -889,8 +887,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="640" column="39" selection-start-line="640" selection-start-column="39" selection-end-line="640" selection-end-column="39" />
+        <state relative-caret-position="285">
+          <caret line="409" column="35" lean-forward="true" selection-start-line="409" selection-start-column="35" selection-end-line="409" selection-end-column="35" />
           <folding>
             <element signature="e#346#392#0" />
             <element signature="e#362#596#0" />
@@ -954,7 +952,6 @@
             <element signature="e#12026#12045#0" />
             <element signature="e#10911#11068#0" />
             <element signature="e#11000#11058#0" />
-            <element signature="n#!!block;n#moveActor#0;n#Game#0" />
             <element signature="e#11174#11287#0" />
             <element signature="e#13265#13322#0" />
             <element signature="e#12199#12766#0" />
@@ -1064,7 +1061,6 @@
             <element signature="n#!!block;n#constructor#0;n#Boulder#0" />
             <element signature="n#Coin#0" />
             <element signature="n#!!block;n#constructor#0;n#Coin#0" />
-            <element signature="n#Player#1" />
             <element signature="n#PowerUp#0" />
             <element signature="n#!!block;n#constructor#0;n#PowerUp#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#PowerUp#0" />

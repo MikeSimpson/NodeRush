@@ -399,9 +399,6 @@ class Game {
         //deny moves more than one tile away
         if (!Pos.adjacent(actor.pos, dest) && !this.teleport) return
 
-        //deny moves off screen for clones
-        if ((dest.x < 0 || dest.x >= BOARD_WIDTH) && actor instanceof Clone) return
-
         if (actor instanceof Player || actor instanceof Clone) {
 
             //check for win condition
@@ -409,6 +406,9 @@ class Game {
             if (dest.x === targetX && actor instanceof Player) {
                 this.resetRound()
             }
+
+            //deny moves off screen
+            if ((dest.x < 0 || dest.x >= BOARD_WIDTH) && actor instanceof Clone) return
 
             let target = this.board[dest.x][dest.y]
 
@@ -929,7 +929,7 @@ class Coin extends Actor {
 class Clone extends Actor {
     constructor(pos) {
         super(pos)
-        this.color = '#00BFFF'
+        this.color = '#55CFFF'
         this.powerUp = null
     }
 }
