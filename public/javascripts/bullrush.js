@@ -638,11 +638,11 @@ class Game {
                     }
                     if (target instanceof Decoy) {
                         game.moveActor(target, null);
-                        remove(this.decoys, target)
+                        remove(game.decoys, target)
                     }
                     if (target instanceof Clone) {
                         game.moveActor(target, null);
-                        remove(this.clones, target)
+                        remove(game.clones, target)
                     }
                     if (target instanceof Player) {
                         if (game.score > 0) {
