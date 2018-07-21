@@ -1,6 +1,6 @@
 let BOARD_WIDTH = 20
 let BOARD_HEIGHT = 10
-let LEVEL_LAPS = 5
+let LEVEL_LAPS = 6
 let MOVE_DELAY = 10
 let ANIMATION_FRAMES = 10
 let game
@@ -11,6 +11,13 @@ sheepImage.src = '/sprites/sheep.png'
 wolfImage.src = '/sprites/wolf.png'
 playerImage.src = '/sprites/player.png'
 var powerKey
+var DIR = {
+    UP: 1,
+    DOWN: 2,
+    LEFT: 3,
+    RIGHT: 4,
+    WAIT: 5
+};
 
 $(document).ready(function () {
     game = new Game()
@@ -30,23 +37,27 @@ let keyDownListener = function (e) {
     switch (e.key) {
         case 'ArrowLeft':
         case 'a':
-            game.update(game.player.pos.getLeftPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
+        case 'A':
+            game.update(DIR.LEFT, powerKey, e.key)
             break
         case 'ArrowUp':
         case 'w':
-            game.update(game.player.pos.getUpPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
+        case 'W':
+            game.update(DIR.UP, powerKey, e.key)
             break
         case 'ArrowRight':
         case 'd':
-            game.update(game.player.pos.getRightPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
+        case 'D':
+            game.update(DIR.RIGHT, powerKey, e.key)
             break
         case 'ArrowDown':
         case 's':
-            game.update(game.player.pos.getDownPos(), e.ctrlKey || e.altKey || e.shiftKey || powerKey, e.key)
+        case 'S':
+            game.update(DIR.DOWN, powerKey, e.key)
             break
         case 'e':
         case ' ':
-            game.update(game.player.pos, false, e.key)
+            game.update(DIR.WAIT, false, e.key)
             break
         case 'q':
         case 'Shift':
@@ -79,19 +90,19 @@ function dpadInput(key) {
             powerKey = false
             break
         case 'PadUp':
-            game.update(game.player.pos.getUpPos(), powerKey, key)
+            game.update(DIR.UP, powerKey, key)
             powerKey = false
             break
         case 'PadRight':
-            game.update(game.player.pos.getRightPos(), powerKey, key)
+            game.update(DIR.RIGHT, powerKey, key)
             powerKey = false
             break
         case 'PadDown':
-            game.update(game.player.pos.getDownPos(), powerKey, key)
+            game.update(DIR.DOWN, powerKey, key)
             powerKey = false
             break
         case 'PadWait':
-            game.update(game.player.pos, powerKey, key)
+            game.update(DIR.WAIT, powerKey, key)
             powerKey = false
             break
         case 'PadAttack':
@@ -163,13 +174,14 @@ class Game {
     spawnActors() {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
+        //spawn player
         let playerY = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
         this.player.pos = new Pos(startX, playerY)
         this.board[startX][playerY] = this.player
+
         //spawn sheep
         this.sheeps = []
         var sheepsCreated = 0
-
         while (this.sheepCount > 0) {
             //attempt to add a sheep
             let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
@@ -215,6 +227,8 @@ class Game {
             }
         }
 
+        //clear transient actors
+        this.clones = []
         this.decoys = []
     }
 
@@ -266,6 +280,9 @@ class Game {
         for (var i = 0; i < this.decoys.length; i++) {
             this.moveActor(this.decoys[i], null)
         }
+        for (var i = 0; i < this.clones.length; i++) {
+            this.moveActor(this.clones[i], null)
+        }
         this.spawnActors();
 
         this.draw()
@@ -302,7 +319,25 @@ class Game {
         }
     }
 
-    update(dest, ctrl, key) {
+    update(dir, ctrl, key) {
+        let playerDest
+        switch (dir) {
+            case DIR.UP:
+                playerDest = this.player.pos.getUpPos()
+                break;
+            case DIR.DOWN:
+                playerDest = this.player.pos.getDownPos()
+                break;
+            case DIR.LEFT:
+                playerDest = this.player.pos.getLeftPos()
+                break;
+            case DIR.RIGHT:
+                playerDest = this.player.pos.getRightPos()
+                break;
+            case DIR.WAIT:
+                playerDest = this.player.pos
+                break;
+        }
         if (this.inputLock) return
         if (ctrl) {
             game.moves.push(key.toUpperCase())
@@ -310,14 +345,40 @@ class Game {
             game.moves.push(key)
         }
 
-        this.moveActor(this.player, dest, ctrl)
-        if (!(this.player.powerUp != null && (this.player.powerUp instanceof SuperSpeed) && (this.player.powerUp.timer % 2 === 1))) {
+        this.moveActor(this.player, playerDest, ctrl)
+
+        //update clones
+        for (var i = 0; i < this.clones.length; i++) {
+            let dest
+            switch (dir) {
+                case DIR.UP:
+                    dest = this.clones[i].pos.getUpPos()
+                    break;
+                case DIR.DOWN:
+                    dest = this.clones[i].pos.getDownPos()
+                    break;
+                case DIR.LEFT:
+                    dest = this.clones[i].pos.getLeftPos()
+                    break;
+                case DIR.RIGHT:
+                    dest = this.clones[i].pos.getRightPos()
+                    break;
+                case DIR.WAIT:
+                    dest = this.clones[i].pos
+                    break;
+            }
+            this.moveActor(this.clones[i], dest, ctrl)
+        }
+
+        //update ai
+        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 2 === 1)) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
             this.updateBackgroundColours()
         }
         this.draw()
+        //decrement powerup
         //TODO make this logic more readable
         if (this.player.powerUp !== null) {
             this.player.powerUp.timer--
@@ -338,16 +399,95 @@ class Game {
         //deny moves more than one tile away
         if (!Pos.adjacent(actor.pos, dest) && !this.teleport) return
 
-        let target
+        //deny moves off screen for clones
+        if ((dest.x < 0 || dest.x >= BOARD_WIDTH) && actor instanceof Clone) return
+        let target = this.board[dest.x][dest.y]
 
-        if (actor instanceof Player) {
-            //check for win condition
-            let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
-            if (dest.x === targetX) {
-                this.resetRound()
+        if (actor instanceof Player || actor instanceof Clone) {
+            //player only actions
+            if (actor instanceof Player) {
+                //check for win condition
+                let targetX = this.directionIsRight ? BOARD_WIDTH : -1 //these are offscreen x values as the player needs to actively move off the screen to win
+                if (dest.x === targetX) {
+                    this.resetRound()
+                }
+
+                //check for murder
+                if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
+                    this.moveActor(target, null);
+                    if (target instanceof Sheep && !target.eaten) {
+                        remove(this.sheeps, target)
+                        this.sheepCount--
+                    }
+                    if (target instanceof Sheep && target.eaten) {
+                        remove(this.sheeps, target)
+                        this.wolfCount--
+                    }
+                    if (target instanceof Wolf) {
+                        remove(this.wolves, target)
+                        this.wolfCount--
+                    }
+                    return
+                }
+
+                //check for player hitting sheep
+                if (ctrl && target instanceof Sheep && !target.eaten) {
+                    this.board[dest.x][dest.y].rooted = true
+                    this.board[dest.x][dest.y].eaten = true
+                    this.sheepCount--
+                    this.wolfCount++
+                    //TODO build array of eaten sheep and move that into wolves on reset
+                    //TODO extract this into a function
+                    //add power up
+                    this.player.powerUp = target.powerUp
+
+                    //TODO spawn clones randomly around player
+                    if (this.player.powerUp instanceof Cloned) {
+
+                    }
+                    return
+                }
+
+                //check for MoneyBags dropping boulders
+                if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
+                    let boulder = new Boulder(new Pos(dest.x, dest.y))
+                    this.board[dest.x][dest.y] = boulder
+                    this.boulders.push(boulder)
+                    this.score--
+                    document.getElementById('score').innerText = "Score: " + this.score
+                    return
+                }
+
+                //check for deploying a clone
+                if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
+                    let clone = new Clone(new Pos(dest.x, dest.y))
+                    this.board[dest.x][dest.y] = clone
+                    this.clones.push(clone)
+                    return
+                }
+
+                //check for WolfeDisguise dropping decoys
+                if (ctrl && this.player.powerUp instanceof WolfDisguise && this.player.powerUp.decoyCount > 0 && target == null) {
+                    let decoy = new Decoy(new Pos(dest.x, dest.y))
+                    this.board[dest.x][dest.y] = decoy
+                    this.decoys.push(decoy)
+                    this.player.powerUp.decoyCount--
+                    return
+                }
+
+                //check for deploying a clone
+                if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
+                    let clone = new Clone(new Pos(dest.x, dest.y))
+                    this.board[dest.x][dest.y] = clone
+                    this.clones.push(clone)
+                    return
+                }
             }
 
-            target = this.board[dest.x][dest.y]
+            //check for player trying to push
+            if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
+                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
+            }
 
             //check for coin
             if (target instanceof Coin) {
@@ -357,64 +497,10 @@ class Game {
                 document.getElementById('score').innerText = "Score: " + this.score
             }
 
-            //check for murder
-            if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
-                this.moveActor(target, null);
-                if (target instanceof Sheep && !target.eaten) {
-                    remove(this.sheeps, target)
-                    this.sheepCount--
-                }
-                if (target instanceof Sheep && target.eaten) {
-                    remove(this.sheeps, target)
-                    this.wolfCount--
-                }
-                if (target instanceof Wolf) {
-                    remove(this.wolves, target)
-                    this.wolfCount--
-                }
-                return
-            }
-
             //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
             if (target instanceof Wolf && !target.rooted) {
                 this.board[dest.x][dest.y].rooted = true
                 return
-            }
-
-            //check for player hitting sheep
-            if (ctrl && target instanceof Sheep && !target.eaten) {
-                this.board[dest.x][dest.y].rooted = true
-                this.board[dest.x][dest.y].eaten = true
-                this.sheepCount--
-                this.wolfCount++
-                //TODO build array of eaten sheep and move that into wolves on reset
-                //TODO extract this into a function
-                //add power up
-                this.player.powerUp = target.powerUp
-                return
-            }
-
-            //check for MoneyBags dropping dosh
-            if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 2 && target == null) {
-                let coin = new Coin(new Pos(dest.x, dest.y))
-                this.board[dest.x][dest.y] = coin
-                this.coins.push(coin)
-                this.score -= 2
-                document.getElementById('score').innerText = "Score: " + this.score
-                return
-            }
-
-            //check for WolfeDisguise dropping decoys
-            if (ctrl && this.player.powerUp instanceof WolfDisguise && this.player.powerUp.decoyCount > 0 && target == null) {
-                let decoy = new Decoy(new Pos(dest.x, dest.y))
-                this.board[dest.x][dest.y] = decoy
-                this.decoys.push(decoy)
-                return
-            }
-
-            //check for player trying to push
-            if (target instanceof Sheep || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
-                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
             }
         }
 
@@ -508,10 +594,13 @@ class Game {
             }
         }
 
-        for (var i = 0; i < game.decoys.length; i++) {
-            let decoy = game.decoys[i]
-            if (!decoy.eaten) {
-                wolfGoals.push(decoy.pos)
+        if (game.decoys.length > 0) {
+            wolfGoals = []
+            for (var i = 0; i < game.decoys.length; i++) {
+                let decoy = game.decoys[i]
+                if (!decoy.eaten) {
+                    wolfGoals.push(decoy.pos)
+                }
             }
         }
 
@@ -537,18 +626,23 @@ class Game {
             let nextStep = astar.search(graph, start, end)[0];
             if (typeof nextStep !== 'undefined') {
                 if (Math.abs(wolf.pos.x - nextStep.x) + Math.abs(wolf.pos.y - nextStep.y) === 1) {
+                    let target = game.board[nextStep.x][nextStep.y]
                     //attack the target
-                    if (game.board[nextStep.x][nextStep.y] instanceof Sheep) {
-                        game.board[nextStep.x][nextStep.y].rooted = true
-                        game.board[nextStep.x][nextStep.y].eaten = true
+                    if (target instanceof Sheep) {
+                        target.rooted = true
+                        target.eaten = true
                         game.sheepCount--
                         game.wolfCount++
                     }
-                    if (game.board[nextStep.x][nextStep.y] instanceof Decoy) {
-                        game.board[nextStep.x][nextStep.y].rooted = true
-                        game.board[nextStep.x][nextStep.y].eaten = true
+                    if (target instanceof Decoy) {
+                        this.moveActor(target, null);
+                        remove(this.decoys, target)
                     }
-                    if (game.board[nextStep.x][nextStep.y] instanceof Player) {
+                    if (target instanceof Clone) {
+                        this.moveActor(target, null);
+                        remove(this.clones, target)
+                    }
+                    if (target instanceof Player) {
                         if (game.score > 0) {
                             addHighscore()
                         }
@@ -830,10 +924,18 @@ class Coin extends Actor {
     }
 }
 
+class Clone extends Actor {
+    constructor(pos) {
+        super(pos)
+        this.color = '#00BFFF'
+        this.powerUp = null
+    }
+}
+
 class PowerUp {
     constructor() {
         this.color = '#000000'
-        this.timer = 10
+        this.timer = 20
     }
 
     static get WEIGHT() {
@@ -853,6 +955,7 @@ class PowerUp {
             + ChainLightning.WEIGHT
             + MoneyBags.WEIGHT
             + Rescue.WEIGHT
+            + Cloned.WEIGHT
         var pill = 0
         let rand = game.gameRandom.nextFloat() * totalWeight
         // console.log(totalWeight)
@@ -874,6 +977,8 @@ class PowerUp {
         pill += MoneyBags.WEIGHT
         if (rand < (Rescue.WEIGHT + pill)) return new Rescue()
         pill += Rescue.WEIGHT
+        if (rand < (Cloned.WEIGHT + pill)) return new Cloned()
+        pill += Cloned.WEIGHT
         return new SuperPush()
     }
 }
@@ -882,7 +987,6 @@ class SuperPush extends PowerUp {
     constructor() {
         super()
         this.color = '#996655'
-        this.timer = 20
     }
 }
 
@@ -890,7 +994,6 @@ class WolfDisguise extends PowerUp {
     constructor() {
         super()
         this.color = '#ff0099'
-        this.timer = 20
         this.decoyCount = 1
     }
 }
@@ -899,7 +1002,6 @@ class SuperSpeed extends PowerUp {
     constructor() {
         super()
         this.color = '#ffff88'
-        this.timer = 20
     }
 }
 
@@ -953,8 +1055,8 @@ class Rescue extends PowerUp {
 class MoneyBags extends PowerUp {
     constructor() {
         super()
-        this.color = '#ffff00'
-        this.timer = 40
+        this.color = '#888888'
+        this.timer = 999
     }
 
     static get WEIGHT() {
@@ -962,33 +1064,22 @@ class MoneyBags extends PowerUp {
     }
 }
 
-//debug codes
-function enableTeleport() {
-    game.teleport = true
-}
-
-function eatAllTheSheep() {
-    for (var i = 0; i < game.sheeps.length; i++) {
-        let sheep = game.sheeps[i]
-        sheep.eaten = true;
-        sheep.rooted = true;
-        game.sheepCount--
-        game.wolfCount++
+class Cloned extends PowerUp {
+    constructor() {
+        super()
+        this.color = '#88eeaa'
+        this.timer = 10
     }
-}
 
-function endGame() {
-    if (game.score > 0) {
-        addHighscore()
+    static get WEIGHT() {
+        return 5
     }
-    game.initialiseGame()
 }
 
 function addHighscore() {
     var person = prompt(
         'Congratulations, you lose! Enter your name to save your score:'
     )
-    console.log(game.seed)
     if (person != null && person !== '') {
         $.post(
             '/highscore',
@@ -1008,6 +1099,28 @@ function remove(array, element) {
     if (index !== -1) {
         array.splice(index, 1);
     }
+}
+
+//debug
+function enableTeleport() {
+    game.teleport = true
+}
+
+function eatAllTheSheep() {
+    for (var i = 0; i < game.sheeps.length; i++) {
+        let sheep = game.sheeps[i]
+        sheep.eaten = true;
+        sheep.rooted = true;
+        game.sheepCount--
+        game.wolfCount++
+    }
+}
+
+function endGame() {
+    if (game.score > 0) {
+        addHighscore()
+    }
+    game.initialiseGame()
 }
 
 function replay(seed, moves) {
