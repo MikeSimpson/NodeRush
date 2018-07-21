@@ -57,8 +57,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="505" selection-start-line="505" selection-end-line="505" />
+            <state relative-caret-position="225">
+              <caret line="407" column="22" selection-start-line="407" selection-start-column="22" selection-end-line="407" selection-end-column="22" />
               <folding>
                 <element signature="e#346#392#0" />
                 <element signature="e#362#596#0" />
@@ -123,7 +123,6 @@
                 <element signature="e#10911#11068#0" />
                 <element signature="e#11000#11058#0" />
                 <element signature="e#11174#11287#0" />
-                <element signature="e#13265#13322#0" />
                 <element signature="e#12199#12766#0" />
                 <element signature="e#12309#12414#0" />
                 <element signature="e#12476#12580#0" />
@@ -530,12 +529,12 @@
       <workItem from="1531864756056" duration="5220000" />
       <workItem from="1531956191011" duration="11287000" />
       <workItem from="1532053924653" duration="1024000" />
-      <workItem from="1532059337145" duration="6959000" />
+      <workItem from="1532059337145" duration="7467000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114871000" />
+    <option name="totallyTimeSpent" value="115379000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1370" height="877" extended-state="6" />
@@ -887,8 +886,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="505" selection-start-line="505" selection-end-line="505" />
+        <state relative-caret-position="225">
+          <caret line="407" column="22" selection-start-line="407" selection-start-column="22" selection-end-line="407" selection-end-column="22" />
           <folding>
             <element signature="e#346#392#0" />
             <element signature="e#362#596#0" />
@@ -953,7 +952,6 @@
             <element signature="e#10911#11068#0" />
             <element signature="e#11000#11058#0" />
             <element signature="e#11174#11287#0" />
-            <element signature="e#13265#13322#0" />
             <element signature="e#12199#12766#0" />
             <element signature="e#12309#12414#0" />
             <element signature="e#12476#12580#0" />
