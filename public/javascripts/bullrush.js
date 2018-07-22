@@ -378,7 +378,7 @@ class Game {
         }
 
         //update ai
-        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 3 === 1)) {
+        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 3 !== 0)) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
@@ -427,6 +427,28 @@ class Game {
 
             //player only actions
             if (actor instanceof Player) {
+                //check for player hitting sheep
+                if (ctrl && target instanceof Sheep && !target.eaten) {
+                    this.board[dest.x][dest.y].rooted = true
+                    this.board[dest.x][dest.y].eaten = true
+                    this.sheepCount--
+                    this.wolfCount++
+                    //TODO build array of eaten sheep and move that into wolves on reset
+                    //TODO extract this into a function
+                    //add power up
+                    if(this.player.powerUp != null && this.player.powerUp.constructor === target.powerUp.constructor){
+                        this.player.powerUp.timer += target.powerUp.timer * Math.min((parseInt(this.player.powerUp.timer / target.powerUp.timer) + 1), 3)
+                    } else {
+                        this.player.powerUp = target.powerUp
+                        //TODO spawn clones randomly around player
+                        if (this.player.powerUp instanceof Cloned) {
+
+                        }
+                    }
+                    console.log(this.player.powerUp.timer)
+                    return
+                }
+
                 //check for murder
                 if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
                     this.moveActor(target, null);
@@ -445,24 +467,6 @@ class Game {
                     return
                 }
 
-                //check for player hitting sheep
-                if (ctrl && target instanceof Sheep && !target.eaten) {
-                    this.board[dest.x][dest.y].rooted = true
-                    this.board[dest.x][dest.y].eaten = true
-                    this.sheepCount--
-                    this.wolfCount++
-                    //TODO build array of eaten sheep and move that into wolves on reset
-                    //TODO extract this into a function
-                    //add power up
-                    this.player.powerUp = target.powerUp
-
-                    //TODO spawn clones randomly around player
-                    if (this.player.powerUp instanceof Cloned) {
-
-                    }
-                    return
-                }
-
                 //check for MoneyBags dropping crates
                 if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
                     let crate = new Crate(new Pos(dest.x, dest.y))
@@ -472,7 +476,6 @@ class Game {
                     document.getElementById('score').innerText = "Score: " + this.score
                     return
                 }
-
 
                 //check for deploying a clone
                 if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
@@ -1031,6 +1034,11 @@ class SuperSpeed extends PowerUp {
     constructor() {
         super()
         this.color = '#ffff88'
+        this.timer
+    }
+
+    static get WEIGHT() {
+        return 5
     }
 }
 

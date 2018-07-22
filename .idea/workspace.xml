@@ -57,8 +57,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="948" column="26" selection-start-line="948" selection-start-column="26" selection-end-line="948" selection-end-column="26" />
+            <state relative-caret-position="479">
+              <caret line="447" column="58" lean-forward="true" selection-start-line="447" selection-start-column="58" selection-end-line="447" selection-end-column="58" />
               <folding>
                 <element signature="e#346#392#0" />
                 <element signature="e#362#596#0" />
@@ -75,7 +75,6 @@
                 <element signature="e#2567#2678#0" />
                 <element signature="e#2687#2774#0" />
                 <element signature="e#2994#3043#0" />
-                <element signature="n#!!block;n#constructor#0;n#Game#0" />
                 <element signature="e#3713#3847#0" />
                 <element signature="e#5170#5603#0" />
                 <element signature="e#5341#5593#0" />
@@ -112,13 +111,11 @@
                 <element signature="e#10911#11068#0" />
                 <element signature="e#11000#11058#0" />
                 <element signature="e#11174#11287#0" />
-                <element signature="e#12199#12766#0" />
-                <element signature="e#12309#12414#0" />
-                <element signature="e#12476#12580#0" />
-                <element signature="e#12625#12729#0" />
-                <element signature="e#14328#14905#0" />
-                <element signature="e#14526#14594#0" />
                 <element signature="e#14848#14868#0" />
+                <element signature="e#15147#15774#0" />
+                <element signature="e#15265#15382#0" />
+                <element signature="e#15448#15564#0" />
+                <element signature="e#15613#15729#0" />
                 <element signature="e#14222#14463#0" />
                 <element signature="e#16750#16845#0" />
                 <element signature="e#15087#15129#0" />
@@ -205,9 +202,6 @@
                 <element signature="n#!!block;n#constructor#0;n#SuperPush#0" />
                 <element signature="n#WolfDisguise#0" />
                 <element signature="n#!!block;n#constructor#0;n#WolfDisguise#0" />
-                <element signature="n#SuperSpeed#0" />
-                <element signature="n#!!block;n#constructor#0;n#SuperSpeed#0" />
-                <element signature="n#!!block;n#constructor#0;n#LethalBlows#0" />
                 <element signature="n#CoinSurprise#0" />
                 <element signature="n#!!block;n#constructor#0;n#CoinSurprise#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#CoinSurprise#0" />
@@ -218,7 +212,6 @@
                 <element signature="n#!!block;n#constructor#0;n#Rescue#0" />
                 <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
                 <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
-                <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
                 <element signature="n#!!block;n#remove#0" />
                 <element signature="e#30927#30966#0" />
                 <element signature="n#!!block;n#enableTeleport#0" />
@@ -487,12 +480,12 @@
       <workItem from="1531864756056" duration="5220000" />
       <workItem from="1531956191011" duration="11287000" />
       <workItem from="1532053924653" duration="1024000" />
-      <workItem from="1532059337145" duration="14384000" />
+      <workItem from="1532059337145" duration="16315000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122296000" />
+    <option name="totallyTimeSpent" value="124227000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1370" height="877" extended-state="6" />
@@ -844,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="948" column="26" selection-start-line="948" selection-start-column="26" selection-end-line="948" selection-end-column="26" />
+        <state relative-caret-position="479">
+          <caret line="447" column="58" lean-forward="true" selection-start-line="447" selection-start-column="58" selection-end-line="447" selection-end-column="58" />
           <folding>
             <element signature="e#346#392#0" />
             <element signature="e#362#596#0" />
@@ -862,7 +855,6 @@
             <element signature="e#2567#2678#0" />
             <element signature="e#2687#2774#0" />
             <element signature="e#2994#3043#0" />
-            <element signature="n#!!block;n#constructor#0;n#Game#0" />
             <element signature="e#3713#3847#0" />
             <element signature="e#5170#5603#0" />
             <element signature="e#5341#5593#0" />
@@ -899,13 +891,11 @@
             <element signature="e#10911#11068#0" />
             <element signature="e#11000#11058#0" />
             <element signature="e#11174#11287#0" />
-            <element signature="e#12199#12766#0" />
-            <element signature="e#12309#12414#0" />
-            <element signature="e#12476#12580#0" />
-            <element signature="e#12625#12729#0" />
-            <element signature="e#14328#14905#0" />
-            <element signature="e#14526#14594#0" />
             <element signature="e#14848#14868#0" />
+            <element signature="e#15147#15774#0" />
+            <element signature="e#15265#15382#0" />
+            <element signature="e#15448#15564#0" />
+            <element signature="e#15613#15729#0" />
             <element signature="e#14222#14463#0" />
             <element signature="e#16750#16845#0" />
             <element signature="e#15087#15129#0" />
@@ -992,9 +982,6 @@
             <element signature="n#!!block;n#constructor#0;n#SuperPush#0" />
             <element signature="n#WolfDisguise#0" />
             <element signature="n#!!block;n#constructor#0;n#WolfDisguise#0" />
-            <element signature="n#SuperSpeed#0" />
-            <element signature="n#!!block;n#constructor#0;n#SuperSpeed#0" />
-            <element signature="n#!!block;n#constructor#0;n#LethalBlows#0" />
             <element signature="n#CoinSurprise#0" />
             <element signature="n#!!block;n#constructor#0;n#CoinSurprise#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#CoinSurprise#0" />
@@ -1005,7 +992,6 @@
             <element signature="n#!!block;n#constructor#0;n#Rescue#0" />
             <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
             <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
-            <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
             <element signature="n#!!block;n#remove#0" />
             <element signature="e#30927#30966#0" />
             <element signature="n#!!block;n#enableTeleport#0" />
