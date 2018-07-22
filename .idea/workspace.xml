@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="078baab9-6d62-488b-84e6-2f8dfaa58280" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/bullrush.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/bullrush.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +28,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+            <state relative-caret-position="405">
+              <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -43,8 +46,8 @@
       <file leaf-file-name="index.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="975">
-              <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+            <state relative-caret-position="1200">
+              <caret line="80" selection-start-line="80" selection-end-line="80" />
             </state>
           </provider>
         </entry>
@@ -57,8 +60,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
+            <state relative-caret-position="-3396">
+              <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="28" />
               <folding>
                 <element signature="e#346#392#0" />
                 <element signature="e#362#596#0" />
@@ -121,15 +124,13 @@
                 <element signature="e#14848#14868#0" />
                 <element signature="e#14222#14463#0" />
                 <element signature="e#16750#16845#0" />
-                <element signature="e#16631#16718#0" />
                 <element signature="e#15087#15129#0" />
                 <element signature="n#!!block;n#animate#0;n#Game#0" />
                 <element signature="e#15311#15658#0" />
+                <element signature="n#!!block;n#updateAI#0;n#Game#0" />
                 <element signature="e#15692#15756#0" />
                 <element signature="e#15979#16016#0" />
                 <element signature="e#16215#16275#0" />
-                <element signature="e#16423#16918#0" />
-                <element signature="e#16544#16671#0" />
                 <element signature="e#17008#17235#0" />
                 <element signature="e#17830#17885#0" />
                 <element signature="e#18011#18068#0" />
@@ -172,15 +173,8 @@
                 <element signature="e#23976#24060#0" />
                 <element signature="n#!!block;n#constructor#0;n#Pos#0" />
                 <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-                <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
                 <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-                <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-                <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-                <element signature="e#24902#24951#0" />
-                <element signature="e#24994#25040#0" />
-                <element signature="e#25085#25133#0" />
-                <element signature="e#25178#25226#0" />
                 <element signature="n#Actor#0" />
                 <element signature="n#!!block;n#constructor#0;n#Actor#0" />
                 <element signature="n#!!block;n#getColor#0;n#Actor#0" />
@@ -189,9 +183,7 @@
                 <element signature="n#!!block;n#getColor#0;n#Player#0" />
                 <element signature="e#25683#25724#0" />
                 <element signature="e#25767#25821#0" />
-                <element signature="n#Sheep#0" />
                 <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-                <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
                 <element signature="e#26050#26090#0" />
                 <element signature="e#26116#26156#0" />
                 <element signature="e#26222#26276#0" />
@@ -230,9 +222,6 @@
                 <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
                 <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
                 <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
-                <element signature="n#!!block;n#addHighscore#0" />
-                <element signature="e#30604#30824#0" />
-                <element signature="e#30660#30807#0" />
                 <element signature="n#!!block;n#remove#0" />
                 <element signature="e#30927#30966#0" />
                 <element signature="n#!!block;n#enableTeleport#0" />
@@ -274,8 +263,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1680">
-              <caret line="112" column="17" selection-start-line="112" selection-start-column="17" selection-end-line="112" selection-end-column="17" />
+            <state relative-caret-position="123">
+              <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -305,8 +294,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>WolfDisguise</find>
-      <find>endga</find>
       <find>speed</find>
       <find>set</find>
       <find>foreach</find>
@@ -335,6 +322,8 @@
       <find>conso</find>
       <find>wolfAI</find>
       <find>score</find>
+      <find>getPushPos</find>
+      <find>adjacent</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -354,11 +343,11 @@
         <option value="$PROJECT_DIR$/public/model/highscore.js" />
         <option value="$PROJECT_DIR$/public/javascripts/DPad.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
-        <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/models/highscore.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/public/javascripts/bullrush.js" />
+        <option value="$PROJECT_DIR$/views/index.ejs" />
+        <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
       </list>
     </option>
   </component>
@@ -501,12 +490,12 @@
       <workItem from="1531864756056" duration="5220000" />
       <workItem from="1531956191011" duration="11287000" />
       <workItem from="1532053924653" duration="1024000" />
-      <workItem from="1532059337145" duration="11311000" />
+      <workItem from="1532059337145" duration="14178000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119223000" />
+    <option name="totallyTimeSpent" value="122090000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1370" height="877" extended-state="6" />
@@ -814,24 +803,10 @@
     <entry file="file://$PROJECT_DIR$/routes/users.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/astar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="112" column="17" selection-start-line="112" selection-start-column="17" selection-end-line="112" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -842,24 +817,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="65" column="31" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+        <state relative-caret-position="405">
+          <caret line="27" column="17" lean-forward="true" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+        <state relative-caret-position="135">
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
+        <state relative-caret-position="-3396">
+          <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="28" />
           <folding>
             <element signature="e#346#392#0" />
             <element signature="e#362#596#0" />
@@ -922,15 +911,13 @@
             <element signature="e#14848#14868#0" />
             <element signature="e#14222#14463#0" />
             <element signature="e#16750#16845#0" />
-            <element signature="e#16631#16718#0" />
             <element signature="e#15087#15129#0" />
             <element signature="n#!!block;n#animate#0;n#Game#0" />
             <element signature="e#15311#15658#0" />
+            <element signature="n#!!block;n#updateAI#0;n#Game#0" />
             <element signature="e#15692#15756#0" />
             <element signature="e#15979#16016#0" />
             <element signature="e#16215#16275#0" />
-            <element signature="e#16423#16918#0" />
-            <element signature="e#16544#16671#0" />
             <element signature="e#17008#17235#0" />
             <element signature="e#17830#17885#0" />
             <element signature="e#18011#18068#0" />
@@ -973,15 +960,8 @@
             <element signature="e#23976#24060#0" />
             <element signature="n#!!block;n#constructor#0;n#Pos#0" />
             <element signature="n#!!block;n#getLeftPos#0;n#Pos#0" />
-            <element signature="n#!!block;n#getUpPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getDownPos#0;n#Pos#0" />
             <element signature="n#!!block;n#getPosFromClick#0;n#Pos#0" />
-            <element signature="n#!!block;n#adjacent#0;n#Pos#0" />
-            <element signature="n#!!block;n#getPushPos#0;n#Pos#0" />
-            <element signature="e#24902#24951#0" />
-            <element signature="e#24994#25040#0" />
-            <element signature="e#25085#25133#0" />
-            <element signature="e#25178#25226#0" />
             <element signature="n#Actor#0" />
             <element signature="n#!!block;n#constructor#0;n#Actor#0" />
             <element signature="n#!!block;n#getColor#0;n#Actor#0" />
@@ -990,9 +970,7 @@
             <element signature="n#!!block;n#getColor#0;n#Player#0" />
             <element signature="e#25683#25724#0" />
             <element signature="e#25767#25821#0" />
-            <element signature="n#Sheep#0" />
             <element signature="n#!!block;n#constructor#0;n#Sheep#0" />
-            <element signature="n#!!block;n#getColor#0;n#Sheep#0" />
             <element signature="e#26050#26090#0" />
             <element signature="e#26116#26156#0" />
             <element signature="e#26222#26276#0" />
@@ -1031,9 +1009,6 @@
             <element signature="n#!!block;n#WEIGHT#0;n#Rescue#0" />
             <element signature="n#!!block;n#constructor#0;n#MoneyBags#0" />
             <element signature="n#!!block;n#constructor#0;n#MoneyBags#1" />
-            <element signature="n#!!block;n#addHighscore#0" />
-            <element signature="e#30604#30824#0" />
-            <element signature="e#30660#30807#0" />
             <element signature="n#!!block;n#remove#0" />
             <element signature="e#30927#30966#0" />
             <element signature="n#!!block;n#enableTeleport#0" />

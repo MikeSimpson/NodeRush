@@ -9,7 +9,7 @@
       <div class="container-fluid" id="canvas_container"></div>
       <div class="row">
          <div class="col-sm-3">
-            <button onClick="endGame()">New Game</button>
+            <button id="newGame" onClick="endGame()">New Game</button>
          </div>
          <div class="col-sm-3">
 			<input id="seed" type="number" value="" placeholder="Random Seed">
@@ -63,25 +63,50 @@
          </tr>
       </table>
       <div class="row">
-         <div class="col-sm-6">
+         <div class="col-sm-12">
+         </div>
+         <div class="col-sm-12">
             <h2>Instructions</h2>
+            <hr>
+         </div>
+         <div class="col-sm-12">
             <div class="instructions">
                <p>You’re the blue square</p>
                <p>White squares are your friends</p>
                <p>Red Squares are not your friends</p>
-               <p>Arrow keys/WASD to move, E or Space to wait</p>
-               <p>Hold Shift or Q to stun a creature in a given direction<br> or if it's a red square just walk into it and hope for the best.</p>
-               <p>You can get a short term power-up if you stun a white square,<br> can you find out what each colour does?</p>
-               <p>Collect gold coins and get to other side!</p>
+               <p>Arrow keys/WASD to move
+               <p>E or Space to wait</p>
+               <p>Hold Shift or Q to stun</p>
+               <p>Stun a white square for a power up</p>
+               <p>Collect gold squares and get to other side!</p>
                <br>
                <p><a href="https://itsmaze.herokuapp.com">Also check out Max's Maze Game</a></p>
             </div>
          </div>
-         <div class="col-sm-6">
+         <div class="col-sm-12">
             <h2>High Scores</h2>
+            <hr>
+         </div>
+         <div class="col-sm-6">
             <div>
                <table>
-                  <% for(var i=0; i<scores.length; i++) { %>
+                  <% for(var i=0; i<scores.length/2; i++) { %>
+                  <tr>
+                     <td class="score_col">
+                        <%= scores[i].name %>
+                     </td>
+                     <td class="score_col">
+                        <%= scores[i].score %>
+                     </td>
+                  </tr>
+                  <% } %>
+               </table>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <div>
+               <table>
+                  <% for(var i=scores.length/2; i<scores.length; i++) { %>
                   <tr>
                      <td class="score_col">
                         <%= scores[i].name %>

@@ -168,6 +168,8 @@ class Game {
 
         this.moves = []
 
+        document.getElementById('newGame').innerText = "Restart"
+
         this.draw()
     }
 
@@ -391,6 +393,11 @@ class Game {
                 this.player.powerUp = null
             }
         }
+
+        //change new game text
+        if(this.score > 1){
+            document.getElementById('newGame').innerText = "Retire"
+        }
     }
 
     moveActor(actor, dest, ctrl) {
@@ -402,7 +409,7 @@ class Game {
         }
 
         //deny moves more than one tile away
-        if (!Pos.adjacent(actor.pos, dest) && !this.teleport) return
+        if (!actor.pos.adjacent(dest) && !this.teleport) return
 
         if (actor instanceof Player || actor instanceof Clone) {
 
@@ -492,7 +499,7 @@ class Game {
 
             //check for player trying to push
             if (target instanceof Sheep || target instanceof Crate || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
-                this.moveActor(target, Pos.getPushPos(actor.pos, dest))
+                this.moveActor(target, actor.pos.getPushPos(dest))
             }
 
             //check for coin
@@ -547,7 +554,7 @@ class Game {
 
         let graph = new Graph(this.getWeightArray(true))
         //build plan for each sheep
-        for (var i = 0; i < this.sheeps.length; i++) {
+        for (var i = this.sheeps.length - 1; i >= 0; i--) {
             let sheep = game.sheeps[i]
             if (sheep.rooted) continue
             if (sheep.pos.x === targetX) {
@@ -712,7 +719,7 @@ class Game {
                     for (var i = 0; i < game.wolves.length; i++) {
                         let wolf = game.wolves[i]
                         if (wolf.rooted) continue
-                        if (Pos.adjacent(wolf.pos, new Pos(x, y))) {
+                        if (wolf.pos.adjacent(new Pos(x, y))) {
                             array[x][y] = 0
                         }
                     }
@@ -817,21 +824,22 @@ class Pos {
         return new Pos(x, y)
     }
 
-    static adjacent(pos1, pos2) {
-        return Math.abs(pos1.x - pos2.x) + Math.abs(pos1.y - pos2.y) === 1
+    adjacent(pos2) {
+        return Math.abs(this.x - pos2.x) + Math.abs(this.y - pos2.y) === 1
     }
 
-    static getPushPos(pos1, pos2) {
-        if (pos1.getRightPos().x === pos2.x) {
-            return pos2.getRightPos()
-        }
-        if (pos1.getUpPos().y === pos2.y) {
-            return pos2.getUpPos()
-        }
-        if (pos1.getLeftPos().x === pos2.x) {
+    getPushPos(pos2) {
+        //note left and right must become before up other wise you can't push when y == 0 because of the -1 checking
+        if (this.getLeftPos().x === pos2.x) {
             return pos2.getLeftPos()
         }
-        if (pos1.getDownPos().y === pos2.y) {
+        if (this.getRightPos().x === pos2.x) {
+            return pos2.getRightPos()
+        }
+        if (this.getUpPos().y === pos2.y) {
+            return pos2.getUpPos()
+        }
+        if (this.getDownPos().y === pos2.y) {
             return pos2.getDownPos()
         }
     }
@@ -881,7 +889,7 @@ class Sheep extends Actor {
         if (this.rooted) {
             return '#bfab92'
         }
-        if (powerKey && Pos.adjacent(game.player.pos, this.pos)) {
+        if (powerKey && game.player.pos.adjacent(this.pos)) {
             return this.powerUp.getColor()
         }
         return this.color
@@ -946,6 +954,7 @@ class Clone extends Actor {
         super(pos)
         this.color = '#55CFFF'
         this.powerUp = null
+        this.rooted = true
     }
 }
 

@@ -14,6 +14,8 @@ table {
 }
 
 hr {
+    margin-left: 100px;
+    margin-right: 100px;
     color: white;
 }
 
@@ -24,9 +26,10 @@ h1 {
 }
 
 h2 {
+    padding-top: 40px;
     color: white;
     text-align: center;
-    font-size: xx-large;
+    font-size: 40px;
 }
 
 .score_col {
@@ -76,6 +79,7 @@ a {
 }
 
 @media only screen and (max-width: 1200px) {
+
     .dpad {
         margin: 600px auto 100px;
     }
