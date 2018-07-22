@@ -449,34 +449,6 @@ class Game {
                     return
                 }
 
-                //check for murder
-                if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
-                    this.moveActor(target, null);
-                    if (target instanceof Sheep && !target.eaten) {
-                        remove(this.sheeps, target)
-                        this.sheepCount--
-                    }
-                    if (target instanceof Sheep && target.eaten) {
-                        remove(this.sheeps, target)
-                        this.wolfCount--
-                    }
-                    if (target instanceof Wolf) {
-                        remove(this.wolves, target)
-                        this.wolfCount--
-                    }
-                    return
-                }
-
-                //check for MoneyBags dropping crates
-                if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
-                    let crate = new Crate(new Pos(dest.x, dest.y))
-                    this.board[dest.x][dest.y] = crate
-                    this.crates.push(crate)
-                    this.score--
-                    document.getElementById('score').innerText = "Score: " + this.score
-                    return
-                }
-
                 //check for deploying a clone
                 if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
                     let clone = new Clone(new Pos(dest.x, dest.y))
@@ -494,6 +466,35 @@ class Game {
                     return
                 }
             }
+
+            //check for murder
+            if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
+                this.moveActor(target, null);
+                if (target instanceof Sheep && !target.eaten) {
+                    remove(this.sheeps, target)
+                    this.sheepCount--
+                }
+                if (target instanceof Sheep && target.eaten) {
+                    remove(this.sheeps, target)
+                    this.wolfCount--
+                }
+                if (target instanceof Wolf) {
+                    remove(this.wolves, target)
+                    this.wolfCount--
+                }
+                return
+            }
+
+            //check for MoneyBags dropping crates
+            if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
+                let crate = new Crate(new Pos(dest.x, dest.y))
+                this.board[dest.x][dest.y] = crate
+                this.crates.push(crate)
+                this.score--
+                document.getElementById('score').innerText = "Score: " + this.score
+                return
+            }
+            
             //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
             if (target instanceof Wolf && !target.rooted) {
                 this.board[dest.x][dest.y].rooted = true
