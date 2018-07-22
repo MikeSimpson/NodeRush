@@ -946,6 +946,7 @@ class Crate extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#bb9955'
+        this.rooted = true
     }
 }
 
@@ -954,7 +955,6 @@ class Clone extends Actor {
         super(pos)
         this.color = '#55CFFF'
         this.powerUp = null
-        this.rooted = true
     }
 }
 
