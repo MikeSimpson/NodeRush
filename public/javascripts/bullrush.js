@@ -11,6 +11,7 @@ sheepImage.src = '/sprites/sheep.png'
 wolfImage.src = '/sprites/wolf.png'
 playerImage.src = '/sprites/player.png'
 var powerKey
+var autoWalking
 var DIR = {
     UP: 1,
     DOWN: 2,
@@ -26,7 +27,7 @@ $(document).ready(function () {
     window.addEventListener('keydown', keyDownListener, true)
 
     window.addEventListener('keyup', keyUpListener, true)
-    // window.addEventListener('click', clickListener, true)
+    document.getElementById('canvas_container').addEventListener('mousedown', clickDownListener, true)
 })
 
 let keyDownListener = function (e) {
@@ -113,8 +114,8 @@ function dpadInput(key) {
     }
 }
 
-let clickListener = function (e) {
-    game.update(Pos.getPosFromClick(e, game))
+let clickDownListener = function (e) {
+    game.playerAuto(Pos.getPosFromClick(e, game))
 }
 
 class Game {
@@ -445,7 +446,7 @@ class Game {
 
                         }
                     }
-                    console.log(this.player.powerUp.timer)
+                    // console.log(this.player.powerUp.timer)
                     return
                 }
 
@@ -494,7 +495,7 @@ class Game {
                 document.getElementById('score').innerText = "Score: " + this.score
                 return
             }
-            
+
             //check for player hitting wolf, we assume they want to hit a wolf if they walk into it
             if (target instanceof Wolf && !target.rooted) {
                 this.board[dest.x][dest.y].rooted = true
@@ -582,7 +583,7 @@ class Game {
             let sheep = game.sheeps[i]
             if (sheep.rooted) return
 
-            let nextStep = sheep.plan[0];
+            let nextStep = sheep.plan[0]
             if (typeof nextStep !== 'undefined') {
                 game.moveActor(sheep, new Pos(nextStep.x, nextStep.y))
             } else {
@@ -680,8 +681,41 @@ class Game {
         })
     }
 
+    playerAuto(dest){
+        let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
+        let graph = new Graph(this.getWeightArray(true, true))
+        if (this.player.pos.x === targetX) {
+            if(this.directionIsRight) {
+                this.update(DIR.RIGHT, false, "AutoRight")
+            } else{
+                this.update(DIR.LEFT, false, "AutoLeft")
+            }
+            return
+        }
+        let start = graph.grid[this.player.pos.x][this.player.pos.y]
+        let end = graph.grid[dest.x][dest.y]
+        let plan = astar.search(graph, start, end).reverse()
+        console.log(plan)
+        MOVE_DELAY = 0
+        this.useInputLock = false
+        replayLoop(plan.length, 50, function (i) { //This must iterate in reverse as we are removing array elements
+            let nextStep = new Pos(plan[i].x, plan[i].y)
+            console.log(nextStep)
+            if(nextStep.x === game.player.pos.getLeftPos().x){
+                game.update(DIR.LEFT, false, "AutoLeft")
+            } else if(nextStep.x === game.player.pos.getRightPos().x){
+                game.update(DIR.RIGHT, false, "AutoRight")
+            } else if(nextStep.y === game.player.pos.getDownPos().y){
+                game.update(DIR.DOWN, false, "AutoDown")
+            } else if(nextStep.y === game.player.pos.getUpPos().y){
+                game.update(DIR.UP, false, "AutoUp")
+            }
+        })
+        MOVE_DELAY = 10
+    }
+
     delayLoop(i, timeout, func) {
-        this.inputLock = true
+        this.inputLock = this.useInputLock
         if (--i < 0) {
             this.inputLock = false
             return
@@ -709,12 +743,12 @@ class Game {
         }
     }
 
-    getWeightArray(sheep = false) {
+    getWeightArray(sheep = false, player = false) {
         let array = [];
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
             for (let y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted) {
+                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted && !(player && this.board[x][y] instanceof Coin)) {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
@@ -824,7 +858,8 @@ class Pos {
 
     static getPosFromClick(e, game) {
         let x = parseInt((e.x - game.context.canvas.offsetLeft) / game.tileSize)
-        let y = parseInt((e.y - game.context.canvas.offsetLeft) / game.tileSize)
+        let y = parseInt((e.y - game.context.canvas.offsetTop) / game.tileSize)
+        console.log(y)
         return new Pos(x, y)
     }
 
@@ -1176,7 +1211,7 @@ function endGame() {
 function replay(seed, moves) {
     MOVE_DELAY = 0
     game.initialiseGame(seed)
-    replayLoop(moveArray.length, 500, function (i) {
+    replayLoop(moves.length, 500, function (i) {
         console.log(moves[i])
         let ctrl = moves[i].toUpperCase() === moves[i]
         switch (moves[i].toUpperCase()) {
