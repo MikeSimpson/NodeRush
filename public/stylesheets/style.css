@@ -1,11 +1,10 @@
 body {
-    padding-top: 20px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: dimgray;
 }
 
 .container-fluid {
-    padding-top: 20px;
+    padding-top: 40px;
     max-width: 90%;
 }
 
@@ -78,7 +77,24 @@ a {
     touch-action: none;
 }
 
+@media screen and (orientation:portrait) {
+
+    #container {
+        -ms-transform: rotate(-90deg); /* IE 9 */
+        -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+        transform: rotate(-90deg);
+        width: 100%;
+        overflow: scroll;
+    }
+}
+
 @media only screen and (max-width: 1200px) {
+
+    .container-fluid {
+        padding: 0px;
+        width: 80%;
+        height: 80%;
+    }
 
     .dpad {
         margin: 600px auto 100px;

@@ -3,6 +3,7 @@ let BOARD_HEIGHT = 10
 let LEVEL_LAPS = 6
 let MOVE_DELAY = 10
 let ANIMATION_FRAMES = 10
+let PLAYER_COUNT = 1
 let game
 var sheepImage = new Image()
 var wolfImage = new Image()
@@ -36,34 +37,45 @@ let keyDownListener = function (e) {
         e.preventDefault()
     }
     switch (e.key) {
-        case 'ArrowLeft':
         case 'a':
         case 'A':
-            game.update(DIR.LEFT, powerKey, e.key)
+            game.update(DIR.LEFT, powerKey, e.key, 0)
             break
-        case 'ArrowUp':
         case 'w':
         case 'W':
-            game.update(DIR.UP, powerKey, e.key)
+            game.update(DIR.UP, powerKey, e.key, 0)
             break
-        case 'ArrowRight':
         case 'd':
         case 'D':
-            game.update(DIR.RIGHT, powerKey, e.key)
+            game.update(DIR.RIGHT, powerKey, e.key, 0)
             break
-        case 'ArrowDown':
         case 's':
         case 'S':
-            game.update(DIR.DOWN, powerKey, e.key)
+            game.update(DIR.DOWN, powerKey, e.key, 0)
             break
         case 'e':
         case ' ':
-            game.update(DIR.WAIT, false, e.key)
+            game.update(DIR.WAIT, false, e.key, 0)
             break
         case 'q':
         case 'Shift':
             powerKey = true
             game.draw()
+            break
+        case 'ArrowLeft':
+            game.update(DIR.LEFT, powerKey, e.key, 1)
+            break
+        case 'ArrowUp':
+            game.update(DIR.UP, powerKey, e.key, 1)
+            break
+        case 'ArrowRight':
+            game.update(DIR.RIGHT, powerKey, e.key, 1)
+            break
+        case 'ArrowDown':
+            game.update(DIR.DOWN, powerKey, e.key, 1)
+            break
+        case '0':
+            game.update(DIR.WAIT, false, e.key, 1)
             break
         default:
     }
@@ -157,9 +169,10 @@ class Game {
         this.spawnBoulders()
 
         //initialise actors
-        this.sheepCount = BOARD_HEIGHT - 1 //zzzzzz TODO this variable shouldn't really be needed
+        this.playerCount = PLAYER_COUNT
+        this.sheepCount = BOARD_HEIGHT - this.playerCount //zzzzzz TODO this variable shouldn't really be needed
         this.wolfCount = 1
-        this.player = new Player(new Pos(-1, -1)) //pos will be overidden
+        // this.player = new Player(new Pos(-1, -1)) //pos will be overidden
         this.spawnActors()
 
         //clear debug flags
@@ -177,10 +190,22 @@ class Game {
     spawnActors() {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
-        //spawn player
-        let playerY = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
-        this.player.pos = new Pos(startX, playerY)
-        this.board[startX][playerY] = this.player
+        //spawn players
+        this.players = []
+        var playersCreated = 0
+        var index = 0
+        while (this.playerCount > 0) {
+            //attempt to add a player
+            let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
+            if (!(this.board[startX][y] instanceof Actor)) {
+                let player = new Player(new Pos(startX, y), index)
+                this.board[startX][y] = player
+                this.players.push(player)
+                playersCreated++
+                index++
+                if (playersCreated === this.playerCount) break
+            }
+        }
 
         //spawn sheep
         this.sheeps = []
@@ -271,7 +296,9 @@ class Game {
         this.directionIsRight = !this.directionIsRight
 
         //reset actors
-        this.moveActor(this.player, null)
+        for (var i = 0; i < this.players.length; i++) {
+            this.moveActor(this.players[i], null)
+        }
         for (var i = 0; i < this.sheeps.length; i++) {
             this.moveActor(this.sheeps[i], null)
         }
@@ -323,23 +350,24 @@ class Game {
         }
     }
 
-    update(dir, ctrl, key) {
+    update(dir, ctrl, key, playerIndex) {
+        if(this.playerCount === 1) playerIndex = 0
         let playerDest
         switch (dir) {
             case DIR.UP:
-                playerDest = this.player.pos.getUpPos()
+                playerDest = this.players[playerIndex].pos.getUpPos()
                 break;
             case DIR.DOWN:
-                playerDest = this.player.pos.getDownPos()
+                playerDest = this.players[playerIndex].pos.getDownPos()
                 break;
             case DIR.LEFT:
-                playerDest = this.player.pos.getLeftPos()
+                playerDest = this.players[playerIndex].pos.getLeftPos()
                 break;
             case DIR.RIGHT:
-                playerDest = this.player.pos.getRightPos()
+                playerDest = this.players[playerIndex].pos.getRightPos()
                 break;
             case DIR.WAIT:
-                playerDest = this.player.pos
+                playerDest = this.players[playerIndex].pos
                 break;
         }
         if (this.inputLock) return
@@ -350,7 +378,7 @@ class Game {
         }
 
         try {
-            this.moveActor(this.player, playerDest, ctrl)
+            this.moveActor(this.players[playerIndex], playerDest, ctrl)
         } catch { //catch my clever joke
             return
         }
@@ -379,7 +407,7 @@ class Game {
         }
 
         //update ai
-        if (!(this.player.powerUp instanceof SuperSpeed && this.player.powerUp.timer % 3 !== 0)) {
+        if (!(this.players[playerIndex].powerUp instanceof SuperSpeed && this.players[playerIndex].powerUp.timer % 3 !== 0)) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
@@ -388,10 +416,10 @@ class Game {
         this.draw()
         //decrement powerup
         //TODO make this logic more readable
-        if (this.player.powerUp !== null) {
-            this.player.powerUp.timer--
-            if (this.player.powerUp.timer < 0) {
-                this.player.powerUp = null
+        if (this.players[playerIndex].powerUp !== null) {
+            this.players[playerIndex].powerUp.timer--
+            if (this.players[playerIndex].powerUp.timer < 0) {
+                this.players[playerIndex].powerUp = null
             }
         }
 
@@ -437,21 +465,21 @@ class Game {
                     //TODO build array of eaten sheep and move that into wolves on reset
                     //TODO extract this into a function
                     //add power up
-                    if(this.player.powerUp != null && this.player.powerUp.constructor === target.powerUp.constructor){
-                        this.player.powerUp.timer += target.powerUp.timer * Math.min((parseInt(this.player.powerUp.timer / target.powerUp.timer) + 1), 3)
+                    if(actor.powerUp != null && actor.powerUp.constructor === target.powerUp.constructor){
+                        actor.powerUp.timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp.timer / target.powerUp.timer) + 1), 3)
                     } else {
-                        this.player.powerUp = target.powerUp
+                        actor.powerUp = target.powerUp
                         //TODO spawn clones randomly around player
-                        if (this.player.powerUp instanceof Cloned) {
+                        if (actor.powerUp instanceof Cloned) {
 
                         }
                     }
-                    // console.log(this.player.powerUp.timer)
+                    // console.log(actor.powerUp.timer)
                     return
                 }
 
                 //check for deploying a clone
-                if (ctrl && this.player.powerUp instanceof Cloned && target == null) {
+                if (ctrl && actor.powerUp instanceof Cloned && target == null) {
                     let clone = new Clone(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = clone
                     this.clones.push(clone)
@@ -459,17 +487,17 @@ class Game {
                 }
 
                 //check for WolfeDisguise dropping decoys
-                if (ctrl && this.player.powerUp instanceof WolfDisguise && this.player.powerUp.decoyCount > 0 && target == null) {
+                if (ctrl && actor.powerUp instanceof WolfDisguise && actor.powerUp.decoyCount > 0 && target == null) {
                     let decoy = new Decoy(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = decoy
                     this.decoys.push(decoy)
-                    this.player.powerUp.decoyCount--
+                    actor.powerUp.decoyCount--
                     return
                 }
             }
 
             //check for murder
-            if (this.player.powerUp instanceof LethalBlows && target instanceof Actor) {
+            if (actor.powerUp instanceof LethalBlows && target instanceof Actor) {
                 this.moveActor(target, null);
                 if (target instanceof Sheep && !target.eaten) {
                     remove(this.sheeps, target)
@@ -487,7 +515,7 @@ class Game {
             }
 
             //check for MoneyBags dropping crates
-            if (ctrl && this.player.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
+            if (ctrl && actor.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
                 let crate = new Crate(new Pos(dest.x, dest.y))
                 this.board[dest.x][dest.y] = crate
                 this.crates.push(crate)
@@ -503,7 +531,7 @@ class Game {
             }
 
             //check for player trying to push
-            if (target instanceof Sheep || target instanceof Crate || (target instanceof Actor && this.player.powerUp instanceof SuperPush)) {
+            if (target instanceof Sheep || target instanceof Crate || (target instanceof Actor && actor.powerUp instanceof SuperPush)) {
                 this.moveActor(target, actor.pos.getPushPos(dest))
             }
 
@@ -595,8 +623,12 @@ class Game {
 
     wolfAI() {
         let wolfGoals = []
-        if (!(this.player.powerUp instanceof WolfDisguise)) {
-            wolfGoals.push(this.player.pos)
+
+        for (var i = 0; i < game.players.length; i++) {
+            let player = game.players[i]
+            if (!(player.powerUp instanceof WolfDisguise)) {
+                wolfGoals.push(player.pos)
+            }
         }
 
         for (var i = 0; i < game.sheeps.length; i++) {
@@ -660,7 +692,7 @@ class Game {
                         remove(game.clones, target)
                     }
                     if (target instanceof Player) {
-                        if(game.player.powerUp instanceof Undead && game.score > 0){
+                        if(target.powerUp instanceof Undead && game.score > 0){
                             game.score--
                             document.getElementById('score').innerText = "Score: " + game.score
                             return
@@ -684,31 +716,30 @@ class Game {
     playerAuto(dest){
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
         let graph = new Graph(this.getWeightArray(true, true))
-        if (this.player.pos.x === targetX) {
+        if (this.players[0].pos.x === targetX) {
             if(this.directionIsRight) {
-                this.update(DIR.RIGHT, false, "AutoRight")
+                this.update(DIR.RIGHT, false, "AutoRight", 0)
             } else{
-                this.update(DIR.LEFT, false, "AutoLeft")
+                this.update(DIR.LEFT, false, "AutoLeft", 0)
             }
             return
         }
-        let start = graph.grid[this.player.pos.x][this.player.pos.y]
+        let start = graph.grid[this.players[0].pos.x][this.players[0].pos.y]
         let end = graph.grid[dest.x][dest.y]
         let plan = astar.search(graph, start, end).reverse()
-        console.log(plan)
+
         MOVE_DELAY = 0
         this.useInputLock = false
         replayLoop(plan.length, 50, function (i) { //This must iterate in reverse as we are removing array elements
             let nextStep = new Pos(plan[i].x, plan[i].y)
-            console.log(nextStep)
-            if(nextStep.x === game.player.pos.getLeftPos().x){
-                game.update(DIR.LEFT, false, "AutoLeft")
-            } else if(nextStep.x === game.player.pos.getRightPos().x){
-                game.update(DIR.RIGHT, false, "AutoRight")
-            } else if(nextStep.y === game.player.pos.getDownPos().y){
-                game.update(DIR.DOWN, false, "AutoDown")
-            } else if(nextStep.y === game.player.pos.getUpPos().y){
-                game.update(DIR.UP, false, "AutoUp")
+            if(nextStep.x === game.players[0].pos.getLeftPos().x){
+                game.update(DIR.LEFT, false, "AutoLeft", 0)
+            } else if(nextStep.x === game.players[0].pos.getRightPos().x){
+                game.update(DIR.RIGHT, false, "AutoRight", 0)
+            } else if(nextStep.y === game.players[0].pos.getDownPos().y){
+                game.update(DIR.DOWN, false, "AutoDown", 0)
+            } else if(nextStep.y === game.players[0].pos.getUpPos().y){
+                game.update(DIR.UP, false, "AutoUp", 0)
             }
         })
         MOVE_DELAY = 10
@@ -859,7 +890,6 @@ class Pos {
     static getPosFromClick(e, game) {
         let x = parseInt((e.x - game.context.canvas.offsetLeft) / game.tileSize)
         let y = parseInt((e.y - game.context.canvas.offsetTop) / game.tileSize)
-        console.log(y)
         return new Pos(x, y)
     }
 
@@ -898,9 +928,16 @@ class Actor {
 }
 
 class Player extends Actor {
-    constructor(pos) {
+    constructor(pos, index) {
         super(pos)
-        this.color = '#00BFFF'
+        switch(index){
+            case 0:
+                this.color = '#00BFFF'
+                break;
+            case 1:
+                this.color = '#57E5BF'
+                break;
+        }
         this.powerUp = null
     }
 
@@ -928,7 +965,7 @@ class Sheep extends Actor {
         if (this.rooted) {
             return '#bfab92'
         }
-        if (powerKey && game.player.pos.adjacent(this.pos)) {
+        if (powerKey && (game.players[0].pos.adjacent(this.pos) || game.players[1].pos.adjacent(this.pos))) {
             return this.powerUp.getColor()
         }
         return this.color
@@ -1212,27 +1249,26 @@ function replay(seed, moves) {
     MOVE_DELAY = 0
     game.initialiseGame(seed)
     replayLoop(moves.length, 500, function (i) {
-        console.log(moves[i])
         let ctrl = moves[i].toUpperCase() === moves[i]
         switch (moves[i].toUpperCase()) {
             case 'ARROWLEFT':
             case 'A':
-                game.update(game.player.pos.getLeftPos(), ctrl, moves[i])
+                game.update(game.players[0].pos.getLeftPos(), ctrl, moves[i])
                 break
             case 'ARROWUP':
             case 'W':
-                game.update(game.player.pos.getUpPos(), ctrl, moves[i])
+                game.update(game.players[0].pos.getUpPos(), ctrl, moves[i])
                 break
             case 'ARROWRIGHT':
             case 'D':
-                game.update(game.player.pos.getRightPos(), ctrl, moves[i])
+                game.update(game.players[0].pos.getRightPos(), ctrl, moves[i])
                 break
             case 'ARROWDOWN':
             case 'S':
-                game.update(game.player.pos.getDownPos(), ctrl, moves[i])
+                game.update(game.players[0].pos.getDownPos(), ctrl, moves[i])
                 break
             case ' ':
-                game.update(game.player.pos, ctrl, moves[i])
+                game.update(game.players[0].pos, ctrl, moves[i])
                 break
             default:
         }
