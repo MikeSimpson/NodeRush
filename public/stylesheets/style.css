@@ -124,14 +124,16 @@ a {
     .dpadAttackSmall {
         width: 70px;
         height: 70px;
-        margin: 10px;
+        margin-left: 150px;
+        margin-top: -250px;
         background: #FF0000;
     }
 
     .dpadWaitSmall {
         width: 70px;
         height: 70px;
-        margin: 10px;
+        margin-left: 150px;
+        margin-top: -240px;
         background: #FFFFFF;
     }
 
