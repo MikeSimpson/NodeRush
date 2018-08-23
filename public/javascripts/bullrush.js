@@ -256,12 +256,25 @@ class Game {
         while (true) {
             //attempt to add a coin
             let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
-            //force wolf to second half of board
             let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[x][y] instanceof Actor)) {
                 let coin = new Coin(new Pos(x, y))
                 this.board[x][y] = coin
                 this.coins.push(coin)
+                break
+            }
+        }
+
+        //spawn powerup
+        this.powerUps = []
+        while (true) {
+            //attempt to add a powerup
+            let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
+            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
+            if (!(this.board[x][y] instanceof Actor)) {
+                let powerup = PowerUp.getRandom()
+                this.board[x][y] = powerup
+                this.powerUps.push(powerup)
                 break
             }
         }
@@ -318,6 +331,9 @@ class Game {
         }
         for (var i = 0; i < this.coins.length; i++) {
             this.moveActor(this.coins[i], null)
+        }
+        for (var i = 0; i < this.powerUps.length; i++) {
+            this.moveActor(this.powerUps[i], null)
         }
         for (var i = 0; i < this.decoys.length; i++) {
             this.moveActor(this.decoys[i], null)
@@ -1080,6 +1096,7 @@ class PowerUp {
     constructor() {
         this.color = '#000000'
         this.timer = 20
+        this.pos = new Pos(-1, -1)
     }
 
     static get WEIGHT() {
