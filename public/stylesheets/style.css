@@ -5,7 +5,7 @@ body {
 
 .container-fluid {
     padding-top: 40px;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 table {
@@ -117,6 +117,20 @@ a {
     .dpadWait {
         width: 140px;
         height: 140px;
+        margin: 10px;
+        background: #FFFFFF;
+    }
+
+    .dpadAttackSmall {
+        width: 70px;
+        height: 70px;
+        margin: 10px;
+        background: #FF0000;
+    }
+
+    .dpadWaitSmall {
+        width: 70px;
+        height: 70px;
         margin: 10px;
         background: #FFFFFF;
     }

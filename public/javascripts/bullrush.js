@@ -965,7 +965,7 @@ class Sheep extends Actor {
         if (this.rooted) {
             return '#bfab92'
         }
-        if (powerKey && (game.players[0].pos.adjacent(this.pos) || game.players[1].pos.adjacent(this.pos))) {
+        if (powerKey && (game.players[0].pos.adjacent(this.pos) || (game.players.length > 1 && game.players[1].pos.adjacent(this.pos)))) {
             return this.powerUp.getColor()
         }
         return this.color

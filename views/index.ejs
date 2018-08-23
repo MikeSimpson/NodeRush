@@ -7,7 +7,19 @@
       <link rel='manifest' href="/manifest.json" />
    </head>
    <body>
-      <div class="container-fluid" id="canvas_container"></div>
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+               <div id="canvas_container"></div>
+            </div>
+            <div class="col-sm-1">
+               <div class="dpadWaitSmall" onClick="dpadInput('PadWait')"></div>
+               <div class="dpadAttackSmall" onClick="dpadInput('PadAttack')"></div>
+            </div>
+         </div>
+      </div>
       <div class="row">
          <div class="col-sm-3">
             <button id="newGame" onClick="endGame()">New Game</button>

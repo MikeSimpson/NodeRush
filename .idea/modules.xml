@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/NodeRush.iml" filepath="$PROJECT_DIR$/.idea/NodeRush.iml" />
+      <module fileurl="file://$USER_HOME$/PhpstormProjects/react-messages/.idea/react-messages.iml" filepath="$USER_HOME$/PhpstormProjects/react-messages/.idea/react-messages.iml" />
     </modules>
   </component>
 </project>
