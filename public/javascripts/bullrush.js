@@ -273,6 +273,7 @@ class Game {
             let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
             if (!(this.board[x][y] instanceof Actor)) {
                 let powerup = PowerUp.getRandom()
+                powerup.pos = new Pos(x, y)
                 this.board[x][y] = powerup
                 this.powerUps.push(powerup)
                 break
@@ -1101,9 +1102,9 @@ class Clone extends Actor {
 
 class PowerUp extends Actor{
     constructor() {
+        super(new Pos(-1, -1))
         this.color = '#000000'
         this.timer = 20
-        this.pos = new Pos(-1, -1)
     }
 
     static get WEIGHT() {
