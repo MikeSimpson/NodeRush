@@ -505,6 +505,13 @@ class Game {
                     return
                 }
 
+                //check for powerup pick up
+                if (target instanceof PowerUp) {
+                    remove(this.powerUps, target)
+                    this.moveActor(target, null)
+                    actor.powerUp = target
+                }
+
                 //check for deploying a clone
                 if (ctrl && actor.powerUp instanceof Cloned && target == null) {
                     let clone = new Clone(new Pos(dest.x, dest.y))
@@ -1092,7 +1099,7 @@ class Clone extends Actor {
     }
 }
 
-class PowerUp {
+class PowerUp extends Actor{
     constructor() {
         this.color = '#000000'
         this.timer = 20
