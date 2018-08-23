@@ -170,6 +170,7 @@ class Game {
 
         //initialise actors
         this.playerCount = PLAYER_COUNT
+        this.players = []
         this.sheepCount = BOARD_HEIGHT - this.playerCount //zzzzzz TODO this variable shouldn't really be needed
         this.wolfCount = 1
         // this.player = new Player(new Pos(-1, -1)) //pos will be overidden
@@ -191,19 +192,29 @@ class Game {
         let startX = this.directionIsRight ? 0 : BOARD_WIDTH - 1
 
         //spawn players
-        this.players = []
         var playersCreated = 0
-        var index = 0
-        while (this.playerCount > 0) {
-            //attempt to add a player
-            let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
-            if (!(this.board[startX][y] instanceof Actor)) {
-                let player = new Player(new Pos(startX, y), index)
-                this.board[startX][y] = player
-                this.players.push(player)
-                playersCreated++
-                index++
-                if (playersCreated === this.playerCount) break
+        if (this.players.length === 0) {
+            while (this.playerCount > 0) {
+                //attempt to add a player
+                let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
+                if (!(this.board[startX][y] instanceof Actor)) {
+                    let player = new Player(new Pos(startX, y), playersCreated)
+                    this.board[startX][y] = player
+                    this.players.push(player)
+                    playersCreated++
+                    if (playersCreated === this.playerCount) break
+                }
+            }
+        } else {
+            while (this.playerCount > 0) {
+                //attempt to place a player
+                let y = parseInt(this.gameRandom.nextFloat() * BOARD_HEIGHT)
+                if (!(this.board[startX][y] instanceof Actor)) {
+                    this.board[startX][y] = this.players[playersCreated]
+                    this.players[playersCreated].pos = new Pos(startX, y)
+                    playersCreated++
+                    if (playersCreated === this.playerCount) break
+                }
             }
         }
 
@@ -351,7 +362,7 @@ class Game {
     }
 
     update(dir, ctrl, key, playerIndex) {
-        if(this.playerCount === 1) playerIndex = 0
+        if (this.playerCount === 1) playerIndex = 0
         let playerDest
         switch (dir) {
             case DIR.UP:
@@ -424,7 +435,7 @@ class Game {
         }
 
         //change new game text
-        if(this.score > 1){
+        if (this.score > 1) {
             document.getElementById('newGame').innerText = "Retire"
         }
     }
@@ -465,7 +476,7 @@ class Game {
                     //TODO build array of eaten sheep and move that into wolves on reset
                     //TODO extract this into a function
                     //add power up
-                    if(actor.powerUp != null && actor.powerUp.constructor === target.powerUp.constructor){
+                    if (actor.powerUp != null && actor.powerUp.constructor === target.powerUp.constructor) {
                         actor.powerUp.timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp.timer / target.powerUp.timer) + 1), 3)
                     } else {
                         actor.powerUp = target.powerUp
@@ -654,6 +665,8 @@ class Game {
         }
 
         let weights = this.getWeightArray()
+        let flankerWeights = this.getWeightArray(false, false, true)
+
         var BREAK_OUTER = false
         this.delayLoop(this.wolves.length, MOVE_DELAY, function (i) {
             if (BREAK_OUTER) return
@@ -668,8 +681,12 @@ class Game {
             //make rooted sheep untraversable
             if (game.board[endPos.x][endPos.y] instanceof Actor && game.board[endPos.x][endPos.y].rooted) {
                 weights[endPos.x][endPos.y] = 1
+                flankerWeights[endPos.x][endPos.y] = 1
             }
             let graph = new Graph(weights)
+            if (wolf.flanker) {
+                graph = new Graph(flankerWeights)
+            }
             let start = graph.grid[wolf.pos.x][wolf.pos.y]
             let end = graph.grid[endPos.x][endPos.y]
             let nextStep = astar.search(graph, start, end)[0];
@@ -692,7 +709,7 @@ class Game {
                         remove(game.clones, target)
                     }
                     if (target instanceof Player) {
-                        if(target.powerUp instanceof Undead && game.score > 0){
+                        if (target.powerUp instanceof Undead && game.score > 0) {
                             game.score--
                             document.getElementById('score').innerText = "Score: " + game.score
                             return
@@ -713,25 +730,25 @@ class Game {
         })
     }
 
-    playerAuto(dest){
+    playerAuto(dest) {
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
         if (this.players[0].pos.x === targetX) {
-            if(this.directionIsRight) {
+            if (this.directionIsRight) {
                 this.update(DIR.RIGHT, false, "AutoRight", 0)
-            } else{
+            } else {
                 this.update(DIR.LEFT, false, "AutoLeft", 0)
             }
             return
         }
-        if(dest.adjacent(this.players[0].pos)){
+        if (dest.adjacent(this.players[0].pos)) {
             let nextStep = dest
-            if(nextStep.x === game.players[0].pos.getLeftPos().x){
+            if (nextStep.x === game.players[0].pos.getLeftPos().x) {
                 game.update(DIR.LEFT, powerKey, "AutoLeft", 0)
-            } else if(nextStep.x === game.players[0].pos.getRightPos().x){
+            } else if (nextStep.x === game.players[0].pos.getRightPos().x) {
                 game.update(DIR.RIGHT, powerKey, "AutoRight", 0)
-            } else if(nextStep.y === game.players[0].pos.getDownPos().y){
+            } else if (nextStep.y === game.players[0].pos.getDownPos().y) {
                 game.update(DIR.DOWN, powerKey, "AutoDown", 0)
-            } else if(nextStep.y === game.players[0].pos.getUpPos().y){
+            } else if (nextStep.y === game.players[0].pos.getUpPos().y) {
                 game.update(DIR.UP, powerKey, "AutoUp", 0)
             }
             powerKey = false
@@ -746,13 +763,13 @@ class Game {
         this.useInputLock = false
         replayLoop(plan.length, 50, function (i) { //This must iterate in reverse as we are removing array elements
             let nextStep = new Pos(plan[i].x, plan[i].y)
-            if(nextStep.x === game.players[0].pos.getLeftPos().x){
+            if (nextStep.x === game.players[0].pos.getLeftPos().x) {
                 game.update(DIR.LEFT, powerKey, "AutoLeft", 0)
-            } else if(nextStep.x === game.players[0].pos.getRightPos().x){
+            } else if (nextStep.x === game.players[0].pos.getRightPos().x) {
                 game.update(DIR.RIGHT, powerKey, "AutoRight", 0)
-            } else if(nextStep.y === game.players[0].pos.getDownPos().y){
+            } else if (nextStep.y === game.players[0].pos.getDownPos().y) {
                 game.update(DIR.DOWN, powerKey, "AutoDown", 0)
-            } else if(nextStep.y === game.players[0].pos.getUpPos().y){
+            } else if (nextStep.y === game.players[0].pos.getUpPos().y) {
                 game.update(DIR.UP, powerKey, "AutoUp", 0)
             }
         })
@@ -789,7 +806,7 @@ class Game {
         }
     }
 
-    getWeightArray(sheep = false, player = false) {
+    getWeightArray(sheep = false, player = false, flanker = false) {
         let array = [];
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
@@ -804,6 +821,15 @@ class Game {
                         let wolf = game.wolves[i]
                         if (wolf.rooted) continue
                         if (wolf.pos.adjacent(new Pos(x, y))) {
+                            array[x][y] = 0
+                        }
+                    }
+                }
+                if (flanker) {
+                    for (var i = 0; i < game.wolves.length; i++) {
+                        let wolf = game.wolves[i]
+                        if (wolf.rooted) continue
+                        if (wolf.pos == new Pos(x, y)) {
                             array[x][y] = 0
                         }
                     }
@@ -945,7 +971,7 @@ class Actor {
 class Player extends Actor {
     constructor(pos, index) {
         super(pos)
-        switch(index){
+        switch (index) {
             case 0:
                 this.color = '#00BFFF'
                 break;
@@ -1007,6 +1033,7 @@ class Wolf extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#ff0000'
+        this.flanker = game.gameRandom.nextFloat() > 0.0
     }
 
     getColor() {
