@@ -829,7 +829,7 @@ class Game {
                     for (var i = 0; i < game.wolves.length; i++) {
                         let wolf = game.wolves[i]
                         if (wolf.rooted) continue
-                        if (wolf.pos == new Pos(x, y)) {
+                        if (wolf.pos.x === x && wolf.pos.y === y) {
                             array[x][y] = 0
                         }
                     }
