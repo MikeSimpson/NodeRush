@@ -128,6 +128,7 @@ function dpadInput(key) {
 
 let clickDownListener = function (e) {
     game.playerAuto(Pos.getPosFromClick(e, game))
+    powerKey = false
 }
 
 class Game {
@@ -779,7 +780,7 @@ class Game {
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
             for (let y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted && !(player && this.board[x][y] instanceof Coin)) {
+                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted && !player) {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
