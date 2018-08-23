@@ -1033,7 +1033,7 @@ class Wolf extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#ff0000'
-        this.flanker = game.gameRandom.nextFloat() > 0.0
+        this.flanker = game.gameRandom.nextFloat() < 0.2
     }
 
     getColor() {
