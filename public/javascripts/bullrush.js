@@ -128,7 +128,6 @@ function dpadInput(key) {
 
 let clickDownListener = function (e) {
     game.playerAuto(Pos.getPosFromClick(e, game))
-    powerKey = false
 }
 
 class Game {
@@ -716,7 +715,6 @@ class Game {
 
     playerAuto(dest){
         let targetX = this.directionIsRight ? BOARD_WIDTH - 1 : 0
-        let graph = new Graph(this.getWeightArray(true, true))
         if (this.players[0].pos.x === targetX) {
             if(this.directionIsRight) {
                 this.update(DIR.RIGHT, false, "AutoRight", 0)
@@ -725,6 +723,21 @@ class Game {
             }
             return
         }
+        if(dest.adjacent(this.players[0].pos)){
+            let nextStep = dest
+            if(nextStep.x === game.players[0].pos.getLeftPos().x){
+                game.update(DIR.LEFT, powerKey, "AutoLeft", 0)
+            } else if(nextStep.x === game.players[0].pos.getRightPos().x){
+                game.update(DIR.RIGHT, powerKey, "AutoRight", 0)
+            } else if(nextStep.y === game.players[0].pos.getDownPos().y){
+                game.update(DIR.DOWN, powerKey, "AutoDown", 0)
+            } else if(nextStep.y === game.players[0].pos.getUpPos().y){
+                game.update(DIR.UP, powerKey, "AutoUp", 0)
+            }
+            powerKey = false
+            return
+        }
+        let graph = new Graph(this.getWeightArray(true, true))
         let start = graph.grid[this.players[0].pos.x][this.players[0].pos.y]
         let end = graph.grid[dest.x][dest.y]
         let plan = astar.search(graph, start, end).reverse()
@@ -734,15 +747,16 @@ class Game {
         replayLoop(plan.length, 50, function (i) { //This must iterate in reverse as we are removing array elements
             let nextStep = new Pos(plan[i].x, plan[i].y)
             if(nextStep.x === game.players[0].pos.getLeftPos().x){
-                game.update(DIR.LEFT, false, "AutoLeft", 0)
+                game.update(DIR.LEFT, powerKey, "AutoLeft", 0)
             } else if(nextStep.x === game.players[0].pos.getRightPos().x){
-                game.update(DIR.RIGHT, false, "AutoRight", 0)
+                game.update(DIR.RIGHT, powerKey, "AutoRight", 0)
             } else if(nextStep.y === game.players[0].pos.getDownPos().y){
-                game.update(DIR.DOWN, false, "AutoDown", 0)
+                game.update(DIR.DOWN, powerKey, "AutoDown", 0)
             } else if(nextStep.y === game.players[0].pos.getUpPos().y){
-                game.update(DIR.UP, false, "AutoUp", 0)
+                game.update(DIR.UP, powerKey, "AutoUp", 0)
             }
         })
+        powerKey = false
         MOVE_DELAY = 10
     }
 
@@ -780,7 +794,7 @@ class Game {
         for (let x = 0; x < BOARD_WIDTH; x++) {
             array[x] = [];
             for (let y = 0; y < BOARD_HEIGHT; y++) {
-                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted && !player) {
+                if (this.board[x][y] instanceof Actor && this.board[x][y].rooted && !(player && this.board[x][y] instanceof Coin)) {
                     array[x][y] = 0
                 } else {
                     array[x][y] = 1
