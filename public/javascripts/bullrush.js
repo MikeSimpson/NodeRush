@@ -333,9 +333,6 @@ class Game {
         for (var i = 0; i < this.coins.length; i++) {
             this.moveActor(this.coins[i], null)
         }
-        for (var i = 0; i < this.powerUps.length; i++) {
-            this.moveActor(this.powerUps[i], null)
-        }
         for (var i = 0; i < this.decoys.length; i++) {
             this.moveActor(this.decoys[i], null)
         }
