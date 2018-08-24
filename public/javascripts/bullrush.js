@@ -441,10 +441,10 @@ class Game {
         this.draw()
         //decrement powerup
         //TODO make this logic more readable
-        if (this.players[playerIndex].powerUp !== null) {
-            this.players[playerIndex].powerUp.timer--
-            if (this.players[playerIndex].powerUp.timer < 0) {
-                this.players[playerIndex].powerUp = null
+        if (this.players[playerIndex].powerUp.length !== 0) {
+            this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length-1].timer--
+            if (this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length-1].timer < 0) {
+                this.players[playerIndex].powerUp.pop()
             }
         }
 
@@ -490,10 +490,10 @@ class Game {
                     //TODO build array of eaten sheep and move that into wolves on reset
                     //TODO extract this into a function
                     //add power up
-                    if (actor.powerUp != null && actor.powerUp.constructor === target.powerUp.constructor) {
-                        actor.powerUp.timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp.timer / target.powerUp.timer) + 1), 3)
+                    if (actor.powerUp.length != 0 && actor.powerUp[actor.powerUp.length-1].constructor === target.powerUp.constructor) {
+                        actor.powerUp[actor.powerUp].length-1].timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp[actor.powerUp.length-1].timer / target.powerUp.timer) + 1), 3)
                     } else {
-                        actor.powerUp = target.powerUp
+                        actor.powerUp.push(target.powerUp)
                         //TODO spawn clones randomly around player
                         if (actor.powerUp instanceof Cloned) {
 
@@ -507,12 +507,12 @@ class Game {
                 if (ctrl && target instanceof PowerUp) {
                     remove(this.powerUps, target)
                     this.moveActor(target, null)
-                    actor.powerUp = target
+                    actor.powerUp.push(target)
                     return
                 }
 
                 //check for deploying a clone
-                if (ctrl && actor.powerUp instanceof Cloned && target == null) {
+                if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof Cloned && target == null) {
                     let clone = new Clone(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = clone
                     this.clones.push(clone)
@@ -520,7 +520,7 @@ class Game {
                 }
 
                 //check for WolfeDisguise dropping decoys
-                if (ctrl && actor.powerUp instanceof WolfDisguise && actor.powerUp.decoyCount > 0 && target == null) {
+                if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof WolfDisguise && actor.powerUp.decoyCount > 0 && target == null) {
                     let decoy = new Decoy(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = decoy
                     this.decoys.push(decoy)
@@ -530,7 +530,7 @@ class Game {
             }
 
             //check for murder
-            if (actor.powerUp instanceof LethalBlows && target instanceof Actor) {
+            if (actor.powerUp[actor.powerUp.length-1] instanceof LethalBlows && target instanceof Actor) {
                 this.moveActor(target, null);
                 if (target instanceof Sheep && !target.eaten) {
                     remove(this.sheeps, target)
@@ -548,7 +548,7 @@ class Game {
             }
 
             //check for MoneyBags dropping crates
-            if (ctrl && actor.powerUp instanceof MoneyBags && this.score >= 1 && target == null) {
+            if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof MoneyBags && this.score >= 1 && target == null) {
                 let crate = new Crate(new Pos(dest.x, dest.y))
                 this.board[dest.x][dest.y] = crate
                 this.crates.push(crate)
@@ -564,7 +564,7 @@ class Game {
             }
 
             //check for player trying to push
-            if (target instanceof Sheep || target instanceof Crate || target instanceof PowerUp || (target instanceof Actor && actor.powerUp instanceof SuperPush)) {
+            if (target instanceof Sheep || target instanceof Crate || target instanceof PowerUp || (target instanceof Actor && actor.powerUp[actor.powerUp.length-1] instanceof SuperPush)) {
                 this.moveActor(target, actor.pos.getPushPos(dest))
             }
 
@@ -659,7 +659,7 @@ class Game {
 
         for (var i = 0; i < game.players.length; i++) {
             let player = game.players[i]
-            if (!(player.powerUp instanceof WolfDisguise)) {
+            if (!(player.powerUp[player.powerUp.length-1] instanceof WolfDisguise)) {
                 wolfGoals.push(player.pos)
             }
         }
@@ -731,7 +731,7 @@ class Game {
                         remove(game.clones, target)
                     }
                     if (target instanceof Player) {
-                        if (target.powerUp instanceof Undead && game.score > 0) {
+                        if (target.powerUp[target.powerUp.length-1] instanceof Undead && game.score > 0) {
                             game.score--
                             document.getElementById('score').innerText = "Score: " + game.score
                             return
@@ -1001,11 +1001,11 @@ class Player extends Actor {
                 this.color = '#57E5BF'
                 break;
         }
-        this.powerUp = null
+        this.powerUp = []
     }
 
     getColor() {
-        if (this.powerUp == null || this.powerUp.timer === 2 || this.powerUp.timer === 4) {
+        if (this.powerUp.length == 0 || this.powerUp[this.powerUp.length-1].timer === 2 || this.powerUp[this.powerUp.length-1].timer === 4) {
             return this.color
         } else if (this.powerUp instanceof PowerUp) {
             return this.powerUp.getColor()
@@ -1352,27 +1352,4 @@ function replayLoop(i, timeout, func) {
         func(i)
         replayLoop(i, timeout, func)
     }, timeout)
-}
-
-function testPowerSpread() {
-    var ass = 0
-    var push = 0
-    var speed = 0
-    var hide = 0
-    for (var i = 0; i < 10000; i++) {
-        let powerUp = PowerUp.getRandom()
-        if (powerUp instanceof LethalBlows) {
-            ass++
-        } else if (powerUp instanceof SuperPush) {
-            push++
-        } else if (powerUp instanceof SuperSpeed) {
-            speed++
-        } else if (powerUp instanceof WolfDisguise) {
-            hide++
-        }
-    }
-    console.log(ass)
-    console.log(push)
-    console.log(speed)
-    console.log(hide)
 }
