@@ -495,7 +495,7 @@ class Game {
                     } else {
                         actor.powerUp.push(target.powerUp)
                         //TODO spawn clones randomly around player
-                        if (actor.powerUp instanceof Cloned) {
+                        if (actor.powerUp[actor.powerUp.length-1] instanceof Cloned) {
 
                         }
                     }
@@ -1096,7 +1096,7 @@ class Clone extends Actor {
     constructor(pos) {
         super(pos)
         this.color = '#55CFFF'
-        this.powerUp = null
+        this.powerUp = []
     }
 }
 
