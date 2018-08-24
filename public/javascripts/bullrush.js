@@ -511,6 +511,7 @@ class Game {
                     remove(this.powerUps, target)
                     this.moveActor(target, null)
                     actor.powerUp = target
+                    return
                 }
 
                 //check for deploying a clone
