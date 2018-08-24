@@ -432,7 +432,7 @@ class Game {
         }
 
         //update ai
-        if (!(this.players[playerIndex].powerUp instanceof SuperSpeed && this.players[playerIndex].powerUp.timer % 3 !== 0)) {
+        if (!(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length-1] instanceof SuperSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length-1].timer % 3 !== 0)) {
             game.updateAI()
         }
         if (this.laps / LEVEL_LAPS >= 5) { //disco mode
@@ -520,11 +520,11 @@ class Game {
                 }
 
                 //check for WolfeDisguise dropping decoys
-                if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof WolfDisguise && actor.powerUp.decoyCount > 0 && target == null) {
+                if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof WolfDisguise && actor.powerUp[actor.powerUp.length-1].decoyCount > 0 && target == null) {
                     let decoy = new Decoy(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = decoy
                     this.decoys.push(decoy)
-                    actor.powerUp.decoyCount--
+                    actor.powerUp[actor.powerUp.length-1].decoyCount--
                     return
                 }
             }
