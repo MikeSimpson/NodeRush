@@ -507,7 +507,7 @@ class Game {
                 }
 
                 //check for powerup pick up
-                if (target instanceof PowerUp) {
+                if (ctrl && target instanceof PowerUp) {
                     remove(this.powerUps, target)
                     this.moveActor(target, null)
                     actor.powerUp = target
@@ -566,7 +566,7 @@ class Game {
             }
 
             //check for player trying to push
-            if (target instanceof Sheep || target instanceof Crate || (target instanceof Actor && actor.powerUp instanceof SuperPush)) {
+            if (target instanceof Sheep || target instanceof Crate || target instanceof PowerUp || (target instanceof Actor && actor.powerUp instanceof SuperPush)) {
                 this.moveActor(target, actor.pos.getPushPos(dest))
             }
 
