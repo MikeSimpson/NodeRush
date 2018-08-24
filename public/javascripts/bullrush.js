@@ -1008,7 +1008,7 @@ class Player extends Actor {
         if (this.powerUp.length == 0 || this.powerUp[this.powerUp.length-1].timer === 2 || this.powerUp[this.powerUp.length-1].timer === 4) {
             return this.color
         } else if (this.powerUp[this.powerUp.length-1] instanceof PowerUp) {
-            return this.powerUp.getColor()
+            return this.powerUp[this.powerUp.length-1].getColor()
         }
     }
 }
