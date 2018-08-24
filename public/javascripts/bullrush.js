@@ -1108,6 +1108,7 @@ class PowerUp extends Actor {
         super(new Pos(-1, -1))
         this.color = '#000000'
         this.timer = 20
+        this.rooted = true
     }
 
     static get WEIGHT() {

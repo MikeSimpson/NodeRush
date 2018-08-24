@@ -58,8 +58,8 @@
       <file leaf-file-name="bullrush.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="1035" column="47" selection-start-line="1035" selection-start-column="47" selection-end-line="1035" selection-end-column="47" />
+            <state relative-caret-position="312">
+              <caret line="1110" column="26" selection-start-line="1110" selection-start-column="26" selection-end-line="1110" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -319,12 +319,12 @@
       <workItem from="1532479882110" duration="3274000" />
       <workItem from="1534120424804" duration="3708000" />
       <workItem from="1534985967525" duration="2065000" />
-      <workItem from="1535001765732" duration="2979000" />
+      <workItem from="1535001765732" duration="3381000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="142182000" />
+    <option name="totallyTimeSpent" value="142584000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1850" height="1057" extended-state="6" />
@@ -680,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/bullrush.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="1035" column="47" selection-start-line="1035" selection-start-column="47" selection-end-line="1035" selection-end-column="47" />
+        <state relative-caret-position="312">
+          <caret line="1110" column="26" selection-start-line="1110" selection-start-column="26" selection-end-line="1110" selection-end-column="26" />
         </state>
       </provider>
     </entry>
