@@ -1021,7 +1021,9 @@ class Sheep extends Actor {
         super(pos)
         this.color = '#ffebd2'
         this.eaten = false
-        this.powerUp = PowerUp.getRandom()
+        if (game.gameRandom.nextFloat() < 0.5) {
+            this.powerUp = PowerUp.getRandom()
+        }
     }
 
     getColor() {
@@ -1101,7 +1103,7 @@ class Clone extends Actor {
     }
 }
 
-class PowerUp extends Actor{
+class PowerUp extends Actor {
     constructor() {
         super(new Pos(-1, -1))
         this.color = '#000000'
