@@ -492,7 +492,7 @@ class Game {
                     //TODO build array of eaten sheep and move that into wolves on reset
                     //TODO extract this into a function
                     //add power up
-                    if (actor.powerUp.length != 0 && actor.powerUp[actor.powerUp.length-1].constructor === target.powerUp.constructor) {
+                    if (actor.powerUp != null && actor.powerUp.length !== 0 && actor.powerUp[actor.powerUp.length-1].constructor === target.powerUp.constructor) {
                         actor.powerUp[actor.powerUp.length-1].timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp[actor.powerUp.length-1].timer / target.powerUp.timer) + 1), 3)
                     } else {
                         actor.powerUp.push(target.powerUp)
@@ -521,7 +521,7 @@ class Game {
                     return
                 }
 
-                //check for WolfeDisguise dropping decoys
+                //check for WolfDisguise dropping decoys
                 if (ctrl && actor.powerUp[actor.powerUp.length-1] instanceof WolfDisguise && actor.powerUp[actor.powerUp.length-1].decoyCount > 0 && target == null) {
                     let decoy = new Decoy(new Pos(dest.x, dest.y))
                     this.board[dest.x][dest.y] = decoy
