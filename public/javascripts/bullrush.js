@@ -267,16 +267,18 @@ class Game {
 
         //spawn powerup
         this.powerUps = []
-        while (true) {
-            //attempt to add a powerup
-            let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
-            let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
-            if (!(this.board[x][y] instanceof Actor)) {
-                let powerup = PowerUp.getRandom()
-                powerup.pos = new Pos(x, y)
-                this.board[x][y] = powerup
-                this.powerUps.push(powerup)
-                break
+        if (this.laps % 6 === 0) {
+            while (true) {
+                //attempt to add a powerup
+                let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
+                let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT)
+                if (!(this.board[x][y] instanceof Actor)) {
+                    let powerup = PowerUp.getRandomHat()
+                    powerup.pos = new Pos(x, y)
+                    this.board[x][y] = powerup
+                    this.powerUps.push(powerup)
+                    break
+                }
             }
         }
 
@@ -1019,7 +1021,7 @@ class Sheep extends Actor {
         this.color = '#ffebd2'
         this.eaten = false
         if (game.gameRandom.nextFloat() < 0.5) {
-            this.powerUp = PowerUp.getRandom()
+            this.powerUp = PowerUp.getRandomBurst()
         }
     }
 
@@ -1104,7 +1106,7 @@ class PowerUp extends Actor {
     constructor() {
         super(new Pos(-1, -1))
         this.color = '#000000'
-        this.timer = 20
+        this.timer = 30
         this.rooted = true
     }
 
@@ -1116,7 +1118,19 @@ class PowerUp extends Actor {
         return this.color
     }
 
-    static getRandom() {
+    static getRandomHat() {
+        let totalWeight = MoneyBags.WEIGHT
+            + Undead.WEIGHT
+        var pill = 0
+        let rand = game.gameRandom.nextFloat() * totalWeight
+        if (rand < (MoneyBags.WEIGHT + pill)) return new MoneyBags()
+        pill += MoneyBags.WEIGHT
+        if (rand < (Undead.WEIGHT + pill)) return new Undead()
+        pill += Undead.WEIGHT
+        return new Undead()
+    }
+
+    static getRandomBurst() {
         let totalWeight = SuperPush.WEIGHT
             + WolfDisguise.WEIGHT
             + LethalBlows.WEIGHT
@@ -1175,7 +1189,6 @@ class SuperSpeed extends PowerUp {
     constructor() {
         super()
         this.color = '#ffff88'
-        this.timer
     }
 
     static get WEIGHT() {
@@ -1222,7 +1235,7 @@ class Rescue extends PowerUp {
     constructor() {
         super()
         this.color = '#eeeeff'
-        this.timer = 999
+        this.timer = 9999
     }
 
     static get WEIGHT() {
@@ -1234,7 +1247,7 @@ class MoneyBags extends PowerUp {
     constructor() {
         super()
         this.color = '#888888'
-        this.timer = 999
+        this.timer = 9999
     }
 
     static get WEIGHT() {
@@ -1258,7 +1271,7 @@ class Undead extends PowerUp {
     constructor() {
         super()
         this.color = '#888800'
-        this.timer = 999
+        this.timer = 9999
     }
 
     static get WEIGHT() {
@@ -1360,7 +1373,7 @@ function testPowerSpread() {
     var speed = 0
     var hide = 0
     for (var i = 0; i < 10000; i++) {
-        let powerUp = PowerUp.getRandom()
+        let powerUp = PowerUp.getRandomBurst()
         if (powerUp instanceof LethalBlows) {
             ass++
         } else if (powerUp instanceof SuperPush) {
