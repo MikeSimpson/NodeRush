@@ -267,7 +267,7 @@ class Game {
 
         //spawn powerup
         this.powerUps = []
-        if (this.laps % 6 === 0) {
+        if (this.laps % LEVEL_LAPS === 0 && this.laps !== 0) {
             while (true) {
                 //attempt to add a powerup
                 let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH)
