@@ -494,7 +494,7 @@ class Game {
                     //add power up
                     if (actor.powerUp.length !== 0 && actor.powerUp[actor.powerUp.length - 1].constructor === target.powerUp.constructor) {
                         actor.powerUp[actor.powerUp.length - 1].timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp[actor.powerUp.length - 1].timer / target.powerUp.timer) + 1), 3)
-                    } else if (target.powerUp !== null) {
+                    } else if (target.powerUp !== null && typeof target.powerUp === 'undefined') {
                         actor.powerUp.push(target.powerUp)
                         //TODO spawn clones randomly around player
                         if (actor.powerUp[actor.powerUp.length - 1] instanceof Cloned) {
