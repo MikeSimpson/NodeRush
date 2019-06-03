@@ -17,7 +17,7 @@ class Sheep extends Actor {
         }
         if (powerKey && this.powerUp != null
             && (game.players[0].pos.adjacent(this.pos) || (game.players.length > 1 && game.players[1].pos.adjacent(this.pos))
-                || this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof Psychic)
+                || game.players[0].powerUp[game.players[0].powerUp.length - 1] instanceof Psychic)
         ) {
             return this.powerUp.getColor();
         }
