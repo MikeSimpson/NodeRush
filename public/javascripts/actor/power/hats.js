@@ -21,3 +21,25 @@ class Undead extends PowerUp {
         return 5;
     }
 }
+
+class SemiSpeed extends PowerUp {
+    constructor() {
+        super();
+        this.color = '#ffffc8';
+    }
+
+    static get WEIGHT() {
+        return 5;
+    }
+}
+
+class Psychic extends PowerUp {
+    constructor() {
+        super();
+        this.color = '#ffa2ff';
+    }
+
+    static get WEIGHT() {
+        return 5;
+    }
+}
