@@ -120,10 +120,10 @@ function dpadInput(key) {
             break;
         case 'PadAttack':
             powerKey = !powerKey;
-            if(powerKey) {
-                document.getElementsByClassName('dpadWaitSmall')[0].style.color = '#FF0000'
+            if (powerKey) {
+                document.getElementsByClassName('dpadWaitSmall')[0].style.background = '#FF0000'
             } else {
-                document.getElementsByClassName('dpadWaitSmall')[0].style.color = '#ff8b72'
+                document.getElementsByClassName('dpadWaitSmall')[0].style.background = '#ff8b72'
             }
             game.draw();
             break;
@@ -134,7 +134,6 @@ function dpadInput(key) {
 let clickDownListener = function (e) {
     game.playerAuto(Pos.getPosFromClick(e, game))
 };
-
 
 
 function addHighscore() {
