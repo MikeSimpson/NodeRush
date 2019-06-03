@@ -303,7 +303,7 @@ class Game {
 
         //update ai
         if (!(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SuperSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 3 !== 0)
-        && !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 10 === 0)
+        && !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 5 === 0)
         ) {
             game.updateAI()
         }
@@ -415,6 +415,20 @@ class Game {
                 if (target instanceof Wolf) {
                     remove(this.wolves, target);
                     this.wolfCount--
+                }
+                return
+            }
+
+            //check for healing
+            if (actor.powerUp[actor.powerUp.length - 1] instanceof Medic && target instanceof Actor) {
+                if (target instanceof Sheep && target.eaten) {
+                    remove(this.wolves, target);
+                    target.eaten = false;
+                    target.rooted = false;
+                    this.sheepCount++;
+                    this.wolfCount--;
+                    this.score--;
+                    document.getElementById('score').innerText = "Score: " + this.score;
                 }
                 return
             }

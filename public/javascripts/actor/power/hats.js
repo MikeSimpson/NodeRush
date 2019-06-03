@@ -6,7 +6,7 @@ class MoneyBags extends PowerUp {
     }
 
     static get WEIGHT() {
-        return 5;
+        return 4;
     }
 }
 
@@ -37,11 +37,23 @@ class SemiSpeed extends PowerUp {
 class Psychic extends PowerUp {
     constructor() {
         super();
-        this.color = '#ffa2ff';
+        this.color = '#bb00ff';
         this.timer = 9999;
     }
 
     static get WEIGHT() {
         return 5;
+    }
+}
+
+class Medic extends PowerUp {
+    constructor() {
+        super();
+        this.color = '#ffb5d5';
+        this.timer = 9999;
+    }
+
+    static get WEIGHT() {
+        return 3;
     }
 }

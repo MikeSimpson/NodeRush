@@ -18,6 +18,7 @@ class PowerUp extends Actor {
         let totalWeight = MoneyBags.WEIGHT
             + Undead.WEIGHT
             + SemiSpeed.WEIGHT
+            + Medic.WEIGHT
             + Psychic.WEIGHT;
         var pill = 0;
         let rand = game.gameRandom.nextFloat() * totalWeight;
@@ -29,6 +30,8 @@ class PowerUp extends Actor {
         pill += SemiSpeed.WEIGHT;
         if (rand < (Psychic.WEIGHT + pill)) return new Psychic();
         pill += Psychic.WEIGHT;
+        if (rand < (Medic.WEIGHT + pill)) return new Medic();
+        pill += Medic.WEIGHT;
         return new Undead()
     }
 
