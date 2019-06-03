@@ -367,6 +367,7 @@ class Game {
                     } else {
                         if (target.powerUp instanceof Coin) {
                             this.score++;
+                            document.getElementById('score').innerText = "Score: " + this.score
                         } else {
                             actor.powerUp.push(target.powerUp);
                         }

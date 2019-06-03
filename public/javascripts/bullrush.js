@@ -120,11 +120,11 @@ function dpadInput(key) {
             break;
         case 'PadAttack':
             powerKey = !powerKey;
-            game.draw();
             break;
         default:
     }
     setAttackKeyColor();
+    game.draw();
 }
 
 function setAttackKeyColor() {
