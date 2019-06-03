@@ -226,7 +226,7 @@ function testPowerSpread() {
     let speed = 0;
     let hide = 0;
     for (let i = 0; i < 10000; i++) {
-        let powerUp = Power_up.getRandomBurst();
+        let powerUp = PowerUp.getRandomBurst();
         if (powerUp instanceof LethalBlows) {
             ass++
         } else if (powerUp instanceof SuperPush) {

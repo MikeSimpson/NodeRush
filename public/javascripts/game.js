@@ -141,7 +141,7 @@ class Game {
                 let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH);
                 let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT);
                 if (!(this.board[x][y] instanceof Actor)) {
-                    let powerup = Power_up.getRandomHat();
+                    let powerup = PowerUp.getRandomHat();
                     powerup.pos = new Pos(x, y);
                     this.board[x][y] = powerup;
                     this.powerUps.push(powerup);
@@ -374,7 +374,7 @@ class Game {
                 }
 
                 //check for powerup pick up
-                if (ctrl && target instanceof Power_up) {
+                if (ctrl && target instanceof PowerUp) {
                     remove(this.powerUps, target);
                     this.moveActor(target, null);
                     actor.powerUp.push(target);
@@ -434,7 +434,7 @@ class Game {
             }
 
             //check for player trying to push
-            if (target instanceof Sheep || target instanceof Crate || target instanceof Power_up || (target instanceof Actor && actor.powerUp[actor.powerUp.length - 1] instanceof SuperPush)) {
+            if (target instanceof Sheep || target instanceof Crate || target instanceof PowerUp || (target instanceof Actor && actor.powerUp[actor.powerUp.length - 1] instanceof SuperPush)) {
                 this.moveActor(target, actor.pos.getPushPos(dest))
             }
 
