@@ -121,9 +121,9 @@ function dpadInput(key) {
         case 'PadAttack':
             powerKey = !powerKey;
             if (powerKey) {
-                document.getElementsByClassName('dpadWaitSmall')[0].style.background = '#FF0000'
+                document.getElementsByClassName('dpadAttackSmall')[0].style.background = '#FF0000'
             } else {
-                document.getElementsByClassName('dpadWaitSmall')[0].style.background = '#ff8b72'
+                document.getElementsByClassName('dpadAttackSmall')[0].style.background = '#ff8b72'
             }
             game.draw();
             break;
