@@ -420,7 +420,7 @@ class Game {
             }
 
             //check for healing
-            if (actor.powerUp[actor.powerUp.length - 1] instanceof Medic && target instanceof Actor) {
+            if (ctrl &&  actor.powerUp[actor.powerUp.length - 1] instanceof Medic && target instanceof Sheep  && this.score >= 1) {
                 if (target instanceof Sheep && target.eaten) {
                     remove(this.wolves, target);
                     target.eaten = false;
