@@ -1,11 +1,11 @@
-class SuperPush extends Power_up {
+class SuperPush extends PowerUp {
     constructor() {
         super();
         this.color = '#996655';
     }
 }
 
-class WolfDisguise extends Power_up {
+class WolfDisguise extends PowerUp {
     constructor() {
         super();
         this.color = '#ff0099';
@@ -13,7 +13,7 @@ class WolfDisguise extends Power_up {
     }
 }
 
-class SuperSpeed extends Power_up {
+class SuperSpeed extends PowerUp {
     constructor() {
         super();
         this.color = '#ffff88';
@@ -24,7 +24,7 @@ class SuperSpeed extends Power_up {
     }
 }
 
-class LethalBlows extends Power_up {
+class LethalBlows extends PowerUp {
     constructor() {
         super();
         this.color = '#000000';
@@ -36,7 +36,7 @@ class LethalBlows extends Power_up {
     }
 }
 
-class CoinSurprise extends Power_up { //spawns coins and gives 2x multiplier
+class CoinSurprise extends PowerUp { //spawns coins and gives 2x multiplier
     constructor() {
         super();
         this.color = '#00BFFF';
@@ -48,7 +48,7 @@ class CoinSurprise extends Power_up { //spawns coins and gives 2x multiplier
     }
 }
 
-class ChainLightning extends Power_up {
+class ChainLightning extends PowerUp {
     constructor() {
         super();
         this.color = '#eeeeff';
@@ -59,7 +59,7 @@ class ChainLightning extends Power_up {
     }
 }
 
-class Rescue extends Power_up {
+class Rescue extends PowerUp {
     constructor() {
         super();
         this.color = '#eeeeff';
@@ -71,7 +71,7 @@ class Rescue extends Power_up {
     }
 }
 
-class Cloned extends Power_up {
+class Cloned extends PowerUp {
     constructor() {
         super();
         this.color = '#88eeaa';
