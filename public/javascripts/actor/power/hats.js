@@ -26,6 +26,7 @@ class SemiSpeed extends PowerUp {
     constructor() {
         super();
         this.color = '#ffffc8';
+        this.timer = 9999;
     }
 
     static get WEIGHT() {
@@ -37,6 +38,7 @@ class Psychic extends PowerUp {
     constructor() {
         super();
         this.color = '#ffa2ff';
+        this.timer = 9999;
     }
 
     static get WEIGHT() {

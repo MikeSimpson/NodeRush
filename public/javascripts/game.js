@@ -303,7 +303,7 @@ class Game {
 
         //update ai
         if (!(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SuperSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 3 !== 0)
-        || !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 10 === 0)
+        && !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 10 === 0)
         ) {
             game.updateAI()
         }
