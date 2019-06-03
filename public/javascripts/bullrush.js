@@ -120,15 +120,22 @@ function dpadInput(key) {
             break;
         case 'PadAttack':
             powerKey = !powerKey;
-            if (powerKey) {
-                document.getElementsByClassName('dpadAttackSmall')[0].style.background = '#FF0000'
-            } else {
-                document.getElementsByClassName('dpadAttackSmall')[0].style.background = '#ff8b72'
-            }
             game.draw();
             break;
         default:
     }
+    setAttackKeyColor();
+}
+
+function setAttackKeyColor() {
+    let color;
+    if (powerKey) {
+        color = '#FF0000'
+    } else {
+        color = '#ff8b72'
+    }
+    document.getElementsByClassName('dpadAttack')[0].style.background = color
+    document.getElementsByClassName('dpadAttackSmall')[0].style.background = color
 }
 
 let clickDownListener = function (e) {
