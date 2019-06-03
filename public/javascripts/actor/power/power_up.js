@@ -1,5 +1,5 @@
 
-class PowerUp extends Actor {
+class Power_up extends Actor {
     constructor() {
         super(new Pos(-1, -1))
         this.color = '#000000'

@@ -1,4 +1,4 @@
-class MoneyBags extends PowerUp {
+class MoneyBags extends Power_up {
     constructor() {
         super();
         this.color = '#888888';
@@ -10,7 +10,7 @@ class MoneyBags extends PowerUp {
     }
 }
 
-class Undead extends PowerUp {
+class Undead extends Power_up {
     constructor() {
         super();
         this.color = '#888800';

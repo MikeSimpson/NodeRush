@@ -4,7 +4,7 @@ class Sheep extends Actor {
         this.color = '#ffebd2';
         this.eaten = false;
         if (game.gameRandom.nextFloat() < 0.5) {
-            this.powerUp = PowerUp.getRandomBurst();
+            this.powerUp = Power_up.getRandomBurst();
         }
     }
 
