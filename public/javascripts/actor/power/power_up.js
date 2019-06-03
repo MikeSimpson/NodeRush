@@ -43,7 +43,8 @@ class PowerUp extends Actor {
             + CoinSurprise.WEIGHT
             + ChainLightning.WEIGHT
             + Rescue.WEIGHT
-            + Cloned.WEIGHT;
+            + Cloned.WEIGHT
+            + Coin.WEIGHT;
         var pill = 0;
         let rand = game.gameRandom.nextFloat() * totalWeight;
         // console.log(totalWeight)
@@ -65,6 +66,8 @@ class PowerUp extends Actor {
         pill += Rescue.WEIGHT;
         if (rand < (Cloned.WEIGHT + pill)) return new Cloned();
         pill += Cloned.WEIGHT;
+        if (rand < (Coin.WEIGHT + pill)) return new Coin();
+        pill += Coin.WEIGHT;
         return new SuperPush()
     }
 }

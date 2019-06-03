@@ -77,8 +77,16 @@ class Cloned extends PowerUp {
         this.color = '#88eeaa';
         this.timer = 10;
     }
+}
+
+class Coin extends Actor {
+    constructor(pos) {
+        super(pos);
+        this.color = '#ffcc00';
+        this.rooted = true;
+    }
 
     static get WEIGHT() {
-        return 10;
+        return 5;
     }
 }

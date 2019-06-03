@@ -303,7 +303,7 @@ class Game {
 
         //update ai
         if (!(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SuperSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 3 !== 0)
-        && !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 5 === 0)
+            && !(this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1] instanceof SemiSpeed && this.players[playerIndex].powerUp[this.players[playerIndex].powerUp.length - 1].timer % 5 === 0)
         ) {
             game.updateAI()
         }
@@ -365,7 +365,11 @@ class Game {
                     if (actor.powerUp.length !== 0 && actor.powerUp[actor.powerUp.length - 1].constructor === target.powerUp.constructor) {
                         actor.powerUp[actor.powerUp.length - 1].timer += target.powerUp.timer * Math.min((parseInt(actor.powerUp[actor.powerUp.length - 1].timer / target.powerUp.timer) + 1), 3)
                     } else {
-                        actor.powerUp.push(target.powerUp);
+                        if (target.powerUp instanceof Coin) {
+                            this.score++;
+                        } else {
+                            actor.powerUp.push(target.powerUp);
+                        }
                         //TODO spawn clones randomly around player
                         if (actor.powerUp[actor.powerUp.length - 1] instanceof Cloned) {
 
@@ -420,7 +424,7 @@ class Game {
             }
 
             //check for healing
-            if (ctrl &&  actor.powerUp[actor.powerUp.length - 1] instanceof Medic && target instanceof Sheep  && this.score >= 1) {
+            if (ctrl && actor.powerUp[actor.powerUp.length - 1] instanceof Medic && target instanceof Sheep && this.score >= 1) {
                 if (target instanceof Sheep && target.eaten) {
                     remove(this.wolves, target);
                     target.eaten = false;

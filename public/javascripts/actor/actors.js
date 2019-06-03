@@ -22,14 +22,6 @@ class Boulder extends Actor {
     }
 }
 
-class Coin extends Actor {
-    constructor(pos) {
-        super(pos);
-        this.color = '#ffcc00';
-        this.rooted = true;
-    }
-}
-
 class Crate extends Actor {
     constructor(pos) {
         super(pos);
