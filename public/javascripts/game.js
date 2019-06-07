@@ -375,6 +375,19 @@ class Game {
                         if (actor.powerUp[actor.powerUp.length - 1] instanceof Cloned) {
 
                         }
+                        if (actor.powerUp[actor.powerUp.length - 1] instanceof Teleport) {
+                            while (true) {
+                                //attempt to teleport player
+                                let x = parseInt(this.genRandom.nextFloat() * BOARD_WIDTH);
+                                let y = parseInt(this.genRandom.nextFloat() * BOARD_HEIGHT);
+                                if (!(this.board[x][y] instanceof Actor)) {
+                                    this.board[actor.pos.x][actor.pos.y] = null;
+                                    this.board[x][y] = actor;
+                                    actor.pos = new Pos(x, y)
+                                    break
+                                }
+                            }
+                        }
                     }
                     // console.log(actor.powerUp.timer)
                     return

@@ -59,6 +59,17 @@ class ChainLightning extends PowerUp {
     }
 }
 
+class Teleport extends PowerUp {
+    constructor() {
+        super();
+        this.color = '#80007f';
+    }
+
+    static get WEIGHT() {
+        return 5;
+    }
+}
+
 class Rescue extends PowerUp {
     constructor() {
         super();
@@ -75,7 +86,7 @@ class Cloned extends PowerUp {
     constructor() {
         super();
         this.color = '#88eeaa';
-        this.timer = 10;
+        this.timer = 100;
     }
 }
 
