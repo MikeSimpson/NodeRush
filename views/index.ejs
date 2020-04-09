@@ -110,7 +110,7 @@
          <div class="col-sm-6">
             <div>
                <table>
-                  <% for(var i=scores.length/2; i<scores.length; i++) { %>
+                  <% for(var i=scores.length/2; i<scores.length && i > 25; i++) { %>
                   <tr>
                      <td class="score_col">
                         <%= scores[i].name %>
