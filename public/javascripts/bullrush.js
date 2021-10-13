@@ -148,15 +148,7 @@ function addHighscore() {
         'Congratulations, you lose! Enter your name to save your score:'
     );
     if (person != null && person !== '') {
-        $.post(
-            '/highscore',
-            {
-                name: person,
-                score: game.score,
-                seed: game.seed,
-                moves: game.moves
-            }
-        );
+       
     }
 }
 
