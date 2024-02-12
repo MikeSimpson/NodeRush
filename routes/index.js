@@ -7,6 +7,8 @@ let port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+var app = express();
+
 //Set up and connect to mongo database
 mongoose.connect(
     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority',
