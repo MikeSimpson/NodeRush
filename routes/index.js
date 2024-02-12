@@ -6,7 +6,7 @@ let router = express.Router();
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-let mongoSecret = process.env.mongoSecret;
+let mongoSecret = process.env.MONGO_SECRET;
 
 // var app = express();
 
@@ -37,7 +37,7 @@ router.post('/highscore', function(req, res) {
      post.seed = req.body.seed;
      post.moves = req.body.moves;
  
-     post.save(function(err);
+     post.save();
 });
 
 module.exports = router;
