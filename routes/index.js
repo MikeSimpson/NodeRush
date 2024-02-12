@@ -11,17 +11,7 @@ var app = express();
 
 //Set up and connect to mongo database
 mongoose.connect(
-     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority',
-    function(err) {
-        if (err) return console.log(err);
-        else {
-            console.log('Connection Successful');
-        }
-        //connect to server
-        //app.listen(port, function() {
-        //    console.log('listening on port ' + port);
-        //});
-    }
+     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority'
 );
 
 let highscore = require('../models/highscore.js');
