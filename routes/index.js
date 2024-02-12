@@ -18,9 +18,9 @@ mongoose.connect(
             console.log('Connection Successful');
         }
         //connect to server
-        app.listen(port, function() {
-            console.log('listening on port ' + port);
-        });
+        //app.listen(port, function() {
+        //    console.log('listening on port ' + port);
+        //});
     }
 );
 
