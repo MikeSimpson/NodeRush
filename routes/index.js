@@ -12,7 +12,7 @@ let mongoSecret = process.env.MONGO_SECRET;
 
 //Set up and connect to mongo database
 mongoose.connect(
-     'mongodb+srv://mikesimpson93:${mongoSecret}@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority'
+     `mongodb+srv://mikesimpson93:${mongoSecret}@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority`
 );
 
 let highscore = require('../models/highscore.js');
