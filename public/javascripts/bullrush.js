@@ -147,6 +147,7 @@ function addHighscore() {
     const person = prompt(
         'Congratulations, you lose! Enter your name to save your score:'
     );
+    console.log(`${person} highscore: ${game.score}`);
     if (person != null && person !== '') {
         $.post(
             '/highscore',
