@@ -11,7 +11,7 @@ var app = express();
 
 //Set up and connect to mongo database
 mongoose.connect(
-    'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority',
+    'mongodb://mikesimpson93:iTJszVCsYjtCFIy6@ac-msq0o9i-shard-00-00.geshm2k.mongodb.net:27017,ac-msq0o9i-shard-00-01.geshm2k.mongodb.net:27017,ac-msq0o9i-shard-00-02.geshm2k.mongodb.net:27017/?ssl=true&replicaSet=atlas-beibdm-shard-0&authSource=admin&retryWrites=true&w=majority',
     function(err) {
         if (err) return console.log(err);
         else {
