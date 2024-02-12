@@ -65,42 +65,44 @@
             </td>
          </tr>
       </table>
-      <div class="row">
-         <div class="col-sm" text-left>
-            <h2>Instructions</h2>
-            <hr>
-            <div class="instructions">
-               <p>You’re the blue square</p>
-               <p>White squares are your friends</p>
-               <p>Red Squares are not your friends</p>
-               <p>Arrow keys/WASD to move
-               <p>E or Space to wait</p>
-               <p>Hold Shift or Q to stun</p>
-               <p>Stun a white square for a power up</p>
-               <p>Tap/click on a tile to path find to it. Use with care!</p>
-               <p>Collect gold squares and get to other side!</p>
-               <p>Every six laps is a new level</p>
+      <div class="container">
+         <div class="row">
+            <div class="col-sm">
+               <h2>Instructions</h2>
+               <hr>
+               <div class="instructions" text-left>
+                  <p>You’re the blue square</p>
+                  <p>White squares are your friends</p>
+                  <p>Red Squares are not your friends</p>
+                  <p>Arrow keys/WASD to move
+                  <p>E or Space to wait</p>
+                  <p>Hold Shift or Q to stun</p>
+                  <p>Stun a white square for a power up</p>
+                  <p>Tap/click on a tile to path find to it. Use with care!</p>
+                  <p>Collect gold squares and get to other side!</p>
+                  <p>Every six laps is a new level</p>
+               </div>
+            </div>
+            <div class="col-sm">
+               <h2>High Scores</h2>
+               <hr>
+               <div text-left>
+                  <table>
+                     <% for(var i=0; i<scores.length; i++) { %>
+                     <tr>
+                        <td class="score_col">
+                           <%= scores[i].name %>
+                        </td>
+                        <td class="score_col">
+                           <%= scores[i].score %>
+                        </td>
+                     </tr>
+                     <% } %>
+                  </table>
+               </div>
             </div>
          </div>
-         <div class="col-sm">
-            <h2>High Scores</h2>
-            <hr>
-            <div>
-               <table>
-                  <% for(var i=0; i<scores.length; i++) { %>
-                  <tr>
-                     <td class="score_col">
-                        <%= scores[i].name %>
-                     </td>
-                     <td class="score_col">
-                        <%= scores[i].score %>
-                     </td>
-                  </tr>
-                  <% } %>
-               </table>
-            </div>
-         </div>
-      </div>
+   </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script type="text/javascript" src="../javascripts/astar.js"></script>
       <script type="text/javascript" src="../javascripts/pos.js"></script>
