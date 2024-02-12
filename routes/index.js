@@ -11,7 +11,7 @@ var app = express();
 
 //Set up and connect to mongo database
 mongoose.connect(
-     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority
+     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority',
     function(err) {
         if (err) return console.log(err);
         else {
