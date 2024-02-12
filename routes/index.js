@@ -1,17 +1,18 @@
 let express = require('express');
 let router = express.Router();
 
-let port = process.env.PORT || 5000;
 
 //mongo setup
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-var app = express();
+let mongoSecret = process.env.mongoSecret;
+
+// var app = express();
 
 //Set up and connect to mongo database
 mongoose.connect(
-     'mongodb+srv://mikesimpson93:iTJszVCsYjtCFIy6@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority'
+     'mongodb+srv://mikesimpson93:${mongoSecret}@bullrush.geshm2k.mongodb.net/?retryWrites=true&w=majority'
 );
 
 let highscore = require('../models/highscore.js');
