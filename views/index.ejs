@@ -7,7 +7,6 @@
       <link rel='manifest' href="/manifest.json" />
    </head>
    <body>
-      <div class="container-fluid" id="canvas_container"></div>
       <div class="row">
          <div class="col-sm-3">
             <button id="newGame" onClick="endGame()">New Game</button>
@@ -67,29 +66,29 @@
       </table>
       <div class="container">
          <div class="row">
-            <div class="col-sm">
-               <h2>Instructions</h2>
+            <div class="col-sm-6">
+               <h2  class="text-left">Instructions</h2>
                <hr>
-               <div class="instructions" text-left>
-                  <p>You’re the blue square</p>
-                  <p>White squares are your friends</p>
-                  <p>Red Squares are not your friends</p>
-                  <p>Arrow keys/WASD to move
-                  <p>E or Space to wait</p>
-                  <p>Hold Shift or Q to stun</p>
-                  <p>Stun a white square for a power up</p>
-                  <p>Tap/click on a tile to path find to it. Use with care!</p>
-                  <p>Collect gold squares and get to other side!</p>
-                  <p>Every six laps is a new level</p>
+               <div class="instructions">
+                  <p class="text-left">You’re the blue square</p>
+                  <p class="text-left">White squares are your friends</p>
+                  <p class="text-left">Red Squares are not your friends</p>
+                  <p class="text-left">Arrow keys/WASD to move
+                  <p class="text-left">E or Space to wait</p>
+                  <p class="text-left">Hold Shift or Q to stun</p>
+                  <p class="text-left">Stun a white square for a power up</p>
+                  <p class="text-left">Click on a tile to path find. Use with care!</p>
+                  <p class="text-left">Collect gold squares and get to other side!</p>
+                  <p class="text-left">Every six laps is a new level</p>
                </div>
             </div>
-            <div class="col-sm">
-               <h2>High Scores</h2>
+            <div class="col-sm-6">
+               <h2  class="text-left">High Scores</h2>
                <hr>
-               <div text-left>
-                  <table>
+               <div>
+                  <table style="width: 100%">
                      <% for(var i=0; i<scores.length; i++) { %>
-                     <tr>
+                     <tr class="text-left">
                         <td class="score_col">
                            <%= scores[i].name %>
                         </td>
@@ -102,7 +101,7 @@
                </div>
             </div>
          </div>
-   </div>
+      </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script type="text/javascript" src="../javascripts/astar.js"></script>
       <script type="text/javascript" src="../javascripts/pos.js"></script>
