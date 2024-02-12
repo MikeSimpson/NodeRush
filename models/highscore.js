@@ -6,7 +6,7 @@ var scoreSchema = new mongoose.Schema({
         seed: String,
         moves: String
     },
-    {collection: 'high_scores'}
+    {collection: 'highScore'}
 );
 
-module.exports = mongoose.model('game_scores', scoreSchema);
+module.exports = mongoose.model('highScore', scoreSchema);
