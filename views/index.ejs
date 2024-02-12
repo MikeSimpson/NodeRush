@@ -66,13 +66,9 @@
          </tr>
       </table>
       <div class="row">
-         <div class="col-sm-12">
-         </div>
-         <div class="col-sm-12">
+         <div class="col-sm" align="left">
             <h2>Instructions</h2>
             <hr>
-         </div>
-         <div class="col-sm-12">
             <div class="instructions">
                <p>You’re the blue square</p>
                <p>White squares are your friends</p>
@@ -86,30 +82,12 @@
                <p>Every six laps is a new level</p>
             </div>
          </div>
-         <div class="col-sm-12">
+         <div class="col-sm">
             <h2>High Scores</h2>
             <hr>
-         </div>
-         <div class="col-sm-6">
             <div>
                <table>
-                  <% for(var i=0; i<scores.length/2; i++) { %>
-                  <tr>
-                     <td class="score_col">
-                        <%= scores[i].name %>
-                     </td>
-                     <td class="score_col">
-                        <%= scores[i].score %>
-                     </td>
-                  </tr>
-                  <% } %>
-               </table>
-            </div>
-         </div>
-         <div class="col-sm-6">
-            <div>
-               <table>
-                  <% for(var i=scores.length/2; i<scores.length && i > 25; i++) { %>
+                  <% for(var i=0; i<scores.length; i++) { %>
                   <tr>
                      <td class="score_col">
                         <%= scores[i].name %>
