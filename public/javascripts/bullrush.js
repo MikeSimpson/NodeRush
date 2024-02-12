@@ -155,7 +155,7 @@ function addHighscore() {
                 name: person,
                 score: game.score,
                 seed: game.seed,
-                moves: game.moves
+                moves: [] //game.moves
             }
         );
     }
