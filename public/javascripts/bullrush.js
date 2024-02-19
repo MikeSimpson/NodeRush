@@ -1,4 +1,4 @@
-let BOARD_WIDTH = 30;
+let BOARD_WIDTH = 40;
 let BOARD_HEIGHT = 20;
 let LEVEL_LAPS = 6;
 let MOVE_DELAY = 10;
