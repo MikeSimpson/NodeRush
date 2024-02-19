@@ -57,3 +57,15 @@ class Medic extends PowerUp {
         return 3;
     }
 }
+
+class Looter extends PowerUp {
+    constructor() {
+        super();
+        this.color = '#f5f100';
+        this.timer = 9999;
+    }
+
+    static get WEIGHT() {
+        return 3;
+    }
+}
