@@ -229,18 +229,18 @@ class Game {
                 }
                 this.context.fillRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
                 //draw sprites
-                // if (this.board[x][y] instanceof Player) {
-                //      this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                //      continue
-                //  }
-                //  if (this.board[x][y] instanceof Wolf) {
-                //      this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                //      continue
-                //  }
-                //  if (this.board[x][y] instanceof Sheep || this.board[x][y] instanceof Decoy) {
-                //      this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-                //      continue
-                //  }
+                if (this.board[x][y] instanceof Player) {
+                     this.context.drawImage(playerImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                     continue
+                 }
+                 if (this.board[x][y] instanceof Wolf) {
+                      this.context.drawImage(wolfImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                      continue
+                  }
+                  if (this.board[x][y] instanceof Sheep || this.board[x][y] instanceof Decoy) {
+                      this.context.drawImage(sheepImage, x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+                      continue
+                  }
             }
         }
     }
